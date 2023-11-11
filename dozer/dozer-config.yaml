@@ -1,0 +1,62 @@
+
+version: 1
+
+app_name: GrowthGenie2
+home_dir: ./.dozer3
+cache_dir: ./.dozer3/cache
+   
+connections:
+  - config: !Postgres
+      user: postgres
+      password: postgres
+      host: host.docker.internal
+      port: 5432
+      database: postgres
+      sslmode: disable
+    name: pgcon
+   
+
+sources:
+  - name: mutual_funds
+    table_name: mutual_funds
+    connection: pgcon
+  - name: investment_accounts 
+    table_name: investment_accounts
+    connection: pgcon
+  - name: transactions 
+    table_name: transactions
+    connection: pgcon
+  - name: accounts 
+    table_name: accounts
+    connection: pgcon
+  
+  
+
+sql: |
+    select mf.fundname as fundname,mf.mutualfundid as mfid , ia."RETURNS" as returns into table1  from mutual_funds mf join investment_accounts ia ON ia.investmentaccountid = mf.investmentaccountid;
+
+    select amount, transactiondate, transactionstatus, customerid into transactionTable from transactions tr join accounts a on tr.accountid = a.accountid ;
+
+
+    
+endpoints: 
+  - name: mutual_funds
+    path: /mutual_funds
+    table_name: table1
+    index:
+      primary_key:
+        - returns
+
+  - name: recent_transaction
+    path: /recent_transaction
+    table_name: transactionTable
+
+  - name: test
+    path: /test
+    table_name: accounts
+    # index:
+    #   primary_key:
+    #     - customerid
+
+
+
