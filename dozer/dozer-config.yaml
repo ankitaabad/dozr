@@ -9,7 +9,7 @@ connections:
   - config: !Postgres
       user: postgres
       password: postgres
-      host: host.docker.internal
+      host: db
       port: 5432
       database: postgres
       sslmode: disable
