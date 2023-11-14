@@ -2,8 +2,8 @@
 version: 1
 
 app_name: GrowthGenie2
-home_dir: ./.dozer3
-cache_dir: ./.dozer3/cache
+home_dir: ./.dozer4
+cache_dir: ./.dozer4/cache
    
 connections:
   - config: !Postgres

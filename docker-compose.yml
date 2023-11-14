@@ -1,26 +1,52 @@
 
+x-common-variables: &commonEnvironment
+  PG_USER: postgres
+  PG_PASSWORD: postgres
+  PG_HOST: docker.host.internal
+  PG_PORT: 5433
+  PG_DB: postgres
+  APP_HOST: "0.0.0.0"
+
 services:
-  db:
-    build: ./db 
+  db:   
+    container_name: dozer-pagila-postgres
+    image: debezium/postgres:15-alpine
     volumes:
-      - ./pdb/db:/var/lib/postgresql/data
-    # environment:
-    #   - POSTGRES_DB=postgres
-    #   - POSTGRES_USER=postgres
-    #   - POSTGRES_PASSWORD=postgres
+      - ./pg_hba.conf:/var/lib/foo/pg_hba.conf
+      # - ./data/init.sql:/docker-entrypoint-initdb.d/init.sql
+    command: postgres -c hba_file=/var/lib/foo/pg_hba.conf
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      ALLOW_IP_RANGE: 0.0.0.0/0
     ports:
-      - "5432:5432"
+      - '5433:5432'
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test: [ "CMD-SHELL", "pg_isready -U postgres -d postgres" ]
       interval: 5s
       timeout: 5s
-      retries: 5
-    command: [ "postgres", "-c", "wal_level=logical" ]
+      retries: 5 
+  
+  # migrate:
+  #   build: ./atlas
+    
+  #   command: >
+  #     schema apply -u "postgresql://postgres:postgres@0.0.0.0:5433/postgres?sslmode=disable" --to file://schema.hcl  --auto-approve 
+
+  #   depends_on:
+  #     db:
+  #       condition: service_healthy
+  #   # volumes:
+  #   #   - ./migrations/:/migrations
+  #   environment:
+  #     - PGUSER=postgres
 
   frontend:
     build: ./frontend
     ports:
       - "2300:80"
+
 
   backend:
     build: ./backend
@@ -49,15 +75,71 @@ services:
   #     - POSTGRES_PASSWORD=postgres
   #   depends_on:
   #     - db
-  dozer: 
-    container_name: mydozer
-    build: ./dozer
-    depends_on:
-      db:
-        condition: service_healthy
-    ports:
-      - "2000:8080"
-      - "50051:50051"
+  # dozer: 
+  #   container_name: mydozer
+  #   build: ./dozer
+  #   depends_on:
+  #     db:
+  #       condition: service_healthy
+  #   ports:
+  #     - "2000:8080"
+  #     - "50051:50051"
+  #   tty: true
+
+  # volume:
+  #   pgdb:
+
+
+  dozer:
+    container_name: dozer-build
+    image: public.ecr.aws/getdozer/dozer:latest
+    environment: *commonEnvironment
+    working_dir: /usr/local/bin
+    volumes:
+      - ./dozer/dozer-config.yaml:/usr/local/bin/dozer-config.yaml
+      - ./dozer/.dozer:/usr/local/bin/.dozer
     tty: true
 
 
+  # dozer-app:
+  #   container_name: dozer-app
+  #   image: public.ecr.aws/getdozer/dozer:latest
+  #   environment: *commonEnvironment
+  #   ports:
+  #     # Internal gRPC talks to api
+  #     - "50053:50053"
+  #   working_dir: /usr/local/bin
+  #   volumes:
+  #     - ./dozer/dozer-config.yaml:/usr/local/bin/dozer-config.yaml
+  #     - ./dozer/.dozer:/usr/local/bin/.dozer
+  #   command:
+  #     - run
+  #   depends_on:
+  #     dozer-build:
+  #       condition: service_completed_successfully
+  #   stdin_open: true
+  #   tty: true
+  #   healthcheck:
+  #     test: ["CMD", "curl", "0.0.0.0:50053", "--http2-prior-knowledge"]
+  #     interval: 1s
+  #     timeout: 20s
+  #     retries: 90
+
+  # dozer-api:
+    # image: public.ecr.aws/getdozer/dozer:latest
+    # ports:
+    #   # REST APIs are published on port 8080
+    #   - "8080:8080"
+    #   # gRPC are available over 50051
+    #   - "50051:50051"
+    # depends_on:
+    #   dozer-app:
+    #     condition: service_healthy
+    # working_dir: /usr/local/bin
+    # volumes:
+    #   - ./dozer/dozer-config.yaml:/usr/local/bin/dozer-config.yaml
+    #   - ./dozer/.dozer:/usr/local/bin//.dozer
+    # command:
+    #   -  run
+    # stdin_open: true
+    # tty: true
