@@ -10,4 +10,5 @@ RUN npm run build
 EXPOSE 80
 
 FROM socialengine/nginx-spa:latest
-COPY --from=build /app/build /usr/share/nginx/html
+WORKDIR /app
+COPY --from=build /app/build .
