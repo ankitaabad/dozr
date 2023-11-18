@@ -13,6 +13,7 @@ services:
     image: debezium/postgres:15-alpine
     volumes:
       - ./pg_hba.conf:/var/lib/foo/pg_hba.conf
+      - pgdata:/var/lib/postgresql/data
       # - ./data/init.sql:/docker-entrypoint-initdb.d/init.sql
     command: postgres -c hba_file=/var/lib/foo/pg_hba.conf
     environment:
@@ -21,26 +22,26 @@ services:
       POSTGRES_PASSWORD: postgres
       ALLOW_IP_RANGE: 0.0.0.0/0
     ports:
-      - '5433:5432'
+      - '5432:5432'
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U postgres -d postgres" ]
       interval: 5s
       timeout: 5s
       retries: 5 
   
-  # migrate:
-  #   build: ./atlas
+  migrate:
+    build: ./atlas
     
-  #   command: >
-  #     schema apply -u "postgresql://postgres:postgres@0.0.0.0:5433/postgres?sslmode=disable" --to file://schema.hcl  --auto-approve 
+    command: >
+      schema apply -u "postgresql://postgres:postgres@db:5432/postgres?sslmode=disable" --to file://schema.hcl  --auto-approve 
 
-  #   depends_on:
-  #     db:
-  #       condition: service_healthy
-  #   # volumes:
-  #   #   - ./migrations/:/migrations
-  #   environment:
-  #     - PGUSER=postgres
+    depends_on:
+      db:
+        condition: service_healthy
+    # volumes:
+    #   - ./migrations/:/migrations
+    environment:
+      - PGUSER=postgres
 
   frontend:
     build: ./frontend
@@ -64,82 +65,27 @@ services:
       - GRPC_GO_LOG_VERBOSITY_LEVEL=99
       - GRPC_GO_LOG_SEVERITY_LEVEL=info
 
-  #   # command: python manage.py runserver 0.0.0.0:8000
-  #   volumes:
-  #     - .:/code
-  #   ports:
-  #     - "8000:8000"
-  #   environment:
-  #     - POSTGRES_NAME=postgres
-  #     - POSTGRES_USER=postgres
-  #     - POSTGRES_PASSWORD=postgres
-  #   depends_on:
-  #     - db
-  # dozer: 
-  #   container_name: mydozer
-  #   build: ./dozer
-  #   depends_on:
-  #     db:
-  #       condition: service_healthy
-  #   ports:
-  #     - "2000:8080"
-  #     - "50051:50051"
-  #   tty: true
 
-  # volume:
-  #   pgdb:
 
 
   dozer:
     container_name: dozer-build
-    image: public.ecr.aws/getdozer/dozer:latest
+    image: public.ecr.aws/getdozer/dozer:dev
     environment: *commonEnvironment
     working_dir: /usr/local/bin
     volumes:
       - ./dozer/dozer-config.yaml:/usr/local/bin/dozer-config.yaml
       - ./dozer/.dozer:/usr/local/bin/.dozer
     tty: true
+    restart: always
+    ports:
+      # REST APIs are published on port 8080
+      - "8080:8080"
+      # gRPC are available over 50051
+      - "50051:50051"
 
 
-  # dozer-app:
-  #   container_name: dozer-app
-  #   image: public.ecr.aws/getdozer/dozer:latest
-  #   environment: *commonEnvironment
-  #   ports:
-  #     # Internal gRPC talks to api
-  #     - "50053:50053"
-  #   working_dir: /usr/local/bin
-  #   volumes:
-  #     - ./dozer/dozer-config.yaml:/usr/local/bin/dozer-config.yaml
-  #     - ./dozer/.dozer:/usr/local/bin/.dozer
-  #   command:
-  #     - run
-  #   depends_on:
-  #     dozer-build:
-  #       condition: service_completed_successfully
-  #   stdin_open: true
-  #   tty: true
-  #   healthcheck:
-  #     test: ["CMD", "curl", "0.0.0.0:50053", "--http2-prior-knowledge"]
-  #     interval: 1s
-  #     timeout: 20s
-  #     retries: 90
 
-  # dozer-api:
-    # image: public.ecr.aws/getdozer/dozer:latest
-    # ports:
-    #   # REST APIs are published on port 8080
-    #   - "8080:8080"
-    #   # gRPC are available over 50051
-    #   - "50051:50051"
-    # depends_on:
-    #   dozer-app:
-    #     condition: service_healthy
-    # working_dir: /usr/local/bin
-    # volumes:
-    #   - ./dozer/dozer-config.yaml:/usr/local/bin/dozer-config.yaml
-    #   - ./dozer/.dozer:/usr/local/bin//.dozer
-    # command:
-    #   -  run
-    # stdin_open: true
-    # tty: true
+
+volumes:
+  pgdata:

@@ -5,7 +5,7 @@ FROM golang:1.21.2-bullseye
 WORKDIR /echo
  
 # Copies everything from your root directory into /app
-COPY . .
+COPY ./backend .
  
 # Installs Go dependencies
 RUN go mod download
