@@ -2,8 +2,8 @@ FROM node:20.9.0-alpine3.18 AS build
 
 WORKDIR /app
 
-COPY package.json ./
-COPY package-lock.json ./
+COPY ./frontend/package.json ./
+COPY ./frontend/package-lock.json ./
 RUN npm install
 COPY ./frontend ./
 RUN npm run build

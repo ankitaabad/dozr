@@ -6,6 +6,8 @@ WORKDIR /echo
  
 # Copies everything from your root directory into /app
 COPY ./backend .
+
+
  
 # Installs Go dependencies
 RUN go mod download
