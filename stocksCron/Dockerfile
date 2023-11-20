@@ -9,7 +9,8 @@ FROM hectormolinero/supercronic:latest
 WORKDIR /cron
 COPY --from=build /main /cron/main
 COPY /ctab /cron/ctab
+ENV TZ=Asia/Kolkata
 EXPOSE 8000 
 # USER nonroot:nonroot
 ENTRYPOINT [ "supercronic" ]
-CMD  [  "ctab" ]
+CMD  [  "-debug","ctab" ]
