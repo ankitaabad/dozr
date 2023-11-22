@@ -1,6 +1,8 @@
 package main
 
 import (
+	"backend/dozer/generated/mutual_funds"
+	"backend/dozer/generated/recent_transactions"
 	"context"
 	"encoding/json"
 	"fmt"
@@ -8,7 +10,6 @@ import (
 	"os"
 	"strconv"
 	"strings"
-
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"

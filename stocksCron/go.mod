@@ -1,4 +1,4 @@
-module StocksCron
+module stocksCron
 
 go 1.21.2
 

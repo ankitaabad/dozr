@@ -1,4 +1,10 @@
 # Specifies a parent image
+FROM arigaio/atlas:latest as schemaApply
+WORKDIR /atlasapp
+COPY ./backend/schema.hcl /atlasapp/
+
+CMD [ "atlas", "schema", "apply", "-u", ${dburl}, "--to", "schema.hcl"  ]
+
 FROM golang:1.21.2-bullseye
  
 # Creates an app directory to hold your app’s source code
