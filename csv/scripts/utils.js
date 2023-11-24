@@ -12,7 +12,6 @@ module.exports.mapCsv = async function (filePath, fn) {
         data.push(fn(row));
       })
       .on("end", () => {
-        console.log(data);
         resolve(data);
       })
       .on("error", () => {
@@ -25,7 +24,7 @@ module.exports.writeJSONToCsv = function (data, filename) {
   const parser = new Parser({});
   const csv = parser.parse(data);
   fs.writeFileSync(filename, csv);
-  console.log(csv);
+  // console.log(csv);
  
 }
 
@@ -38,6 +37,15 @@ module.exports.mfChangePercentage = function() {
 
   const rn = module.exports.randomIntFromInterval(-9100,9000)
   const result = parseFloat((rn * 0.0005).toFixed(2))
-  console.log({result})
+  // console.log({result})
   return result
 }
+
+module.exports.roundFloat = (f) => {
+  return parseFloat(f.toFixed(2))
+}
+module.exports.change = (newPrice, oldPrice) => {
+  return !oldPrice
+    ? 0
+    : module.exports.roundFloat((newPrice - oldPrice) * 100 / oldPrice);
+};

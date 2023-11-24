@@ -1,2 +1,4 @@
 .idea
 pdb/*
+csv/gen
+csv/.DS_Store
