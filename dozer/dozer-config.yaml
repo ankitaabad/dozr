@@ -12,26 +12,25 @@ connections:
       host: srv-captain--pgdb
       port: 5432
       database: postgres
+      schema: public
       sslmode: disable
-    name: pgcon
+    name: pgcon2
    
 
 sources:
-  - name: mfDaily 
+  - name: mfdata 
     table_name: mfdata
-    connection: pgcon
+    connection:  pgcon2
   
 
 
-sql: |
 
-  select *  into MFDailyPriceTable from mfdata
   
     
 endpoints: 
   - name: mf
     path: /mfdaily
-    table_name: MFDailyPriceTable
+    table_name: mfdata
 
 
  
