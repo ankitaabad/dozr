@@ -17,27 +17,15 @@ connections:
    
 
 sources:
-  - name: mutual_funds
-    table_name: mutual_funds
-    connection: pgcon
-  - name: investment_accounts 
-    table_name: investment_accounts
-    connection: pgcon
-  - name: transactions 
-    table_name: transactions
-    connection: pgcon
-  - name: accounts 
-    table_name: accounts
-    connection: pgcon
   - name: mfDaily 
-    table_name: accounts
+    table_name: mfdata
     connection: pgcon
   
 
 
 sql: |
 
-  select *  into MFDailyPriceTable from mfdailyprice
+  select *  into MFDailyPriceTable from mfdata
   
     
 endpoints: 
