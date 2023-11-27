@@ -19,7 +19,10 @@ async function getStocks() {
       ),
     };
   });
-
+  // take around 700 stocks out of 2000 stocks
+  stocks = stocks.filter((_,i)=> {
+    return i%3 ==0
+  })
   writeJSONToCsv(stocks, "../generated/stocks.csv");
   console.log({ count: stocks.length });
 }

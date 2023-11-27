@@ -3,13 +3,15 @@ const {
   randomIntFromInterval,
   mfChangePercentage,
   writeJSONToCsv,
+  change,
 } = require("./utils");
 const { DateTime } = require("luxon");
 
 async function backfillStocks() {
-  const stocks = await mapCsv("../generated/stocks.csv", (row) => {
+  let stocks = await mapCsv("../generated/stocks.csv", (row) => {
     return { stock_id: row.stock_id };
   });
+
   console.log({ stocks });
   // console.log(DateTime.now().toFormat("yyyy-MM-dd"))
   const today = DateTime.now();

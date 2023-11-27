@@ -1,4 +1,4 @@
-<script>
+<!-- <script>
 	import { createQuery } from '@tanstack/svelte-query';
 	import RecentTransaction from './RecentTransaction.svelte';
 	import { server } from '$lib/utils';
@@ -27,4 +27,6 @@
 	<div>
 		<RecentTransaction recentTransactions={getRecentData($customerData.data)} />
 	</div>
-{/if}
+{/if} -->
+
+<div> Cutomer</div>

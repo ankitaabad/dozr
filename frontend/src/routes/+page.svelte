@@ -4,19 +4,42 @@
   import {goto} from '$app/navigation'
 	import { server } from "$lib/utils";
  let userId
+ let ws
  
   async function managerLogin() {
     isManager.set(true)
     console.log(get(isManager))
-    goto("/dashboard")
   }
 
   function randomUserLogin(){
     customerId.set(1001)
+    userLogin()
     goto("/dashboard")
   }
   function userLogin() {
     if(userId){
+      console.log("inside user login")
+      ws = new WebSocket("ws://gotify.68.183.85.136.nip.io/stream?token=CnUR0SKNDn_nBX3");
+				
+        ws.onopen = function() {
+           
+           // Web Socket is connected, send data using send()
+          //  ws.send("Message to send");
+
+          console.log("socket openend")
+        };
+ 
+        ws.onmessage = function (evt) { 
+          console.log(evt)
+           var received_msg = evt.data;
+           console.log({received_msg})
+        };
+ 
+        ws.onclose = function() { 
+           
+           // websocket is closed.
+           alert("Connection is closed..."); 
+        };
       customerId.set(userId)
       goto("/dashboard")
 
