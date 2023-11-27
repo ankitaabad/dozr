@@ -29,4 +29,4 @@
 	</div>
 {/if} -->
 
-<div> Cutomer</div>
+<div>Hitesh Kumawat</div>
