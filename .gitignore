@@ -3,3 +3,4 @@ pdb/*
 csv/gen
 csv/.DS_Store
 csv/generated
+*/.env
