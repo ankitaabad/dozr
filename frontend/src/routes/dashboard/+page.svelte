@@ -24,14 +24,16 @@
 		// The data visibly shown in your table body UI.
 		body: tableMapperValues(sourceData, ['name', 'tradeprice', 'qty', 'amount']),
 		// Optional: The data returned when interactive is enabled and a row is clicked.
-		meta: tableMapperValues(sourceData, ['position', 'name', 'tradeprice', 'qty', 'amount']),
+		meta: tableMapperValues(sourceData, ['position', 'name', 'tradeprice', 'qty', 'amount'])
 		// Optional: A list of footer labels.
-		foot: ['Total', '', '<code class="code">5</code>']
+		//foot: ['Total', '', '', '<code class="code">5</code>']
 	};
 </script>
 
 <div class="flex flex-col h-screen">
-	<div class="flex bg-white items-center px-6 justify-between">
+	<div
+		class="flex bg-white items-center px-6 justify-between border-b border-gray-200 border-solid"
+	>
 		<div class="logo">
 			<img src={logo} alt="Logo" />
 		</div>
@@ -70,26 +72,56 @@
 			<svelte:fragment slot="panel">
 				{#if tabSet === 0}
 					<div class="flex gap-6">
-						<div class="w-[75%] card p-4">
+						<div class="w-[75%] card p-6">
+							<div class="heading mb-6 flex justify-between items-center">
+								<h2 class="font-medium">Your Trades</h2>
+								<label class="label">
+									<!-- <span>Select</span> -->
+									<select class="select">
+										<option value="2">Week</option>
+										<option value="3" selected>Month</option>
+										<option value="4">Year</option>
+									</select>
+								</label>
+							</div>
 							<div class="">
 								<Table source={tableSimple} />
 							</div>
 						</div>
-						<div class="w-[25%] card p-4">
-							<div class="">Account balance</div>
+						<div class="w-[25%] card p-6">
+							<div class="heading mb-6">
+								<h2 class="font-medium">Account balance</h2>
+							</div>
 						</div>
 					</div>
 					<div class="flex gap-6 mt-6">
-						<div class="w-[50%] card p-4">
-							<div class="">
+						<div class="w-[75%] flex gap-6">
+							<div class="w-[66%] card p-6">
+								<div class="heading mb-6">
+									<h2 class="font-medium">Recent transactions</h2>
+								</div>
 								<Table source={tableSimple} />
 							</div>
+							<div class="w-[34%] card p-6">
+								<div class="heading mb-6 flex justify-between items-center">
+									<h2 class="font-medium">Statistics</h2>
+									<label class="label">
+										<!-- <span>Select</span> -->
+										<select class="select">
+											<option value="2">Week</option>
+											<option value="3">Month</option>
+											<option value="4" selected>Year</option>
+										</select>
+									</label>
+								</div>
+							</div>
 						</div>
-						<div class="w-[25%] card p-4">
-							<div class="">Statistics</div>
-						</div>
-						<div class="w-[25%] card p-4">
-							<div class="">All watchlists</div>
+
+						<div class="w-[25%] card p-6">
+							<div class="heading mb-6 flex justify-between items-center">
+								<h2 class="font-medium">All watchlists</h2>
+								<a href="#" class="text-primary-500 font-medium">View all</a>
+							</div>
 						</div>
 					</div>
 				{:else if tabSet === 1}
