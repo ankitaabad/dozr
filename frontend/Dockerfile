@@ -4,10 +4,9 @@ WORKDIR /app
 
 # COPY ./frontend/package.json ./
 # COPY ./frontend/package-lock.json ./
-COPY ./frontend ./
+COPY ./frontend .
 RUN npm install
 RUN npm run build
-EXPOSE 80
 
 FROM socialengine/nginx-spa:latest
 WORKDIR /app

@@ -1,9 +1,7 @@
 module backend
 
 go 1.21.2
-// replace (
-//   GrowthGenie/backend/dozer/generated/mutual_funds v0.0.0 => ../backend/dozer/generated/mutual_funds
-// )
+
 require (
 	github.com/labstack/echo/v4 v4.11.2
 	google.golang.org/grpc v1.59.0
