@@ -75,30 +75,188 @@
 						<div class="w-[75%] card p-6">
 							<div class="heading mb-6 flex justify-between items-center">
 								<h2 class="font-medium">Your Trades</h2>
-								<label class="label">
-									<!-- <span>Select</span> -->
-									<select class="select">
-										<option value="2">Week</option>
-										<option value="3" selected>Month</option>
-										<option value="4">Year</option>
-									</select>
-								</label>
 							</div>
-							<div class="">
-								<Table source={tableSimple} />
+							<div class="flex gap-6">
+								<div class="card grow">
+									<h3 class="font-medium mb-4 p-6 pb-0">Stocks</h3>
+									<div class="flex justify-between pt-0 p-6 border-b border-gray-100 border-solid">
+										<div class="flex justify-between flex-col">
+											<div class="flex flex-col mb-8">
+												<span class="text-xs text-gray-400">Current</span>
+												<span>₹2,50,217</span>
+											</div>
+											<div class="flex flex-col">
+												<span class="text-xs text-gray-400">Invested</span>
+												<span>₹2,10,990</span>
+											</div>
+										</div>
+										<div class="flex justify-between flex-col">
+											<div class="flex flex-col">
+												<span class="text-xs text-gray-400">Total return</span>
+												<span class=" text-success-500">+₹39,227 (18.59%)</span>
+											</div>
+											<div class="flex flex-col">
+												<span class="text-xs text-gray-400">1D returns</span>
+												<span class="text-error-500">-₹161.41(0.006%)</span>
+											</div>
+										</div>
+									</div>
+									<div class="py-4 px-6 text-gray-400">
+										XIRR <span class="text-success-500">17.28%</span>
+									</div>
+								</div>
+								<div class="card grow">
+									<h3 class="font-medium mb-4 p-6 pb-0">Mutual Funds</h3>
+									<div class="flex justify-between pt-0 p-6 border-b border-gray-100 border-solid">
+										<div class="flex justify-between flex-col">
+											<div class="flex flex-col mb-8">
+												<span class="text-xs text-gray-400">Current</span>
+												<span>₹2,50,217</span>
+											</div>
+											<div class="flex flex-col">
+												<span class="text-xs text-gray-400">Invested</span>
+												<span>₹2,10,990</span>
+											</div>
+										</div>
+										<div class="flex justify-between flex-col">
+											<div class="flex flex-col">
+												<span class="text-xs text-gray-400">Total return</span>
+												<span class="text-success-500">+₹39,227 (18.59%)</span>
+											</div>
+											<div class="flex flex-col">
+												<span class="text-xs text-gray-400">1D returns</span>
+												<span class="text-error-500">-₹161.41(0.006%)</span>
+											</div>
+										</div>
+									</div>
+									<div class="py-4 px-6 text-gray-400">
+										XIRR <span class="text-success-500">17.28%</span>
+									</div>
+								</div>
+								<div class="card grow">
+									<h3 class="font-medium mb-4 p-6 pb-0">Fixed Deposit</h3>
+									<div class="flex justify-between pt-0 p-6 border-b border-gray-100 border-solid">
+										<div class="flex justify-between flex-col">
+											<div class="flex flex-col mb-8">
+												<span class="text-xs text-gray-400">Current</span>
+												<span>₹2,50,217</span>
+											</div>
+											<div class="flex flex-col">
+												<span class="text-xs text-gray-400">Invested</span>
+												<span> ₹2,10,990</span>
+											</div>
+										</div>
+										<div class="flex justify-between flex-col">
+											<div class="flex flex-col">
+												<span class="text-xs text-gray-400">Total return</span>
+												<span class="text-success-500">+₹39,227 (18.59%)</span>
+											</div>
+											<div class="flex flex-col">
+												<span class="text-xs text-gray-400">1D returns</span>
+												<span class="text-error-500">-₹161.41(0.006%)</span>
+											</div>
+										</div>
+									</div>
+									<div class="py-4 px-6 text-gray-400">
+										XIRR <span class="text-success-500">17.28%</span>
+									</div>
+								</div>
 							</div>
 						</div>
 						<div class="w-[25%] card p-6">
 							<div class="heading mb-6">
 								<h2 class="font-medium">Account balance</h2>
 							</div>
+							<div class="text-2xl font-semibold">₹1,00,184</div>
+							<div class="my-6">
+								<div class=" ">
+									<a
+										href="#"
+										class="py-5 border-t border-b border-solid border-gray-100 flex justify-between w-full items-center"
+									>
+										<div>Withdraw</div>
+										<div>
+											<svg
+												width="16"
+												height="16"
+												viewBox="0 0 16 16"
+												fill="none"
+												xmlns="http://www.w3.org/2000/svg"
+											>
+												<g clip-path="url(#clip0_24_73)">
+													<path
+														d="M6 12L10 8L6 4"
+														stroke="#374151"
+														stroke-width="1.5"
+														stroke-linecap="round"
+														stroke-linejoin="round"
+													/>
+												</g>
+												<defs>
+													<clipPath id="clip0_24_73">
+														<rect
+															width="16"
+															height="16"
+															fill="white"
+															transform="translate(0 16) rotate(-90)"
+														/>
+													</clipPath>
+												</defs>
+											</svg>
+										</div>
+									</a>
+								</div>
+							</div>
+							<div class="">
+								<div>
+									<a
+										href="#"
+										class="pb-5 border-b border-solid border-gray-100 flex justify-between w-full items-center"
+									>
+										<div>All transactions</div>
+										<div>
+											<svg
+												width="16"
+												height="16"
+												viewBox="0 0 16 16"
+												fill="none"
+												xmlns="http://www.w3.org/2000/svg"
+											>
+												<g clip-path="url(#clip0_24_73)">
+													<path
+														d="M6 12L10 8L6 4"
+														stroke="#374151"
+														stroke-width="1.5"
+														stroke-linecap="round"
+														stroke-linejoin="round"
+													/>
+												</g>
+												<defs>
+													<clipPath id="clip0_24_73">
+														<rect
+															width="16"
+															height="16"
+															fill="white"
+															transform="translate(0 16) rotate(-90)"
+														/>
+													</clipPath>
+												</defs>
+											</svg>
+										</div>
+									</a>
+								</div>
+							</div>
+							<button type="button" class="mt-8 btn variant-filled w-full rounded-lg bg-primary-500"
+								>Add Money</button
+							>
 						</div>
 					</div>
 					<div class="flex gap-6 mt-6">
 						<div class="w-[75%] flex gap-6">
 							<div class="w-[66%] card p-6">
-								<div class="heading mb-6">
+								<div class="heading mb-6 flex justify-between items-center">
 									<h2 class="font-medium">Recent transactions</h2>
+									<a href="#" class="text-primary-500 font-medium">View all</a>
 								</div>
 								<Table source={tableSimple} />
 							</div>
@@ -121,6 +279,51 @@
 							<div class="heading mb-6 flex justify-between items-center">
 								<h2 class="font-medium">All watchlists</h2>
 								<a href="#" class="text-primary-500 font-medium">View all</a>
+							</div>
+							<div class="">
+								<div class="pb-4 border-b border-solid border-gray-100 flex justify-between w-full">
+									<div>SBI</div>
+									<div class="flex flex-col items-end">
+										<div>₹563.05</div>
+										<div class="text-error-500 text-xs">-21.60(3.69%)</div>
+									</div>
+								</div>
+							</div>
+							<div class="">
+								<div class="py-4 border-b border-solid border-gray-100 flex justify-between w-full">
+									<div>Asian Paints</div>
+									<div class="flex flex-col items-end">
+										<div>₹3,168.90</div>
+										<div class="text-success-500 text-xs">38.60(1.23%)</div>
+									</div>
+								</div>
+							</div>
+							<div class="">
+								<div class="py-4 border-b border-solid border-gray-100 flex justify-between w-full">
+									<div>Siemens</div>
+									<div class="flex flex-col items-end">
+										<div>₹3,570.75</div>
+										<div class="text-success-500 text-xs">45.75(1.30%)</div>
+									</div>
+								</div>
+							</div>
+							<div class="">
+								<div class="py-4 border-b border-solid border-gray-100 flex justify-between w-full">
+									<div>Bank of Baroda</div>
+									<div class="flex flex-col items-end">
+										<div>₹196.80</div>
+										<div class="text-error-500 text-xs">-1.55(0.78%)</div>
+									</div>
+								</div>
+							</div>
+							<div class="">
+								<div class="py-4 border-b border-solid border-gray-100 flex justify-between w-full">
+									<div>Power Grid Cord</div>
+									<div class="flex flex-col items-end">
+										<div>₹209.50</div>
+										<div class="text-success-500 text-xs">2.30(1.11%)</div>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
