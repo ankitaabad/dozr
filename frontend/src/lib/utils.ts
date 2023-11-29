@@ -5,6 +5,16 @@ const server = axios.create({
   baseURL: `${baseURL}`
 });
 
+const dozerRest = axios.create({
+  baseURL: 'http://0.0.0.0:8080'
+ 
+})
+
+
+
+
+
 export {
-  server
+  server,
+  dozerRest
 }
