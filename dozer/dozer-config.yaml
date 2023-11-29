@@ -4,34 +4,69 @@ version: 1
 app_name: GrowthGenie2
 home_dir: ./.dozer4
 cache_dir: ./.dozer4/cache
+
+
    
 connections:
   - config: !Postgres
       user: postgres
       password: pgpass
-      host: srv-captain--pgdb
-      port: 5432
+      host: 68.183.85.136
+      port: 5689
       database: postgres
       schema: public
       sslmode: disable
     name: pgcon2
-   
 
 sources:
-  - name: mfdata 
-    table_name: mfdata
+  - name: transactions 
+    table_name: transactions
+    connection:  pgcon2
+  - name: stocks 
+    table_name: stocks
+    connection:  pgcon2
+  - name: stocks_daily_price 
+    table_name: stocks_daily_price
     connection:  pgcon2
   
+   
+
+
+sql: |
+  select sdp."date" , sdp.stock_id ,round(sdp.daily_change,2), sdp.price, s.company_name into dailyStocks from stocks_daily_price sdp join stocks s on sdp.stock_id = s.stock_id 
+
+
 
 
 
   
     
 endpoints: 
-  - name: mf
-    path: /mfdaily
-    table_name: mfdata
+
+  - name: recent_transactions
+    path: /recent_transactions
+    table_name: transactions
+    index:
+      secondary:
+        create:
+          - !SortedInverted
+              fields:
+                - customer_id
+                - date 
+
+  - name: dailyStocks
+    path: /dailyStocks
+    table_name: dailyStocks
+    index:
+      secondary:
+        create:
+          - !SortedInverted
+              fields:
+                - date
+                - daily_change
+      
+
+  
 
 
- 
 

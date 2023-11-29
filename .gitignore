@@ -4,3 +4,5 @@ csv/gen
 csv/.DS_Store
 csv/generated
 */.env
+*/.dozer*
+*/dozer.lock

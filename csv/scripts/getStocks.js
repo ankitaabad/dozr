@@ -3,8 +3,10 @@ const { mapCsv, writeJSONToCsv } = require("./utils");
 
 async function getStocks() {
   let stocks = await mapCsv("../scraped/stocks.csv", function (row) {
-    const company_name = row.companyName.split(" ").slice(0, -1).join(" ");
-    const symbol = row.companyName.split(" ").pop();
+    const company_name = row.companyName.split(" ").slice(0, -1).join(" ").trim();
+    const symbol = row.companyName.split(" ").pop().trim();
+    console.log({symbol,company_name})
+
     return {
       stock_id: kuuid.id(),
       company_name,
@@ -24,7 +26,7 @@ async function getStocks() {
     return i%3 ==0
   })
   writeJSONToCsv(stocks, "../generated/stocks.csv");
-  console.log({ count: stocks.length });
+  // console.log({ count: stocks.length });
 }
 
 getStocks();
