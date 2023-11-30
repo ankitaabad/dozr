@@ -11,6 +11,8 @@ connections:
   - config: !Postgres
       user: postgres
       password: pgpass
+      # host: 68.183.85.136
+      # port: 5689  
       host: srv-captain--pgdb
       port: 5432
       database: postgres
@@ -30,6 +32,9 @@ sources:
     connection:  pgcon2
   - name: customer_stocks 
     table_name: customer_stocks
+    connection:  pgcon2
+  - name: customers 
+    table_name: customers
     connection:  pgcon2
   
    
@@ -78,6 +83,13 @@ endpoints:
           - !SortedInverted
               fields:
                 - stock_id
+  
+  - name: customers
+    path: /customers
+    table_name: customers
+    index:
+      primary_key:
+        - customer_id
                 
       
 
