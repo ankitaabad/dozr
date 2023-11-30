@@ -11,8 +11,8 @@ connections:
   - config: !Postgres
       user: postgres
       password: pgpass
-      host: 68.183.85.136
-      port: 5689
+      host: srv-captain--pgdb
+      port: 5432
       database: postgres
       schema: public
       sslmode: disable
@@ -28,6 +28,9 @@ sources:
   - name: stocks_daily_price 
     table_name: stocks_daily_price
     connection:  pgcon2
+  - name: customer_stocks 
+    table_name: customer_stocks
+    connection:  pgcon2
   
    
 
@@ -38,7 +41,8 @@ sql: |
 
 
 
-
+api:
+  default_max_num_records: 99999999
   
     
 endpoints: 
@@ -64,6 +68,17 @@ endpoints:
               fields:
                 - date
                 - daily_change
+
+  - name: stocks
+    path: /stocks
+    table_name: stocks
+    index:
+      secondary:
+        create:
+          - !SortedInverted
+              fields:
+                - stock_id
+                
       
 
   

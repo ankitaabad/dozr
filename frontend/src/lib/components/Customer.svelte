@@ -16,35 +16,7 @@
 	//   console.log(JSON.parse(e.data))
 	// }
 
-	onMount(() => {
-		try {
-			ws = new WebSocket('ws://gotify.68.183.85.136.nip.io/stream?token=Cr7tCz6GvMo3jKG');
 
-			console.log('waiting');
-		} catch (err) {
-			console.log(JSON.stringify(err));
-		}
-
-		ws.onopen = function () {
-			//  Web Socket is connected, send data using send()
-			//  ws.send("Message to send");
-
-			console.log('socket openend');
-		};
-
-		ws.onmessage = function (evt) {
-			console.log(evt);
-			var received_msg = evt.data;
-			console.log({ received_msg });
-			return false;
-		};
-
-		ws.onclose = function (event) {
-			// websocket is closed.
-      console.log({data: event})
-			alert('Connection is closed...');
-		};
-	});
 </script>
 
 <!-- <script>

@@ -5,12 +5,12 @@
 	$: handler = new DataHandler($topStockGainersStore, { rowsPerPage: 10 });
 	$: rows = handler.getRows();
 </script>
-<div class="w-1/2">
+<div class="w-1/3">
   <Datatable {handler} search={false} rowsPerPage={false} rowCount={false} >
-    <table>
+    <table >
       <thead>
         <tr>
-          <Th {handler} orderBy="company_name">Stock</Th>
+          <Th  {handler} orderBy="company_name">Stock</Th>
           <Th {handler} orderBy="daily_change">Gain</Th>
           <Th {handler} orderBy="price">Price</Th>
         </tr>
