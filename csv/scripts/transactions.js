@@ -1,5 +1,6 @@
 const kuuid = require("kuuid");
 const { DateTime } = require("luxon");
+const { aleaRNGFactory } = require("number-generator");
 
 const {
   mapCsv,
@@ -28,6 +29,7 @@ async function addTransactions() {
   })
   customers.forEach(customer => {
     const today = DateTime.now();
+    const alreadyPurchased = []
     for( let i= 0 ; i<10; i++ ){
       const randomBuyDays = randomIntFromInterval(10,1000)
       const randomSaleDays = randomIntFromInterval(1,randomBuyDays)
@@ -44,6 +46,10 @@ async function addTransactions() {
       const count = randomIntFromInterval(0,stocks.length-1)
       console.log({count})
       const stockToBuy = stocks[count]
+      if(alreadyPurchased.includes(stockToBuy.stock_id)){
+        continue
+      }
+      alreadyPurchased.push(stockToBuy.stock_id)
       const buyPrice = roundFloat(stockPriceMap[randomBuyDateSql + stockToBuy.stock_id])
       const buyid = kuuid.id()
       stocks_buy.push({
@@ -93,7 +99,7 @@ async function addTransactions() {
         // transaction_id : buyid,
         desc: `sold ${sellQuantity} stocks of ${stockToBuy.company_name}`
       })
-      break
+      
     }
    console.log({transactions})
 

@@ -42,7 +42,8 @@ sources:
 
 sql: |
   select sdp."date" , sdp.stock_id ,round(sdp.daily_change,2) daily_change, sdp.price, s.company_name into dailyStocks from stocks_daily_price sdp join stocks s on sdp.stock_id = s.stock_id 
-
+ 
+  select * into customer_stocks_nonzero from customer_stocks where quantity != 0
 
 
 
@@ -90,7 +91,11 @@ endpoints:
     index:
       primary_key:
         - customer_id
-                
+
+  - name: customer_stocks
+    path: /customer_stocks
+    table_name: customer_stocks_nonzero
+
       
 
   

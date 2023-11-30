@@ -82,6 +82,58 @@ function createCustomersStore() {
 
 	return { subscribe, set, update, fetchData };
 }
+
+function createAllStocksStore() {
+	const { subscribe, set, update } = writable([]);
+	
+	async function fetchData() {
+    const cid = get(customerId);
+	console.log({ cid });
+		
+
+		const config = {
+			method: 'post',
+			url: '/stocks/query',
+		};
+
+		dozerRest.request(config).then((response) => {
+			console.log('before updating stocks store');
+			update(() => response.data);
+		});
+	}
+
+	return { subscribe, set, update, fetchData };
+}
+
+function creaeCustomerStocksStore() {
+	const { subscribe, set, update } = writable([]);
+	
+	async function fetchData() {
+    const cid = get(customerId);
+	console.log({ cid });
+		let data = JSON.stringify({
+			$filter: {
+				customer_id: cid
+			}
+		});
+
+		const config = {
+			method: 'post',
+			url: '/customer_stocks/query',
+			data: data
+		};
+
+		dozerRest.request(config).then((response) => {
+			console.log('before updating customers_stocks store');
+			update(() => response.data);
+		});
+	}
+
+	return { subscribe, set, update, fetchData };
+}
+
 export const recentTransactionsStore = createRecentTransactions();
 export const topStockGainersStore = createDailyStockGainers();
 export const customersStore = createCustomersStore();
+export const allStocksStore = createAllStocksStore();
+export const customersStocksStore = creaeCustomerStocksStore();
