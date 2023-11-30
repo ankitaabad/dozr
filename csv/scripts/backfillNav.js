@@ -33,7 +33,7 @@ async function backfillNav() {
       let price = parseFloat(
         (
           getFromPriceMap(prevDayKey) *
-          ((100 + mfChangePercentage()) / 100)
+          ((100 + mfChangePercentage(5)) / 100)
         ).toFixed(2)
       );
       let todayKey = i.toSQLDate() + f.mf_id;

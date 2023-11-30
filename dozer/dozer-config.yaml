@@ -41,9 +41,11 @@ sources:
 
 
 sql: |
-  select sdp."date" , sdp.stock_id ,round(sdp.daily_change,2) daily_change, sdp.price, s.company_name into dailyStocks from stocks_daily_price sdp join stocks s on sdp.stock_id = s.stock_id 
+  select sdp."date" , sdp.stock_id ,round(sdp.daily_change,2) daily_change, sdp.price, s.company_name into dailyStocks from stocks_daily_price sdp join stocks s on sdp.stock_id = s.stock_id;
  
-  select * into customer_stocks_nonzero from customer_stocks where quantity != 0
+  select * into customer_stocks_nonzero from customer_stocks where quantity != 0;
+
+  select cs.customer_id ,round(sum(cs.avg_price* cs.quantity),2) investment, round(sum(cs.quantity * sdp.price),2) present_value into customer_stock_investment_value from customer_stocks cs join stocks_daily_price sdp on cs.stock_id  = sdp.stock_id where sdp."date" = cast(now() as date)  group by cs.customer_id
 
 
 
@@ -96,6 +98,9 @@ endpoints:
     path: /customer_stocks
     table_name: customer_stocks_nonzero
 
+  - name: customer_stock_investment_value
+    path: /customer_stock_investment_value
+    table_name: customer_stock_investment_value
       
 
   
