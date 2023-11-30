@@ -6,7 +6,7 @@ const server = axios.create({
 });
 
 const dozerRest = axios.create({
-  baseURL: 'http://0.0.0.0:8080'
+  baseURL: 'http://dozer.68.183.85.136.nip.io'
  
 })
 
