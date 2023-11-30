@@ -5,7 +5,7 @@ WORKDIR /app
 # COPY ./frontend/package.json ./
 # COPY ./frontend/package-lock.json ./
 COPY ./frontend .
-RUN npm install
+RUN NODE_ENV=development npm install
 RUN npm run build
 
 FROM socialengine/nginx-spa:latest
