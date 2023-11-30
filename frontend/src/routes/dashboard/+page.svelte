@@ -1,33 +1,14 @@
 <script lang="ts">
 	import Manager from '$lib/components/Manager.svelte';
 	import { isManager } from '$lib/store';
-
+	import Table from '../../components/table.svelte';
+	import StocksTable from '../../components/stocksTable.svelte';
 	import { Avatar, tableMapperValues } from '@skeletonlabs/skeleton';
 	import Customer from '$lib/components/Customer.svelte';
 	import logo from '../dashboard/images/logo.svg';
 	import { TabGroup, Tab, TabAnchor } from '@skeletonlabs/skeleton';
-	import { Table } from '@skeletonlabs/skeleton';
-	import type { TableSource } from '@skeletonlabs/skeleton';
-	let tabSet: number = 0;
-
-	const sourceData = [
-		{ position: 1, name: 'Lorem Ipsum', tradeprice: 9.15, qty: '100', amount: '915' },
-		{ position: 2, name: 'Lorem Ipsum', tradeprice: 9.15, qty: '100', amount: '915' },
-		{ position: 3, name: 'Lorem Ipsum', tradeprice: 9.15, qty: '100', amount: '915' },
-		{ position: 4, name: 'Lorem Ipsum', tradeprice: 9.15, qty: '100', amount: '915' },
-		{ position: 5, name: 'Lorem Ipsum', tradeprice: 9.15, qty: '100', amount: '915' }
-	];
-
-	const tableSimple: TableSource = {
-		// A list of heading labels.
-		head: ['Name', 'Trade Price', 'Qty', 'Amount'],
-		// The data visibly shown in your table body UI.
-		body: tableMapperValues(sourceData, ['name', 'tradeprice', 'qty', 'amount']),
-		// Optional: The data returned when interactive is enabled and a row is clicked.
-		meta: tableMapperValues(sourceData, ['position', 'name', 'tradeprice', 'qty', 'amount'])
-		// Optional: A list of footer labels.
-		//foot: ['Total', '', '', '<code class="code">5</code>']
-	};
+	let tabSet: number = 1;
+	let StocktabSet: number = 0;
 </script>
 
 <div class="flex flex-col h-screen">
@@ -246,7 +227,9 @@
 									</a>
 								</div>
 							</div>
-							<button type="button" class="mt-8 btn variant-filled w-full rounded-lg bg-primary-500"
+							<button
+								type="button"
+								class="mt-8 btn w-full rounded-lg bg-primary-500 variant-filled-primary"
 								>Add Money</button
 							>
 						</div>
@@ -258,13 +241,12 @@
 									<h2 class="font-medium">Recent transactions</h2>
 									<a href="#" class="text-primary-500 font-medium">View all</a>
 								</div>
-								<Table source={tableSimple} />
+								<Table />
 							</div>
 							<div class="w-[34%] card p-6">
 								<div class="heading mb-6 flex justify-between items-center">
 									<h2 class="font-medium">Statistics</h2>
 									<label class="label">
-										<!-- <span>Select</span> -->
 										<select class="select">
 											<option value="2">Week</option>
 											<option value="3">Month</option>
@@ -328,9 +310,137 @@
 						</div>
 					</div>
 				{:else if tabSet === 1}
-					Stocks contents
+					<div class="stock flex gap-6">
+						<div class="w-[75%] card p-6">
+							<div class="heading mb-6 flex justify-between items-center">
+								<h2 class="font-medium">Index</h2>
+								<a href="#" class="text-primary-500 font-medium">All Indices</a>
+							</div>
+							<div class="flex gap-6 mb-10">
+								<div class="card grow">
+									<h3 class="font-medium mb-2 p-6 pb-0 uppercase">Nifty 50</h3>
+									<div class="flex justify-between pt-0 p-6 border-b border-gray-100 border-solid">
+										<div class="flex justify-between flex-col">
+											<div class="flex gap-3 font-semibold">
+												<span class="">20,50,217</span>
+												<span class=" text-error-500">-11.60 (0.08%)</span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="card grow">
+									<h3 class="font-medium mb-2 p-6 pb-0 uppercase">Sensex</h3>
+									<div class="flex justify-between pt-0 p-6 border-b border-gray-100 border-solid">
+										<div class="flex justify-between flex-col">
+											<div class="flex gap-3 font-semibold">
+												<span class="">66,50,217</span>
+												<span class=" text-error-500">-97.98 (0.14%)</span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="card grow">
+									<h3 class="font-medium mb-2 p-6 pb-0 uppercase">Banknifty</h3>
+									<div class="flex justify-between pt-0 p-6 border-b border-gray-100 border-solid">
+										<div class="flex justify-between flex-col">
+											<div class="flex gap-3 font-semibold">
+												<span class="">44,50,217</span>
+												<span class=" text-error-500">-211.60 (0.48%)</span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div
+								class="pt-10 heading mb-6 border-t border-solid border-gray-100 flex justify-between items-center"
+							>
+								<h2 class="font-medium">All Stocks</h2>
+								<a href="#" class="text-primary-500 font-medium">View all</a>
+							</div>
+							<TabGroup>
+								<Tab bind:group={StocktabSet} name="tab2" value={0}>All Stocks</Tab>
+								<Tab bind:group={StocktabSet} name="tab2" value={1}>Top ganiner</Tab>
+								<Tab bind:group={StocktabSet} name="tab3" value={2}>Top losers Funds</Tab>
+								<svelte:fragment slot="panel">
+									{#if StocktabSet === 0}
+										<StocksTable />
+									{:else if StocktabSet === 1}
+										<Table />
+									{:else if StocktabSet === 2}
+										<Table />
+									{/if}
+								</svelte:fragment>
+							</TabGroup>
+						</div>
+						<div class="w-[25%] card p-6">Stocks</div>
+					</div>
 				{:else if tabSet === 2}
-					Mutual Funds
+					<div class="stock flex gap-6">
+						<div class="w-[75%] card p-6">
+							<div class="heading mb-6 flex justify-between items-center">
+								<h2 class="font-medium">Index</h2>
+								<a href="#" class="text-primary-500 font-medium">All Indices</a>
+							</div>
+							<div class="flex gap-6 mb-10">
+								<div class="card grow">
+									<h3 class="font-medium mb-2 p-6 pb-0 uppercase">Nifty 50</h3>
+									<div class="flex justify-between pt-0 p-6 border-b border-gray-100 border-solid">
+										<div class="flex justify-between flex-col">
+											<div class="flex gap-3 font-semibold">
+												<span class="">20,50,217</span>
+												<span class=" text-error-500">-11.60 (0.08%)</span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="card grow">
+									<h3 class="font-medium mb-2 p-6 pb-0 uppercase">Sensex</h3>
+									<div class="flex justify-between pt-0 p-6 border-b border-gray-100 border-solid">
+										<div class="flex justify-between flex-col">
+											<div class="flex gap-3 font-semibold">
+												<span class="">66,50,217</span>
+												<span class=" text-error-500">-97.98 (0.14%)</span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="card grow">
+									<h3 class="font-medium mb-2 p-6 pb-0 uppercase">Banknifty</h3>
+									<div class="flex justify-between pt-0 p-6 border-b border-gray-100 border-solid">
+										<div class="flex justify-between flex-col">
+											<div class="flex gap-3 font-semibold">
+												<span class="">44,50,217</span>
+												<span class=" text-error-500">-211.60 (0.48%)</span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div
+								class="pt-10 heading mb-6 border-t border-solid border-gray-100 flex justify-between items-center"
+							>
+								<h2 class="font-medium">All Mutual Funds</h2>
+								<a href="#" class="text-primary-500 font-medium">View all</a>
+							</div>
+							<TabGroup>
+								<Tab bind:group={StocktabSet} name="tab2" value={0}>All Stocks</Tab>
+								<Tab bind:group={StocktabSet} name="tab2" value={1}>Top ganiner</Tab>
+								<Tab bind:group={StocktabSet} name="tab3" value={2}>Top losers Funds</Tab>
+								<svelte:fragment slot="panel">
+									{#if StocktabSet === 0}
+										<StocksTable />
+									{:else if StocktabSet === 1}
+										<Table />
+									{:else if StocktabSet === 2}
+										<Table />
+									{/if}
+								</svelte:fragment>
+							</TabGroup>
+						</div>
+						<div class="w-[25%] card p-6">Mutual Funds</div>
+					</div>
 				{:else if tabSet === 3}
 					Fixed Deposit
 				{/if}
