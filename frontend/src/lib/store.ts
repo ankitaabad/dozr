@@ -1,68 +1,87 @@
-import { readable, writable } from "svelte/store";
-import { dozerRest } from "./utils";
-import {DateTime} from 'luxon'
-export const isManager = writable(false) 
-export const customerId = writable(0)
-
+import { get, readable, writable } from 'svelte/store';
+import { dozerRest } from './utils';
+import { DateTime } from 'luxon';
+export const isManager = writable(false);
+export const customerId = writable(0);
 
 function createRecentTransactions() {
-  const { subscribe, set, update } = writable([]);
-  async function fetchData(){
-    const data = JSON.stringify({
-      $limit: 10,
-      $filter: {
-        customer_id: 1001
-      }
-    });
-  
-    const config = {
-      method: 'post',
-      maxBodyLength: Infinity,
-      url: '/recent_transactions/query',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      data: data
-    };
+	const { subscribe, set, update } = writable([]);
+	async function fetchData() {
+		const cid = get(customerId);
+		console.log({ cid });
+		const data = JSON.stringify({
+			$limit: 10,
+			$filter: {
+				customer_id: cid
+			}
+		});
 
-    dozerRest.request(config).then((response) => {
-      console.log("before updating recent transactino store")
-      update(() => response.data)
-    })
-  }
+		const config = {
+			method: 'post',
+			url: '/recent_transactions/query',
+			data: data
+		};
 
-  return {subscribe,set,update,fetchData}
+		dozerRest.request(config).then((response) => {
+			console.log('before updating recent transactino store');
+			update(() => response.data);
+		});
+	}
+
+	return { subscribe, set, update, fetchData };
 }
 
 function createDailyStockGainers() {
-  const { subscribe, set, update } = writable([]);
-  async function fetchData(){
-    const data = JSON.stringify({
-      "$order_by": {"daily_change": "desc"},
-      "$limit": 10,
-      "$filter": {"date":"2023-11-28"}
+	const { subscribe, set, update } = writable([]);
+	async function fetchData() {
+		const data = JSON.stringify({
+			$order_by: { daily_change: 'desc' },
+			$limit: 10,
+			$filter: { date: '2023-11-28' }
+		});
+		// "$filter": {"date":DateTime.now().toSQLDate()}
 
-  });
-        // "$filter": {"date":DateTime.now().toSQLDate()}
+		const config = {
+			method: 'post',
+			url: '/dailyStocks/query',
+			data: data
+		};
 
-    const config = {
-      method: 'post',
-      maxBodyLength: Infinity,
-      url: '/dailyStocks/query',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      data: data
-    };
+		dozerRest.request(config).then((response) => {
+			console.log('before updating top stock gainers store');
+			update(() => response.data);
+		});
+	}
 
-    dozerRest.request(config).then((response) => {
-      console.log("before updating top stock gainers store")
-      update(() => response.data)
-    })
-  }
-
-  return {subscribe,set,update,fetchData}
+	return { subscribe, set, update, fetchData };
 }
 
-export const recentTransactionsStore = createRecentTransactions()
-export const topStockGainersStore = createDailyStockGainers()
+function createCustomersStore() {
+	const { subscribe, set, update } = writable([]);
+	
+	async function fetchData() {
+    const cid = get(customerId);
+	console.log({ cid });
+		let data = JSON.stringify({
+			$filter: {
+				customer_id: cid
+			}
+		});
+
+		const config = {
+			method: 'post',
+			url: '/customers/query',
+			data: data
+		};
+
+		dozerRest.request(config).then((response) => {
+			console.log('before updating customers store');
+			update(() => response.data);
+		});
+	}
+
+	return { subscribe, set, update, fetchData };
+}
+export const recentTransactionsStore = createRecentTransactions();
+export const topStockGainersStore = createDailyStockGainers();
+export const customersStore = createCustomersStore();

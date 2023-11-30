@@ -21,7 +21,7 @@
       console.log("inside user login")
   
       customerId.set(userId)
-      goto("/dashboard")
+      goto("/test")
 
     }
   }
