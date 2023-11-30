@@ -8,7 +8,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/jackc/pgx/v5"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"google.golang.org/grpc"
@@ -26,6 +25,7 @@ type res struct {
 }
 
 func main() {
+
 	e := echo.New()
 	env := os.Environ()
 	fmt.Println(env)
@@ -78,32 +78,46 @@ func main() {
 
 	})
 
-	e.POST("/stocks/:stock_id/buy", func(c echo.Context) error {
+	e.PUT("/stocks/:stock_id/buy", func(c echo.Context) error {
 
-		conn, err := pgx.Connect(context.Background(), "postgres://postgres:pgpass@68.183.85.136:5689/postgres")
-		if err != nil {
-			fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
-			os.Exit(1)
-		}
-		defer conn.Close(context.Background())
-
-		fmt.Println("buying stocks")
-		var stocksBuy models.StocksBuy
+		fmt.Println("buying stocks", c.Param("stock_id"))
+		conn := db.GetDbConn()
+		var stocksBuy models.BuyStocksModel
 		if err := c.Bind(&stocksBuy); err != nil {
 			return echo.ErrBadRequest
 		}
-		amount := stocksBuy.Price * float32(stocksBuy.Quantity)
-		x, y := conn.Exec(context.Background(), "INSERT INTO transactions (id, amount, \"date\", customer_id, \"desc\") VALUES($1, $2, $3, $4, $5)", "1238", amount, "2023-11-26", 1001, "this is test")
-		fmt.Println(x)
-		fmt.Println("err", y)
+		fmt.Println(stocksBuy)
+		err := conn.BuyStocks(stocksBuy)
+		if err != nil {
+			return err
+		}
+
 		return c.JSON(200, stocksBuy)
+
+	})
+
+	e.PUT("/stocks/:stock_id/sell", func(c echo.Context) error {
+
+		fmt.Println("buying stocks", c.Param("stock_id"))
+		conn := db.GetDbConn()
+		var stocksSell models.SellStocksModel
+		if err := c.Bind(&stocksSell); err != nil {
+			return echo.ErrBadRequest
+		}
+		fmt.Println(stocksSell)
+		err := conn.SellStocks(stocksSell)
+		if err != nil {
+			return err
+		}
+
+		return c.JSON(200, stocksSell)
 
 	})
 
 	e.PUT("/customers/:customer_id/addMoney", func(c echo.Context) error {
 
 		log.Println("adding money to customer")
-		var addMoney models.AddMoney
+		var addMoney models.AddMoneyModel
 		if err := c.Bind(&addMoney); err != nil {
 			return echo.ErrBadRequest
 		}

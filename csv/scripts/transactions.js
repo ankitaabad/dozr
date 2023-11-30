@@ -52,7 +52,9 @@ async function addTransactions() {
         quantity: buyQuantity,
         buy_date: randomBuyDateSql,
         price: buyPrice,
-        remaining_quantity: buyQuantity - sellQuantity
+        remaining_quantity: buyQuantity - sellQuantity,
+        customer_id: customer.customer_id,
+
         
       })
       transactions.push({
@@ -70,14 +72,16 @@ async function addTransactions() {
         stock_id : stockToBuy.stock_id,
         date: randomBuyDateSql,
         quantity: sellQuantity,
-        price: sellPrice
+        price: sellPrice,
+        customer_id: customer.customer_id,
+
       })
       if(buyQuantity> sellQuantity){
         customer_stocks.push({
           customer_id: customer.customer_id,
           stock_id : stockToBuy.stock_id,
           quantity: buyQuantity - sellQuantity,
-          buy_price: buyPrice
+          avg_price: buyPrice
         })
       }
       transactions.push({

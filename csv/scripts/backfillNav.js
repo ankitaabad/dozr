@@ -25,7 +25,7 @@ async function backfillNav() {
   };
   for (
     let i = threeYearBack;
-    today.toSQLDate() !== i.toSQLDate();
+    today.toSQLDate() > i.toSQLDate();
     i = i.plus({ days: 1 })
   ) {
     funds.forEach((f) => {

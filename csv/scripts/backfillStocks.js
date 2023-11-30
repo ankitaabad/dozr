@@ -26,9 +26,10 @@ async function backfillStocks() {
   };
   for (
     let i = fourYearBack;
-    today.toSQLDate() !== i.toSQLDate();
-    i = i.plus({ days: 1 })
+    today.toSQLDate() > i.toSQLDate();
   ) {
+    i = i.plus({ days: 1 })
+
     stocks.forEach((s) => {
       let prevDayKey = i.plus({ days: -1 }).toSQLDate() + s.stock_id;
       let price = roundFloat(

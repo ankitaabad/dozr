@@ -32,9 +32,6 @@ sources:
    
 
 
-sql: |
-  select sdp."date" , sdp.stock_id ,round(sdp.daily_change,2) daily_change, sdp.price, s.company_name into dailyStocks from stocks_daily_price sdp join stocks s on sdp.stock_id = s.stock_id 
-
 
 
 
@@ -54,19 +51,6 @@ endpoints:
                 - customer_id
                 - date 
 
-  - name: dailyStocks
-    path: /dailyStocks
-    table_name: dailyStocks
-    index:
-      secondary:
-        create:
-          - !SortedInverted
-              fields:
-                - date
-                - daily_change
-      
-
-  
 
 
 

@@ -18,6 +18,7 @@
     "@sveltejs/kit": "^1.20.4",
     "@tailwindcss/forms": "0.5.6",
     "@tailwindcss/typography": "0.5.10",
+    "@types/luxon": "^3.3.5",
     "@types/node": "20.8.10",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
@@ -42,7 +43,9 @@
     "@sveltejs/adapter-static": "^2.0.3",
     "@sveltestack/svelte-query": "^1.6.0",
     "@tanstack/svelte-query": "^5.4.3",
+    "@vincjo/datatables": "^1.14.0",
     "axios": "^1.6.0",
+    "luxon": "^3.4.4",
     "socket.io-client": "^4.7.2"
   }
 }
