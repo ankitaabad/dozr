@@ -10,9 +10,9 @@
     <table>
       <thead>
         <tr>
-          <Th {handler} orderBy="date">Stock</Th>
-          <Th {handler} orderBy="amount">Gain</Th>
-          <Th {handler} orderBy="desc">Price</Th>
+          <Th {handler} orderBy="company_name">Stock</Th>
+          <Th {handler} orderBy="daily_change">Gain</Th>
+          <Th {handler} orderBy="price">Price</Th>
         </tr>
     
       </thead>
