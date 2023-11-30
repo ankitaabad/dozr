@@ -47,7 +47,7 @@ async function backfillStocks() {
         date: i.toSQLDate(),
         price: price,
         daily_change: change(price, lastDayPrice),
-        yeary_change: change(price, lastYearPrice),
+        yearly_change: change(price, lastYearPrice),
       });
     });
   }

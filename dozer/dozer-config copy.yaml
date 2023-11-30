@@ -30,26 +30,11 @@ sources:
   - name: stocks_daily_price 
     table_name: stocks_daily_price
     connection:  pgcon2
-  - name: mf_daily_price 
-    table_name: mf_daily_price
-    connection:  pgcon2
   - name: customer_stocks 
     table_name: customer_stocks
     connection:  pgcon2
   - name: customers 
     table_name: customers
-    connection:  pgcon2
-  - name: mf_buy 
-    table_name: mf_buy
-    connection:  pgcon2
-  - name: mf_sell 
-    table_name: mf_sell
-    connection:  pgcon2
-  - name: customer_mf 
-    table_name: customer_mf
-    connection:  pgcon2
-  - name: transaction_mf 
-    table_name: transaction_mf
     connection:  pgcon2
   
    
@@ -60,15 +45,9 @@ sql: |
  
   select * into customer_stocks_nonzero from customer_stocks where quantity != 0;
 
- 
+  select cs.customer_id ,round(sum(cs.avg_price* cs.quantity),2) investment, round(sum(cs.quantity * sdp.price),2) present_value into customer_stock_investment_value from customer_stocks cs join stocks_daily_price sdp on cs.stock_id  = sdp.stock_id where sdp."date" = cast(now() as date)  group by cs.customer_id
 
-  with stock_table  as ( select sum(cs.quantity * cs.avg_price) stock_investment,cs.customer_id from customer_stocks cs group by customer_id),
-  mf_table as ( select sum(cm.quantity * cm.avg_price)mf_investment,cm.customer_id from customer_mf cm  group by customer_id)
-  select  c.*, stock_investment+mf_investment as total_investment into top_investors from stock_table st join mf_table mf on st.customer_id = mf.customer_id join customers c on c.customer_id = mf.customer_id; 
-
-  select count(*) count,stock_id into popular_stocks from stocks_buy sb group by stock_id, buy_date
-
-
+  
 
 api:
   default_max_num_records: 99999999
@@ -119,36 +98,9 @@ endpoints:
     path: /customer_stocks
     table_name: customer_stocks_nonzero
 
-  - name: popular_stocks
-    path: /popular_stocks
-    table_name: popular_stocks
-
-
-  - name: top_investors
-    path: /top_investors
-    table_name: top_investors
-
-  - name: stocks_daily_price
-    path: /stocks_daily_price
-    table_name: stocks_daily_price
-    index:
-      secondary:
-        create:
-          - !SortedInverted
-              fields:
-                - date
-                - yearly_change
-  
-  - name: mf_daily_price
-    path: /mf_daily_price
-    table_name: mf_daily_price
-    index:
-      secondary:
-        create:
-          - !SortedInverted
-              fields:
-                - date
-                - yearly_change
+  - name: customer_stock_investment_value
+    path: /customer_stock_investment_value
+    table_name: customer_stock_investment_value
       
 
   
