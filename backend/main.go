@@ -28,6 +28,7 @@ func main() {
 
 	e := echo.New()
 	env := os.Environ()
+
 	fmt.Println(env)
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
 		AllowOrigins: []string{"*"},

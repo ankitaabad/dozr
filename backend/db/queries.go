@@ -18,7 +18,10 @@ type DbConn struct {
 }
 
 func (c *DbConn) AddMoney(input models.AddMoneyModel) error {
-	_, err := c.pool.Exec(context.Background(), "UPDATE customers SET balance=balance+$1 where customer_id = $2;", input.Amount, input.CustomerId)
+	transactionId := ksuid.New() // a time sorted uuid
+	fmt.Println(transactionId)
+
+	_, err := c.pool.Exec(context.Background(), "with cb as (update customers  set balance = balance + $1 where customer_id = $2)\nINSERT INTO transactions (id, amount, customer_id, \"desc\") VALUES($3, $1, $2, 'Money credited to Account');", input.Amount, input.CustomerId, transactionId)
 	return err
 }
 
@@ -26,7 +29,7 @@ func (c *DbConn) BuyStocks(input models.BuyStocksModel) error {
 	//ctx := context.Background()
 
 	today := time.Now().Format("2006-01-02") // today date to sql date
-	transactionId := ksuid.New() // a time sorted uuid
+	transactionId := ksuid.New()             // a time sorted uuid
 	stockBuyId := ksuid.New()
 
 	desc := fmt.Sprintf("Bought %d stocks of %s ", input.Quantity, input.CompanyName)

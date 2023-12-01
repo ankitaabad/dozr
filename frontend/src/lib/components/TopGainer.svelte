@@ -6,7 +6,7 @@
 	$: rows = handler.getRows();
 </script>
 <div class="w-2/3">
-  <Datatable {handler} search={false} rowsPerPage={false} rowCount={false} >
+  <Datatable {handler} search={false} rowsPerPage={false} rowCount={false}  >
     <table >
       <thead>
         <tr>

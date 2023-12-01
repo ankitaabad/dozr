@@ -3,7 +3,9 @@
   
   import {get } from "svelte/store"
   import {goto} from '$app/navigation'
-	import { server } from "$lib/utils";
+  import { getModalStore } from '@skeletonlabs/skeleton';
+			
+const modalStore = getModalStore();
  let userId
  
   async function managerLogin() {
@@ -23,25 +25,8 @@
       customerId.set(userId)
       goto("/test")
 
-			ws.onopen = function () {
-				// Web Socket is connected, send data using send()
-				//  ws.send("Message to send");
-
-				console.log('socket openend');
-			};
-
-			ws.onmessage = function (evt) {
-				console.log(evt);
-				var received_msg = evt.data;
-				console.log({ received_msg });
-			};
-
-			ws.onclose = function () {
-				// websocket is closed.
-				alert('Connection is closed...');
-			};
-			customerId.set(userId);
-			goto('/dashboard');
+		
+	
 		}
 	}
 </script>

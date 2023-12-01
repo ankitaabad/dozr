@@ -1,8 +1,11 @@
 import axios from 'axios'
-const baseURL = 'http://dozer-be.68.183.85.136.nip.io/'
+
 const server = axios.create({
   // .. congigure axios baseURL
-  baseURL: `${baseURL}`
+  baseURL: 'http://dozer-be.68.183.85.136.nip.io/',
+  headers: {
+    'Content-Type': 'application/json'
+  }
 });
 
 const dozerRest = axios.create({
