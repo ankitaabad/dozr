@@ -11,10 +11,10 @@ connections:
   - config: !Postgres
       user: postgres
       password: pgpass
-      # host: 68.183.85.136
-      # port: 5689  
-      host: srv-captain--pgdb
-      port: 5432
+      host: 68.183.85.136
+      port: 5689  
+      # host: srv-captain--pgdb
+      # port: 5432
       database: postgres
       schema: public
       sslmode: disable
@@ -59,6 +59,8 @@ sql: |
   select sdp."date" , sdp.stock_id ,round(sdp.daily_change,2) daily_change, sdp.price, s.company_name into dailyStocks from stocks_daily_price sdp join stocks s on sdp.stock_id = s.stock_id;
  
   select * into customer_stocks_nonzero from customer_stocks where quantity != 0;
+  
+  select customer_id, balance into customer_balance from customers;
 
 
   with stock_table  as ( select sum(cs.quantity * cs.avg_price) stock_investment,cs.customer_id from customer_stocks cs group by customer_id),
@@ -113,6 +115,11 @@ endpoints:
     index:
       primary_key:
         - customer_id
+
+  - name: customer_balance
+    path: /customer_balance
+    table_name: customer_balance
+
 
   - name: customer_stocks
     path: /customer_stocks

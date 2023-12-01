@@ -1,5 +1,5 @@
 import { get } from "svelte/store";
-import { customerId, recentTransactionsStore } from "./store";
+import { customerId,  refreshDozerStores } from "./store";
 import { server } from "./utils";
 
 
@@ -17,8 +17,8 @@ export async function  addMondyApi(amount){
   };
   
   await server(config).then(async (response) => {
-    await recentTransactionsStore.fetchData()
-    console.log(JSON.stringify(response.data));
+    console.log("added the money")
+    refreshDozerStores("recentTransactionsStore","customersBalanceStore")
   })
   .catch((error) => {
     console.log(error);

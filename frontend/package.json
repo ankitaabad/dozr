@@ -45,6 +45,7 @@
     "@tanstack/svelte-query": "^5.4.3",
     "@vincjo/datatables": "^1.14.0",
     "axios": "^1.6.0",
+    "exponential-backoff": "^3.1.1",
     "luxon": "^3.4.4",
     "socket.io-client": "^4.7.2"
   }
