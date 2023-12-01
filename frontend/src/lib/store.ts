@@ -204,7 +204,7 @@ export function refreshDozerStores(...storeNames: StoreNames[]) {
 						break;
 					}
 					default:
-            await store.fetchData();
+						await store.fetchData();
 
 						if (id === getStoreDozerId(store)) {
 							throw Error('throwing for retry');
@@ -214,7 +214,7 @@ export function refreshDozerStores(...storeNames: StoreNames[]) {
 			{
 				delayFirstAttempt: true,
 				numOfAttempts: 3,
-				startingDelay: 30
+				startingDelay: 80
 			}
 		);
 	}

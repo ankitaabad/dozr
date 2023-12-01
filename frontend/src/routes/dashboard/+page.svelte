@@ -253,7 +253,7 @@
 							</div>
 							<button
 								type="button"
-								class="mt-8 btn w-full rounded-lg bg-primary-500 variant-filled-primary"
+								class="mt-8 btn w-full rounded bg-primary-500 variant-filled-primary"
 								on:click={showAddMoneyModal}>Add Money</button
 							>
 						</div>
@@ -465,7 +465,7 @@
 				<div>
 					ⓒ 2023 TradeGo. All rights reserved, Built with <span class="text-pink-500 text-lg"
 						>♥</span
-					> in India
+					> By Twin Titans
 				</div>
 				<div>
 					<ul class="flex gap-3 justify-center">
