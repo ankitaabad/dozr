@@ -19,7 +19,7 @@
 	// We've created a custom submit function to pass the response and close the modal.
 	async function onFormSubmit() {
 
-    await addMondyApi()
+    await addMondyApi(formData.amount)
 		if ($modalStore[0].response) $modalStore[0].response(formData);
 		modalStore.close();
 	}

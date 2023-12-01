@@ -6,7 +6,7 @@ import { server } from "./utils";
 export async function  addMondyApi(amount){
   console.log("inside add money api")
   const data = JSON.stringify({
-    amount
+    amount:Number(amount)
   });
   const customer_id = get(customerId)
   const config = {

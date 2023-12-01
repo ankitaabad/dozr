@@ -3,12 +3,23 @@
 	import { isManager } from '$lib/store';
 	import Table from '../../components/table.svelte';
 	import StocksTable from '../../components/stocksTable.svelte';
-	import { Avatar, tableMapperValues } from '@skeletonlabs/skeleton';
+	import { Avatar, tableMapperValues, type ModalSettings, getModalStore } from '@skeletonlabs/skeleton';
 	import Customer from '$lib/components/Customer.svelte';
 	import logo from '../dashboard/images/logo.svg';
 	import { TabGroup, Tab, TabAnchor } from '@skeletonlabs/skeleton';
 	let tabSet: number = 1;
 	let StocktabSet: number = 0;
+
+  const modalStore = getModalStore();
+	function addMoney() {
+    console.log("inside add money")
+		const modal: ModalSettings = {
+			type: 'component',
+			component: 'addMoneyModel'
+		};
+
+		modalStore.trigger(modal);
+	}
 </script>
 
 <div class="flex flex-col h-screen">
@@ -230,6 +241,7 @@
 							<button
 								type="button"
 								class="mt-8 btn w-full rounded-lg bg-primary-500 variant-filled-primary"
+                on:click={addMoney}
 								>Add Money</button
 							>
 						</div>

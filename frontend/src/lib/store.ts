@@ -13,7 +13,8 @@ function createRecentTransactions() {
 			$limit: 10,
 			$filter: {
 				customer_id: cid
-			}
+			},
+      $order_by:{date:"desc"}
 		});
 
 		const config = {

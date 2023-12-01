@@ -4,6 +4,7 @@
   import {get } from "svelte/store"
   import {goto} from '$app/navigation'
   import { getModalStore } from '@skeletonlabs/skeleton';
+	import { randomIntFromInterval } from "$lib/utils";
 			
 const modalStore = getModalStore();
  let userId
@@ -14,7 +15,7 @@ const modalStore = getModalStore();
   }
 
   function randomUserLogin(){
-    customerId.set(1001)
+    customerId.set(randomIntFromInterval(1001,1100))
     userLogin()
     goto("/dashboard")
   }
@@ -23,7 +24,7 @@ const modalStore = getModalStore();
       console.log("inside user login")
   
       customerId.set(userId)
-      goto("/test")
+      goto("/dashboard")
 
 		
 	

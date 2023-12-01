@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const server = axios.create({
+export const server = axios.create({
   // .. congigure axios baseURL
   baseURL: 'http://dozer-be.68.183.85.136.nip.io/',
   headers: {
@@ -8,7 +8,7 @@ const server = axios.create({
   }
 });
 
-const dozerRest = axios.create({
+export const dozerRest = axios.create({
   baseURL: 'http://dozer.68.183.85.136.nip.io',
   headers: {
     'Content-Type': 'application/json'
@@ -16,11 +16,9 @@ const dozerRest = axios.create({
  
 })
 
-
-
-
-
-export {
-  server,
-  dozerRest
+export const randomIntFromInterval = function(min, max) { 
+  return Math.floor(Math.random() * (max - min + 1) + min)
 }
+
+
+
