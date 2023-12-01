@@ -27,13 +27,15 @@ type res struct {
 func main() {
 
 	e := echo.New()
+	e.Use(middleware.CORS())
+
 	env := os.Environ()
 
 	fmt.Println(env)
-	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
-		AllowOrigins: []string{"*"},
-		AllowHeaders: []string{"*"},
-	}))
+	//e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+	//	AllowOrigins: []string{"*"},
+	//	AllowHeaders: []string{"*"},
+	//}))
 	e.GET("/", func(c echo.Context) error {
 		fmt.Println("inside the req")
 		var conn *grpc.ClientConn
