@@ -3,7 +3,7 @@ import { customerId,  refreshDozerStores } from "./store";
 import { server } from "./utils";
 
 
-export async function  addMondyApi(amount){
+export async function  addMoneyApi(amount){
   console.log("inside add money api")
   const data = JSON.stringify({
     amount:Number(amount)
@@ -18,7 +18,7 @@ export async function  addMondyApi(amount){
   
   await server(config).then(async (response) => {
     console.log("added the money")
-    refreshDozerStores("recentTransactionsStore","customersBalanceStore")
+    refreshDozerStores("recentTransactionsStore","customerBalanceStore")
   })
   .catch((error) => {
     console.log(error);

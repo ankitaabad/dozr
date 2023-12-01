@@ -1,11 +1,9 @@
-import { get, readable, writable, type Writable } from 'svelte/store';
+import { get,  writable, type Writable } from 'svelte/store';
 import { dozerRest } from './utils';
-import { DateTime } from 'luxon';
 export const isManager = writable(false);
 export const customerId = writable(0);
 import { backOff } from 'exponential-backoff';
 
-function storeRefresh() {}
 
 function createRecentTransactions() {
 	const { subscribe, set, update } = writable([]);
@@ -166,7 +164,7 @@ export const topStockGainersStore = createDailyStockGainers();
 export const customersStore = createCustomersStore();
 export const allStocksStore = createAllStocksStore();
 export const customersStocksStore = creaeCustomerStocksStore();
-export const customersBalanceStore = createCustomerBalanceStore();
+export const customerBalanceStore = createCustomerBalanceStore();
 
 function getStoreDozerId(store: Writable<any>) {
 	const data = get(store);
@@ -177,7 +175,7 @@ function getStoreDozerId(store: Writable<any>) {
 const storeMap = {
 	recentTransactionsStore,
 	customersStore,
-	customersBalanceStore
+	customerBalanceStore
 };
 type StoreNames = keyof typeof storeMap;
 
@@ -194,7 +192,7 @@ export function refreshDozerStores(...storeNames: StoreNames[]) {
 			async () => {
 				console.log('comparing ', id, getStoreDozerId(store));
 				switch (s) {
-					case 'customersBalanceStore': {
+					case 'customerBalanceStore': {
 						const oldBalance = get(store)?.[0]?.['balance'];
 						await store.fetchData();
 						const newBalance = get(store)?.[0]?.['balance'];

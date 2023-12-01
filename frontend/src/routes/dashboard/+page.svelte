@@ -12,7 +12,7 @@
 	import Customer from '$lib/components/Customer.svelte';
 	import logo from '../dashboard/images/logo.svg';
 	import { TabGroup, Tab, TabAnchor } from '@skeletonlabs/skeleton';
-	import { customersStore } from '$lib/store';
+	import { customerBalanceStore } from '$lib/store';
 	import RecentTransactions from '$lib/components/RecentTransactions.svelte';
 	import CustomerStock from '$lib/components/CustomerStock.svelte';
 	import TopGainer from '$lib/components/TopGainer.svelte';
@@ -172,7 +172,7 @@
 							<div class="heading mb-6">
 								<h2 class="font-medium text-lg">Account balance</h2>
 							</div>
-							<div class="text-2xl font-semibold">₹{$customersStore[0]?.balance}</div>
+							<div class="text-2xl font-semibold">₹{$customerBalanceStore[0]?.balance}</div>
 							<div class="my-6">
 								<div class=" ">
 									<a

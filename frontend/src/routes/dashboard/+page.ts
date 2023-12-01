@@ -3,7 +3,8 @@ import {
 	topStockGainersStore,
 	customersStore,
 	allStocksStore,
-	customersStocksStore
+	customersStocksStore,
+  customerBalanceStore
 } from '$lib/store';
 export const prerender = true;
 /** @type {import('./$types').PageLoad} */
@@ -13,6 +14,7 @@ export async function load() {
 		topStockGainersStore.fetchData(),
 		customersStore.fetchData(),
 		allStocksStore.fetchData(),
-		customersStocksStore.fetchData()
+		customersStocksStore.fetchData(),
+    customerBalanceStore.fetchData()
 	]);
 }

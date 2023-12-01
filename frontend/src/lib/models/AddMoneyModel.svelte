@@ -4,7 +4,7 @@
 	import type { ConicStop } from '@skeletonlabs/skeleton';
 	// Stores
 	import { getModalStore } from '@skeletonlabs/skeleton';
-	import { addMondyApi } from '$lib/apis';
+	import { addMoneyApi } from '$lib/apis';
 
 	// Props
 	/** Exposes parent props to this component. */
@@ -21,7 +21,7 @@
 	let loading;
 	async function onFormSubmit() {
 		loading = true;
-		await addMondyApi(formData.amount);
+		await addMoneyApi(formData.amount);
 		if ($modalStore[0].response) $modalStore[0].response(formData);
 		modalStore.close();
 	}
