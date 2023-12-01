@@ -60,7 +60,7 @@ sql: |
  
   select * into customer_stocks_nonzero from customer_stocks where quantity != 0;
 
- 
+  select * into test from transaction_mf;
 
   with stock_table  as ( select sum(cs.quantity * cs.avg_price) stock_investment,cs.customer_id from customer_stocks cs group by customer_id),
   mf_table as ( select sum(cm.quantity * cm.avg_price)mf_investment,cm.customer_id from customer_mf cm  group by customer_id)
