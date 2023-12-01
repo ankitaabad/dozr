@@ -39,8 +39,9 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
 		os.Exit(1)
 	}
-	sql := fmt.Sprintf(`select * from "customers" where id = $1::int limit 1 `)
-	r, _ := conn.Query(context.Background(), sql, 1001)
+	sql := fmt.Sprintf(`select "customer_id" from public.customers  `)
+	r, err := conn.Query(context.Background(), sql)
+	fmt.Println(err)
 	defer r.Close()
 	rows, err := conn.Query(context.Background(), "select stock_id,price , (select price from stocks_daily_price sdpp where date = $1 and stock_id = sdp.stock_id) as year_before_price from stocks_daily_price  sdp where date = $2 ", ayearbefore, today)
 	fmt.Println(rows)

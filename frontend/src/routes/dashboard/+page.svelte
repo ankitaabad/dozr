@@ -7,11 +7,13 @@
 	import Customer from '$lib/components/Customer.svelte';
 	import logo from '../dashboard/images/logo.svg';
 	import { TabGroup, Tab, TabAnchor } from '@skeletonlabs/skeleton';
+  import {customersStore} from '$lib/store'
+	import RecentTransactions from '$lib/components/RecentTransactions.svelte';
 	let tabSet: number = 1;
 	let StocktabSet: number = 0;
 
   const modalStore = getModalStore();
-	function addMoney() {
+	function showAddMoneyModal() {
     console.log("inside add money")
 		const modal: ModalSettings = {
 			type: 'component',
@@ -64,7 +66,8 @@
 			<svelte:fragment slot="panel">
 				{#if tabSet === 0}
 					<div class="flex gap-6">
-						<div class="w-[75%] card p-6">
+            <RecentTransactions/>
+						<!-- <div class="w-[75%] card p-6">
 							<div class="heading mb-6 flex justify-between items-center">
 								<h2 class="font-medium">Your Trades</h2>
 							</div>
@@ -154,12 +157,12 @@
 									</div>
 								</div>
 							</div>
-						</div>
+						</div> -->
 						<div class="w-[25%] card p-6">
 							<div class="heading mb-6">
 								<h2 class="font-medium">Account balance</h2>
 							</div>
-							<div class="text-2xl font-semibold">₹1,00,184</div>
+							<div class="text-2xl font-semibold">₹{$customersStore[0].balance}</div>
 							<div class="my-6">
 								<div class=" ">
 									<a
@@ -241,7 +244,7 @@
 							<button
 								type="button"
 								class="mt-8 btn w-full rounded-lg bg-primary-500 variant-filled-primary"
-                on:click={addMoney}
+                on:click={showAddMoneyModal}
 								>Add Money</button
 							>
 						</div>
