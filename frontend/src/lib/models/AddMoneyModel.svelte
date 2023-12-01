@@ -13,21 +13,20 @@
 
 	// Form Data
 	const formData = {
-		amount:0
+		amount: 0
 	};
 
 	// We've created a custom submit function to pass the response and close the modal.
 	async function onFormSubmit() {
-
-    await addMondyApi(formData.amount)
+		await addMondyApi(formData.amount);
 		if ($modalStore[0].response) $modalStore[0].response(formData);
 		modalStore.close();
 	}
 
 	// Base Classes
-	const cBase = 'card p-4 w-modal shadow-xl space-y-4';
+	const cBase = 'card p-4 w-modal shadow-xl space-y-4 ';
 	const cHeader = 'text-2xl font-bold';
-	const cForm = 'border border-surface-500 p-4 space-y-4 rounded-container-token';
+	const cForm = 'space-y-4 ';
 </script>
 
 <!-- @component This example creates a simple form modal. -->
@@ -38,16 +37,14 @@
 		<!-- Enable for debugging: -->
 		<form class="modal-form {cForm}">
 			<label class="label">
-				<span>Amount</span>
+				<span>Enter Amount</span>
 				<input class="input" type="text" bind:value={formData.amount} placeholder="Enter name..." />
 			</label>
-		
-		
 		</form>
 		<!-- prettier-ignore -->
-		<footer class="modal-footer {parent.regionFooter}">
+		<footer class="modal-footer border-t border-gray-200 border-solid pt-4 {parent.regionFooter}">
         <button class="btn {parent.buttonNeutral}" on:click={parent.onClose}>{parent.buttonTextCancel}</button>
-        <button class="btn {parent.buttonPositive}" on:click={onFormSubmit}>Submit Form</button>
+        <button class="btn bg-primary-500 variant-filled-primary {parent.buttonPositive}" on:click={onFormSubmit}>Add Money</button>
     </footer>
 	</div>
 {/if}

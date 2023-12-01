@@ -1,8 +1,7 @@
 <script lang="ts">
-	import { topStockGainersStore } from '$lib/store';
-	import { dozerRest, server } from '$lib/utils';
+	import { recentTransactionsStore } from '$lib/store';
 	import { DataHandler, Datatable, Th, ThFilter } from '@vincjo/datatables';
-	$: handler = new DataHandler($topStockGainersStore, { rowsPerPage: 10 });
+	$: handler = new DataHandler($recentTransactionsStore, { rowsPerPage: 5 });
 	$: rows = handler.getRows();
 </script>
 
@@ -11,18 +10,33 @@
 		<table>
 			<thead>
 				<tr>
-					<Th {handler} orderBy="company_name">Stock</Th>
-					<Th {handler} orderBy="daily_change">Gain</Th>
-					<Th {handler} orderBy="price">Price</Th>
+					<Th {handler} orderBy="date">Name</Th>
+					<Th {handler} orderBy="amount">1Y</Th>
+					<Th {handler} orderBy="desc">3Y</Th>
+					<Th {handler} orderBy="desc1">5Y</Th>
 					<Th {handler} orderBy="">&nbsp;</Th>
+				</tr>
+				<tr>
+					<ThFilter {handler} filterBy="date" />
+					<ThFilter {handler} filterBy="amount" />
+					<ThFilter {handler} filterBy="desc" />
+					<ThFilter {handler} filterBy="desc1" />
+					<ThFilter {handler} filterBy="" />
 				</tr>
 			</thead>
 			<tbody>
 				{#each $rows as row}
 					<tr>
-						<td>{row.company_name}</td>
-						<td>{row.daily_change}</td>
-						<td>{row.price}</td>
+						<td>
+							<div class="flex gap-2 items-center">
+								<div class="w-12 h-12 rounded backdrop-brightness-50" />
+								<div>HSBC Small Cap Fund Direct Growth</div>
+							</div>
+						</td>
+						<td>27.46%</td>
+						<td>27.46%</td>
+						<td>27.46%</td>
+
 						<td
 							><button
 								type="button"

@@ -10,9 +10,9 @@
 		<table>
 			<thead>
 				<tr>
-					<Th {handler} orderBy="date">Date</Th>
-					<Th {handler} orderBy="amount">Amount</Th>
-					<Th {handler} orderBy="desc">Description</Th>
+					<Th {handler} orderBy="date">Name</Th>
+					<Th {handler} orderBy="amount">Return</Th>
+					<Th {handler} orderBy="desc">Current</Th>
 					<Th {handler} orderBy="">&nbsp;</Th>
 				</tr>
 				<tr>
@@ -25,9 +25,24 @@
 			<tbody>
 				{#each $rows as row}
 					<tr>
-						<td>{row.date}</td>
-						<td>{row.amount}</td>
-						<td>{row.desc}</td>
+						<td>
+							<div class="flex gap-2 items-center">
+								<div class="w-12 h-12 rounded backdrop-brightness-50" />
+								<div>HSBC Small Cap Fund Direct Growth</div>
+							</div>
+						</td>
+						<td
+							><div class="flex flex-col items-start">
+								<div>₹3,168.90</div>
+								<div class="text-success-500 text-xs">38.60(1.23%)</div>
+							</div></td
+						>
+						<td
+							><div class="flex flex-col items-start">
+								<div>₹3,168.90</div>
+								<div class=" text-xs">38.60(1.23%)</div>
+							</div></td
+						>
 						<td
 							><button
 								type="button"

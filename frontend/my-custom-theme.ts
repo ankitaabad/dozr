@@ -25,9 +25,9 @@ export const myCustomTheme: CustomThemeConfig = {
 		'--color-primary-100': '207 241 230', // #cff1e6
 		'--color-primary-200': '195 238 224', // #c3eee0
 		'--color-primary-300': '159 227 205', // #9fe3cd
-		'--color-primary-400': '87 207 167', // #57cfa7
+		'--color-primary-400': '67 70 239', // #57cfa7
 		'--color-primary-500': '99 102 241', // #6366F1
-		'--color-primary-600': '14 167 116', // #0ea774
+		'--color-primary-600': '14 167 116', // #4346ef
 		'--color-primary-700': '11 140 97', // #0b8c61
 		'--color-primary-800': '9 112 77', // #09704d
 		'--color-primary-900': '7 91 63', // #075b3f

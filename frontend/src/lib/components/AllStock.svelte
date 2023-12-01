@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { topStockGainersStore } from '$lib/store';
+	import { allStocksStore } from '$lib/store';
 	import { dozerRest, server } from '$lib/utils';
 	import { DataHandler, Datatable, Th, ThFilter } from '@vincjo/datatables';
-	$: handler = new DataHandler($topStockGainersStore, { rowsPerPage: 10 });
+	$: handler = new DataHandler($allStocksStore, { rowsPerPage: 10 });
 	$: rows = handler.getRows();
 </script>
 

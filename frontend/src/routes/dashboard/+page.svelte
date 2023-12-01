@@ -3,18 +3,29 @@
 	import { isManager } from '$lib/store';
 	import Table from '../../components/table.svelte';
 	import StocksTable from '../../components/stocksTable.svelte';
-	import { Avatar, tableMapperValues, type ModalSettings, getModalStore } from '@skeletonlabs/skeleton';
+	import {
+		Avatar,
+		tableMapperValues,
+		type ModalSettings,
+		getModalStore
+	} from '@skeletonlabs/skeleton';
 	import Customer from '$lib/components/Customer.svelte';
 	import logo from '../dashboard/images/logo.svg';
 	import { TabGroup, Tab, TabAnchor } from '@skeletonlabs/skeleton';
-  import {customersStore} from '$lib/store'
+	import { customersStore } from '$lib/store';
 	import RecentTransactions from '$lib/components/RecentTransactions.svelte';
+	import CustomerStock from '$lib/components/CustomerStock.svelte';
+	import TopGainer from '$lib/components/TopGainer.svelte';
+	import TopLosers from '$lib/components/TopLosers.svelte';
+	import AllStock from '$lib/components/AllStock.svelte';
+	import AllmutualFunds from '$lib/components/AllmutualFunds.svelte';
+	import CustomerMutualFunds from '$lib/components/CustomerMutualFunds.svelte';
 	let tabSet: number = 1;
 	let StocktabSet: number = 0;
 
-  const modalStore = getModalStore();
+	const modalStore = getModalStore();
 	function showAddMoneyModal() {
-    console.log("inside add money")
+		//console.log('inside add money');
 		const modal: ModalSettings = {
 			type: 'component',
 			component: 'addMoneyModel'
@@ -26,10 +37,10 @@
 
 <div class="flex flex-col h-screen">
 	<div
-		class="flex bg-white items-center px-6 justify-between border-b border-gray-200 border-solid"
+		class="flex bg-white items-center px-6 justify-between border-b border-gray-200 border-solid py-4"
 	>
 		<div class="logo">
-			<img src={logo} alt="Logo" />
+			<a href="/"><img src={logo} alt="Logo" /></a>
 		</div>
 		<div class="search min-w-[20%]">
 			<form action="">
@@ -44,7 +55,7 @@
 		</div>
 		<div class="flex items-center gap-2">
 			<div>
-				<Avatar initials="HK" background="bg-secondary-500" />
+				<Avatar initials="HK" background="bg-secondary-500" class="w-10" />
 			</div>
 			{#if $isManager}
 				<Manager />
@@ -66,10 +77,9 @@
 			<svelte:fragment slot="panel">
 				{#if tabSet === 0}
 					<div class="flex gap-6">
-            <RecentTransactions/>
-						<!-- <div class="w-[75%] card p-6">
+						<div class="w-[75%] card p-6">
 							<div class="heading mb-6 flex justify-between items-center">
-								<h2 class="font-medium">Your Trades</h2>
+								<h2 class="font-medium text-lg">Your Trades</h2>
 							</div>
 							<div class="flex gap-6">
 								<div class="card grow">
@@ -157,12 +167,12 @@
 									</div>
 								</div>
 							</div>
-						</div> -->
+						</div>
 						<div class="w-[25%] card p-6">
 							<div class="heading mb-6">
-								<h2 class="font-medium">Account balance</h2>
+								<h2 class="font-medium text-lg">Account balance</h2>
 							</div>
-							<div class="text-2xl font-semibold">₹{$customersStore[0].balance}</div>
+							<div class="text-2xl font-semibold">₹{$customersStore[0]?.balance}</div>
 							<div class="my-6">
 								<div class=" ">
 									<a
@@ -244,23 +254,22 @@
 							<button
 								type="button"
 								class="mt-8 btn w-full rounded-lg bg-primary-500 variant-filled-primary"
-                on:click={showAddMoneyModal}
-								>Add Money</button
+								on:click={showAddMoneyModal}>Add Money</button
 							>
 						</div>
 					</div>
 					<div class="flex gap-6 mt-6">
 						<div class="w-[75%] flex gap-6">
-							<div class="w-[66%] card p-6">
+							<div class="w-[100%] card p-6">
 								<div class="heading mb-6 flex justify-between items-center">
-									<h2 class="font-medium">Recent transactions</h2>
+									<h2 class="font-medium text-lg">Recent transactions</h2>
 									<a href="#" class="text-primary-500 font-medium">View all</a>
 								</div>
-								<Table />
+								<RecentTransactions />
 							</div>
-							<div class="w-[34%] card p-6">
+							<!-- <div class="w-[34%] card p-6">
 								<div class="heading mb-6 flex justify-between items-center">
-									<h2 class="font-medium">Statistics</h2>
+									<h2 class="font-medium text-lg">Statistics</h2>
 									<label class="label">
 										<select class="select">
 											<option value="2">Week</option>
@@ -269,69 +278,96 @@
 										</select>
 									</label>
 								</div>
-							</div>
+							</div> -->
 						</div>
 
 						<div class="w-[25%] card p-6">
 							<div class="heading mb-6 flex justify-between items-center">
-								<h2 class="font-medium">All watchlists</h2>
+								<h2 class="font-medium text-lg">All watchlists</h2>
 								<a href="#" class="text-primary-500 font-medium">View all</a>
 							</div>
-							<div class="">
-								<div class="pb-4 border-b border-solid border-gray-100 flex justify-between w-full">
-									<div>SBI</div>
-									<div class="flex flex-col items-end">
-										<div>₹563.05</div>
-										<div class="text-error-500 text-xs">-21.60(3.69%)</div>
+							<div class="card px-4 py-6">
+								<div class="">
+									<div
+										class="pb-4 border-b border-solid border-gray-100 flex justify-between w-full"
+									>
+										<div>SBI</div>
+										<div class="flex flex-col items-end">
+											<div>₹563.05</div>
+											<div class="text-error-500 text-xs">-21.60(3.69%)</div>
+										</div>
 									</div>
 								</div>
-							</div>
-							<div class="">
-								<div class="py-4 border-b border-solid border-gray-100 flex justify-between w-full">
-									<div>Asian Paints</div>
-									<div class="flex flex-col items-end">
-										<div>₹3,168.90</div>
-										<div class="text-success-500 text-xs">38.60(1.23%)</div>
+								<div class="">
+									<div
+										class="py-4 border-b border-solid border-gray-100 flex justify-between w-full"
+									>
+										<div>Asian Paints</div>
+										<div class="flex flex-col items-end">
+											<div>₹3,168.90</div>
+											<div class="text-success-500 text-xs">38.60(1.23%)</div>
+										</div>
 									</div>
 								</div>
-							</div>
-							<div class="">
-								<div class="py-4 border-b border-solid border-gray-100 flex justify-between w-full">
-									<div>Siemens</div>
-									<div class="flex flex-col items-end">
-										<div>₹3,570.75</div>
-										<div class="text-success-500 text-xs">45.75(1.30%)</div>
+								<div class="">
+									<div
+										class="py-4 border-b border-solid border-gray-100 flex justify-between w-full"
+									>
+										<div>Siemens</div>
+										<div class="flex flex-col items-end">
+											<div>₹3,570.75</div>
+											<div class="text-success-500 text-xs">45.75(1.30%)</div>
+										</div>
 									</div>
 								</div>
-							</div>
-							<div class="">
-								<div class="py-4 border-b border-solid border-gray-100 flex justify-between w-full">
-									<div>Bank of Baroda</div>
-									<div class="flex flex-col items-end">
-										<div>₹196.80</div>
-										<div class="text-error-500 text-xs">-1.55(0.78%)</div>
+								<div class="">
+									<div
+										class="py-4 border-b border-solid border-gray-100 flex justify-between w-full"
+									>
+										<div>Bank of Baroda</div>
+										<div class="flex flex-col items-end">
+											<div>₹196.80</div>
+											<div class="text-error-500 text-xs">-1.55(0.78%)</div>
+										</div>
 									</div>
 								</div>
-							</div>
-							<div class="">
-								<div class="py-4 border-b border-solid border-gray-100 flex justify-between w-full">
-									<div>Power Grid Cord</div>
-									<div class="flex flex-col items-end">
-										<div>₹209.50</div>
-										<div class="text-success-500 text-xs">2.30(1.11%)</div>
+								<div class="">
+									<div
+										class="py-4 border-b border-solid border-gray-100 flex justify-between w-full"
+									>
+										<div>Power Grid Cord</div>
+										<div class="flex flex-col items-end">
+											<div>₹209.50</div>
+											<div class="text-success-500 text-xs">2.30(1.11%)</div>
+										</div>
+									</div>
+								</div>
+								<div class="">
+									<div
+										class="py-4 border-b border-solid border-gray-100 flex justify-between w-full"
+									>
+										<div>Asian Paints</div>
+										<div class="flex flex-col items-end">
+											<div>₹3,168.90</div>
+											<div class="text-success-500 text-xs">38.60(1.23%)</div>
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				{:else if tabSet === 1}
-					<div class="stock flex gap-6">
-						<div class="w-[75%] card p-6">
+					<div class="stock flex gap-6 flex-col">
+						<div class="w-[100%] card p-6">
 							<div class="heading mb-6 flex justify-between items-center">
-								<h2 class="font-medium">Index</h2>
-								<a href="#" class="text-primary-500 font-medium">All Indices</a>
+								<h2 class="font-medium text-lg">Holding</h2>
+								<a href="#" class="text-primary-500 font-medium">View all</a>
 							</div>
-							<div class="flex gap-6 mb-10">
+							<div class="customer-stocks">
+								<CustomerStock />
+							</div>
+						</div>
+						<!-- <div class="flex gap-6 mb-10">
 								<div class="card grow">
 									<h3 class="font-medium mb-2 p-6 pb-0 uppercase">Nifty 50</h3>
 									<div class="flex justify-between pt-0 p-6 border-b border-gray-100 border-solid">
@@ -365,12 +401,10 @@
 										</div>
 									</div>
 								</div>
-							</div>
-
-							<div
-								class="pt-10 heading mb-6 border-t border-solid border-gray-100 flex justify-between items-center"
-							>
-								<h2 class="font-medium">All Stocks</h2>
+							</div> -->
+						<div class="w-[100%] card p-6">
+							<div class=" heading mb-6 flex justify-between items-center">
+								<h2 class="font-medium text-lg">All Stocks</h2>
 								<a href="#" class="text-primary-500 font-medium">View all</a>
 							</div>
 							<TabGroup>
@@ -379,87 +413,75 @@
 								<Tab bind:group={StocktabSet} name="tab3" value={2}>Top losers Funds</Tab>
 								<svelte:fragment slot="panel">
 									{#if StocktabSet === 0}
-										<StocksTable />
+										<AllStock />
 									{:else if StocktabSet === 1}
-										<Table />
+										<TopGainer />
 									{:else if StocktabSet === 2}
-										<Table />
+										<TopLosers />
 									{/if}
 								</svelte:fragment>
 							</TabGroup>
 						</div>
-						<div class="w-[25%] card p-6">Stocks</div>
+						<!-- <div class="w-[25%] card p-6">Stocks</div> -->
 					</div>
 				{:else if tabSet === 2}
-					<div class="stock flex gap-6">
-						<div class="w-[75%] card p-6">
+					<div class="stock flex gap-6 flex-col">
+						<div class="w-[100%] card p-6">
 							<div class="heading mb-6 flex justify-between items-center">
-								<h2 class="font-medium">Index</h2>
-								<a href="#" class="text-primary-500 font-medium">All Indices</a>
+								<h2 class="font-medium text-lg">Investments</h2>
+								<a href="#" class="text-primary-500 font-medium">View all</a>
 							</div>
-							<div class="flex gap-6 mb-10">
-								<div class="card grow">
-									<h3 class="font-medium mb-2 p-6 pb-0 uppercase">Nifty 50</h3>
-									<div class="flex justify-between pt-0 p-6 border-b border-gray-100 border-solid">
-										<div class="flex justify-between flex-col">
-											<div class="flex gap-3 font-semibold">
-												<span class="">20,50,217</span>
-												<span class=" text-error-500">-11.60 (0.08%)</span>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="card grow">
-									<h3 class="font-medium mb-2 p-6 pb-0 uppercase">Sensex</h3>
-									<div class="flex justify-between pt-0 p-6 border-b border-gray-100 border-solid">
-										<div class="flex justify-between flex-col">
-											<div class="flex gap-3 font-semibold">
-												<span class="">66,50,217</span>
-												<span class=" text-error-500">-97.98 (0.14%)</span>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="card grow">
-									<h3 class="font-medium mb-2 p-6 pb-0 uppercase">Banknifty</h3>
-									<div class="flex justify-between pt-0 p-6 border-b border-gray-100 border-solid">
-										<div class="flex justify-between flex-col">
-											<div class="flex gap-3 font-semibold">
-												<span class="">44,50,217</span>
-												<span class=" text-error-500">-211.60 (0.48%)</span>
-											</div>
-										</div>
-									</div>
-								</div>
+							<div class="customer-mutualfunds">
+								<CustomerMutualFunds />
 							</div>
-
-							<div
-								class="pt-10 heading mb-6 border-t border-solid border-gray-100 flex justify-between items-center"
-							>
-								<h2 class="font-medium">All Mutual Funds</h2>
+						</div>
+						<div class="w-[100%] card p-6">
+							<div class="heading mb-6 flex justify-between items-center">
+								<h2 class="font-medium text-lg">All Mutual Funds</h2>
 								<a href="#" class="text-primary-500 font-medium">View all</a>
 							</div>
 							<TabGroup>
 								<Tab bind:group={StocktabSet} name="tab2" value={0}>All Stocks</Tab>
-								<Tab bind:group={StocktabSet} name="tab2" value={1}>Top ganiner</Tab>
-								<Tab bind:group={StocktabSet} name="tab3" value={2}>Top losers Funds</Tab>
 								<svelte:fragment slot="panel">
 									{#if StocktabSet === 0}
-										<StocksTable />
-									{:else if StocktabSet === 1}
-										<Table />
-									{:else if StocktabSet === 2}
-										<Table />
+										<AllmutualFunds />
 									{/if}
 								</svelte:fragment>
 							</TabGroup>
 						</div>
-						<div class="w-[25%] card p-6">Mutual Funds</div>
+						<!-- <div class="w-[25%] card p-6">Mutual Funds</div> -->
 					</div>
 				{:else if tabSet === 3}
 					Fixed Deposit
 				{/if}
 			</svelte:fragment>
 		</TabGroup>
+	</div>
+	<div
+		class="flex bg-white items-center px-6 justify-between border-t border-gray-200 border-solid py-6"
+	>
+		<div class="max-w-7xl w-full mx-auto text-center">
+			<div class="flex justify-between gap-3">
+				<div>
+					ⓒ 2023 TradeGo. All rights reserved, Built with <span class="text-pink-500 text-lg"
+						>♥</span
+					> in India
+				</div>
+				<div>
+					<ul class="flex gap-3 justify-center">
+						<li>
+							<a href="/" class="text-primary-500 underline hover:text-primary-400 transition-all"
+								>Term and Condition</a
+							>
+						</li>
+						<li>
+							<a href="/" class="text-primary-500 underline hover:text-primary-400 transition-all"
+								>Privacy Policy</a
+							>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
