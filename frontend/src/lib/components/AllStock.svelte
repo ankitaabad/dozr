@@ -2,7 +2,21 @@
 	import { allStocksStore } from '$lib/store';
 	import { dozerRest, server } from '$lib/utils';
 	import { DataHandler, Datatable, Th, ThFilter } from '@vincjo/datatables';
-	$: handler = new DataHandler($allStocksStore, { rowsPerPage: 10 });
+	import { getModalStore, type ModalSettings } from '@skeletonlabs/skeleton';
+	const modalStore = getModalStore();
+	function buyStocks(stock_id, company_name) {
+    console.log("inside add money")
+		const modal: ModalSettings = {
+			type: 'component',
+			component: 'buyStocksModel',
+      meta:{stock_id,company_name}
+		};
+    console.log({modal})
+
+		modalStore.trigger(modal);
+	}
+
+  $: handler = new DataHandler($allStocksStore, { rowsPerPage: 10 });
 	$: rows = handler.getRows();
 </script>
 
@@ -27,7 +41,8 @@
 							><button
 								type="button"
 								class=" btn btn-sm rounded-md px-6 bg-primary-500 variant-filled-primary"
-								>Buy</button
+								on:click={()=> buyStocks(row.stock_id,row.company_name)}
+                >Buy</button
 							></td
 						>
 					</tr>

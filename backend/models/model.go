@@ -5,7 +5,7 @@ package models
 type BuyStocksModel struct {
 	StockId     string `param:"stock_id"`
 	CompanyName string `json:"company_name"`
-	CustomerId  string `json:"customer_id"`
+	CustomerId  int `json:"customer_id"`
 	Quantity    int    `json:"quantity"`
 	//Price       float32 `json:"price"`
 }
@@ -13,7 +13,7 @@ type BuyStocksModel struct {
 type SellStocksModel struct {
 	StockId     string `param:"stock_id"`
 	CompanyName string `json:"company_name"`
-	CustomerId  string `json:"customer_id"`
+	CustomerId  int `json:"customer_id"`
 	Quantity    int    `json:"quantity"`
 	//Price       float32 `json:"price"`
 }

@@ -8,12 +8,17 @@
 	import { QueryClient, QueryClientProvider } from '@tanstack/svelte-query';
 	import { initializeStores } from '@skeletonlabs/skeleton';
 	import AddMoneyModel from '$lib/models/AddMoneyModel.svelte';
+	import BuyStocksModel from '$lib/models/BuyStocksModel.svelte';
+	import SellStocksModel from '$lib/models/SellStocksModel.svelte';
 
 	initializeStores();
 
 	const modalRegistry: Record<string, ModalComponent> = {
 		// Set a unique modal ID, then pass the component reference
-		addMoneyModel: { ref: AddMoneyModel }
+		addMoneyModel: { ref: AddMoneyModel },
+    buyStocksModel: {ref: BuyStocksModel},
+    sellStocksModel: {ref: SellStocksModel}
+
 		// ...
 	};
 	const queryClient = new QueryClient({

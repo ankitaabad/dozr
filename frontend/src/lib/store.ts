@@ -380,7 +380,9 @@ const storeMap = {
 	recentTransactionsStore,
 	customersStore,
 	customerBalanceStore,
-	customerMutualFundsStore
+  customerStockInvestmentValueStore,
+  customerTotalInvestmentValueStore
+
 };
 type StoreNames = keyof typeof storeMap;
 
