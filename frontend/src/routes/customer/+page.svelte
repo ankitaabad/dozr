@@ -1,8 +1,7 @@
 <script lang="ts">
 	import Manager from '$lib/components/Manager.svelte';
 	import { customersStore, getInitials, isManager } from '$lib/store';
-	import Table from '../../components/table.svelte';
-	import StocksTable from '../../components/stocksTable.svelte';
+	
 	import {
 		Avatar,
 		tableMapperValues,

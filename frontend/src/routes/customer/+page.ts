@@ -14,6 +14,7 @@ export const prerender = true;
 /** @type {import('./$types').PageLoad} */
 export async function load({url}) {
   if(browser){
+    console.log({pathname: url})
     const customer_id = url.searchParams.get("customer_id") 
     if(!customer_id){
       goto("/")
