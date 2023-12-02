@@ -1,4 +1,4 @@
-import { get,  writable, type Writable } from 'svelte/store';
+import { get, writable, type Writable } from 'svelte/store';
 import { dozerRest } from './utils';
 export const isManager = writable(false);
 export const customerId = writable(0);
@@ -152,7 +152,33 @@ function createCustomerBalanceStore() {
 		};
 
 		dozerRest.request(config).then((response) => {
-			console.log('before updating customers_stocks store');
+			console.log('before updating customers_balance store');
+			update(() => response.data);
+		});
+	}
+
+	return { subscribe, set, update, fetchData };
+}
+function createCustomerMutualFundsStore() {
+	const { subscribe, set, update } = writable([]);
+
+	async function fetchData() {
+		const cid = get(customerId);
+		console.log({ cid });
+		let data = JSON.stringify({
+			$filter: {
+				customer_id: cid
+			}
+		});
+
+		const config = {
+			method: 'post',
+			url: '/customer_mutual_funds/query',
+			data: data
+		};
+
+		dozerRest.request(config).then((response) => {
+			console.log('before updating customers_balance store');
 			update(() => response.data);
 		});
 	}
@@ -165,6 +191,7 @@ export const customersStore = createCustomersStore();
 export const allStocksStore = createAllStocksStore();
 export const customersStocksStore = creaeCustomerStocksStore();
 export const customerBalanceStore = createCustomerBalanceStore();
+export const customerMutualFundsStore = createCustomerMutualFundsStore();
 
 function getStoreDozerId(store: Writable<any>) {
 	const data = get(store);
@@ -175,7 +202,8 @@ function getStoreDozerId(store: Writable<any>) {
 const storeMap = {
 	recentTransactionsStore,
 	customersStore,
-	customerBalanceStore
+	customerBalanceStore,
+	customerMutualFundsStore
 };
 type StoreNames = keyof typeof storeMap;
 

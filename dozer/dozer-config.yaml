@@ -36,6 +36,10 @@ sources:
   - name: customer_stocks 
     table_name: customer_stocks
     connection:  pgcon2
+
+  - name: customer_mf 
+    table_name: customer_mf
+    connection:  pgcon2
   - name: customers 
     table_name: customers
     connection:  pgcon2
@@ -45,12 +49,7 @@ sources:
   - name: mf_sell 
     table_name: mf_sell
     connection:  pgcon2
-  - name: customer_mf 
-    table_name: customer_mf
-    connection:  pgcon2
-  - name: transactions_mfs 
-    table_name: transactions_mfs
-    connection:  pgcon2
+
   
    
 
@@ -67,8 +66,9 @@ sql: |
   mf_table as ( select sum(cm.quantity * cm.avg_price)mf_investment,cm.customer_id from customer_mf cm  group by customer_id)
   select  c.*, stock_investment+mf_investment as total_investment into top_investors from stock_table st join mf_table mf on st.customer_id = mf.customer_id join customers c on c.customer_id = mf.customer_id; 
 
-  select count(*) count,stock_id into popular_stocks from stocks_buy sb group by stock_id, buy_date
+  select count(*) count,stock_id into popular_stocks from stocks_buy sb group by stock_id, buy_date;
 
+  select  cm.customer_id, cm.mf_id, cm.quantity ,cm.avg_price, mf.fund_name, mf.image_src  into customer_mutual_funds from customer_mf cm join mutual_funds mf on cm.mf_id  = mf.mf_id; 
 
 
 api:
@@ -133,6 +133,10 @@ endpoints:
   - name: top_investors
     path: /top_investors
     table_name: top_investors
+
+  - name: customer_mutual_funds
+    path: /customer_mutual_funds
+    table_name: customer_mutual_funds
 
   - name: stocks_daily_price
     path: /stocks_daily_price

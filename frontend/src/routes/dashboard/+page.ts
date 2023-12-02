@@ -4,7 +4,8 @@ import {
 	customersStore,
 	allStocksStore,
 	customersStocksStore,
-  customerBalanceStore
+  customerBalanceStore,
+  customerMutualFundsStore
 } from '$lib/store';
 export const prerender = true;
 /** @type {import('./$types').PageLoad} */
@@ -15,6 +16,7 @@ export async function load() {
 		customersStore.fetchData(),
 		allStocksStore.fetchData(),
 		customersStocksStore.fetchData(),
-    customerBalanceStore.fetchData()
+    customerBalanceStore.fetchData(),
+    customerMutualFundsStore.fetchData()
 	]);
 }

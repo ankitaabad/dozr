@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { recentTransactionsStore } from '$lib/store';
+	import { customerMutualFundsStore } from '$lib/store';
 	import { DataHandler, Datatable, Th, ThFilter } from '@vincjo/datatables';
-	$: handler = new DataHandler($recentTransactionsStore, { rowsPerPage: 5 });
+	$: handler = new DataHandler($customerMutualFundsStore, { rowsPerPage: 5 });
 	$: rows = handler.getRows();
 </script>
 
@@ -10,7 +10,7 @@
 		<table>
 			<thead>
 				<tr>
-					<Th {handler} orderBy="date">Name</Th>
+					<Th {handler} orderBy="fund_name">Name</Th>
 					<Th {handler} orderBy="amount">Return</Th>
 					<Th {handler} orderBy="desc">Current</Th>
 					<Th {handler} orderBy="">&nbsp;</Th>
@@ -27,8 +27,8 @@
 					<tr>
 						<td>
 							<div class="flex gap-2 items-center">
-								<div class="w-12 h-12 rounded backdrop-brightness-50" />
-								<div>HSBC Small Cap Fund Direct Growth</div>
+								<img src={row.image_src} class="w-12 h-12 rounded backdrop-brightness-50" />
+								<div>{row.fund_name}</div>
 							</div>
 						</td>
 						<td
