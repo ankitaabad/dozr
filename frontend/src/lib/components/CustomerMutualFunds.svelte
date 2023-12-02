@@ -27,7 +27,10 @@
 					<tr>
 						<td>
 							<div class="flex gap-2 items-center">
-								<img src={row.image_src} class="w-12 h-12 rounded backdrop-brightness-50" />
+								<img
+									src={row.image_src}
+									class="w-12 h-12 rounded border border-solid border-gray-300"
+								/>
 								<div>{row.fund_name}</div>
 							</div>
 						</td>

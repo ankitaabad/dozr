@@ -22,7 +22,7 @@
 					<tr>
 						<td>{row.company_name}</td>
 						<td>{row.daily_change}</td>
-						<td>{row.price}</td>
+						<td>{row.price.toFixed(2)}</td>
 						<td
 							><button
 								type="button"
