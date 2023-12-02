@@ -1,8 +1,7 @@
 <script lang="ts">
-	import {  topStockLosersStore } from '$lib/store';
-	import { dozerRest, server } from '$lib/utils';
+	import { loansStore } from '$lib/store';
 	import { DataHandler, Datatable, Th, ThFilter } from '@vincjo/datatables';
-	$: handler = new DataHandler($topStockLosersStore, { rowsPerPage: 10 });
+	$: handler = new DataHandler($loansStore, { rowsPerPage: 5 });
 	$: rows = handler.getRows();
 </script>
 
@@ -11,23 +10,29 @@
 		<table>
 			<thead>
 				<tr>
-					<Th {handler} orderBy="company_name">Stock</Th>
-					<Th {handler} orderBy="daily_change">Gain</Th>
-					<Th {handler} orderBy="price">Price</Th>
+					<Th {handler} orderBy="loan_type">Loan Type</Th>
+					<Th {handler} orderBy="EMI">EMI</Th>
+					<Th {handler} orderBy="repayment_schedule">repayment_schedule</Th>
 					<Th {handler} orderBy="">&nbsp;</Th>
+				</tr>
+				<tr>
+					<ThFilter {handler} filterBy="loan_type" />
+					<ThFilter {handler} filterBy="EMI" />
+					<ThFilter {handler} filterBy="repayment_schedule" />
+					<ThFilter {handler} filterBy="" />
 				</tr>
 			</thead>
 			<tbody>
 				{#each $rows as row}
 					<tr>
-						<td>{row.company_name}</td>
-						<td>{row.daily_change}</td>
-						<td>{row.price}</td>
+						<td>{row.loan_type}</td>
+						<td>{row.EMI}</td>
+						<td>{row.repayment_schedule}</td>
 						<td
 							><button
 								type="button"
 								class=" btn btn-sm rounded-md px-6 bg-primary-500 variant-filled-primary"
-								>Buy</button
+								>Sell</button
 							></td
 						>
 					</tr>

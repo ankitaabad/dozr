@@ -27,6 +27,9 @@ sources:
   - name: stocks 
     table_name: stocks
     connection:  pgcon2
+  - name: mutual_funds 
+    table_name: mutual_funds
+    connection:  pgcon2
   - name: stocks_daily_price 
     table_name: stocks_daily_price
     connection:  pgcon2
@@ -35,6 +38,9 @@ sources:
     connection:  pgcon2
   - name: customer_stocks 
     table_name: customer_stocks
+    connection:  pgcon2
+  - name: loans 
+    table_name: loans
     connection:  pgcon2
 
   - name: customer_mf 
@@ -70,7 +76,14 @@ sql: |
 
   select  cm.customer_id, cm.mf_id, cm.quantity ,cm.avg_price, mf.fund_name, mf.image_src  into customer_mutual_funds from customer_mf cm join mutual_funds mf on cm.mf_id  = mf.mf_id; 
 
+  select  cs.customer_id , sum(cs.quantity* cs.avg_price) investment, sum(cs.quantity * s.price) present_value into customer_stock_investment_value from customer_stocks cs  join stocks s on cs.stock_id = s.stock_id  group by cs.customer_id ;
 
+  select  cmf.customer_id , sum(cmf.quantity* cmf.avg_price) investment, sum(cmf.quantity * mf.price) present_value into customer_mf_investment_value from customer_mf cmf  join mutual_funds mf  on cmf.mf_id = mf.mf_id  group by cmf.customer_id ;
+
+  WITH customerStocktInvestment AS (select  cs.customer_id , sum(cs.quantity* cs.avg_price) investment, sum(cs.quantity * s.price) present_value  from customer_stocks cs  join stocks s on cs.stock_id = s.stock_id  group by cs.customer_id),mutualFundInvestment AS (select  cmf.customer_id , sum(cmf.quantity* cmf.avg_price) investment, sum(cmf.quantity * mf.price) present_value from customer_mf cmf  join mutual_funds mf  on cmf.mf_id = mf.mf_id  group by cmf.customer_id  ) SELECT csi.customer_id, csi.investment + mfi.investment total_investment,csi.present_value+mfi.present_value total_present_value into customer_total_investment_value FROM customerStocktInvestment csi JOIN mutualFundInvestment mfi ON csi.customer_id = mfi.customer_id;
+
+
+  
 api:
   default_max_num_records: 99999999
   
@@ -108,6 +121,34 @@ endpoints:
           - !SortedInverted
               fields:
                 - stock_id
+
+  - name: customer_stock_investment_value
+    path: /customer_stock_investment_value
+    table_name: customer_stock_investment_value
+    index:
+      primary_key:
+        - customer_id
+
+  - name: customer_mf_investment_value
+    path: /customer_mf_investment_value
+    table_name: customer_mf_investment_value
+    index:
+      primary_key:
+        - customer_id
+
+  - name: customer_total_investment_value
+    path: /customer_total_investment_value
+    table_name: customer_total_investment_value
+    index:
+      primary_key:
+        - customer_id               
+
+  - name: mutual_funds
+    path: /mutual_funds
+    table_name: mutual_funds
+
+
+
   
   - name: customers
     path: /customers
@@ -133,6 +174,11 @@ endpoints:
   - name: top_investors
     path: /top_investors
     table_name: top_investors
+    
+
+  - name: loans
+    path: /loans
+    table_name: loans
 
   - name: customer_mutual_funds
     path: /customer_mutual_funds

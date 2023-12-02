@@ -19,6 +19,8 @@
 	import AllStock from '$lib/components/AllStock.svelte';
 	import AllmutualFunds from '$lib/components/AllmutualFunds.svelte';
 	import CustomerMutualFunds from '$lib/components/CustomerMutualFunds.svelte';
+	import PayableLoans from '$lib/components/PayableLoans.svelte';
+	import CustomerInvestmentValue from '$lib/components/CustomerInvestmentValue.svelte';
 	let tabSet: number = 1;
 	let StocktabSet: number = 0;
 
@@ -457,6 +459,8 @@
 			</svelte:fragment>
 		</TabGroup>
 	</div>
+  <PayableLoans/>
+  <CustomerInvestmentValue/>
 	<div
 		class="flex bg-white items-center px-6 justify-between border-t border-gray-200 border-solid py-6"
 	>
@@ -485,3 +489,4 @@
 		</div>
 	</div>
 </div>
+

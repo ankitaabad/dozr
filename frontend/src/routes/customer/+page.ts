@@ -6,7 +6,12 @@ import {
 	customersStocksStore,
   customerBalanceStore,
   customerMutualFundsStore,
-  customerId
+  customerId,
+  loansStore,
+  allMutualFundsStore,
+  customerStockInvestmentValueStore,
+  customerMFInvestmentValueStore,
+  customerTotalInvestmentValueStore
 } from '$lib/store';
 import { browser } from '$app/environment';
 
@@ -29,6 +34,12 @@ export async function load({url}) {
 		allStocksStore.fetchData(),
 		customersStocksStore.fetchData(),
     customerBalanceStore.fetchData(),
-    customerMutualFundsStore.fetchData()
+    customerMutualFundsStore.fetchData(),
+    loansStore.fetchData(),
+    allMutualFundsStore.fetchData(),
+    customerStockInvestmentValueStore.fetchData(),
+    customerMFInvestmentValueStore.fetchData(),
+    customerTotalInvestmentValueStore.fetchData()
+
 	]);
 }
