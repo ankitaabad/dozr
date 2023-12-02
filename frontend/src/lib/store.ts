@@ -419,7 +419,7 @@ export function refreshDozerStores(...storeNames: StoreNames[]) {
 			{
 				delayFirstAttempt: true,
 				numOfAttempts: 3,
-				startingDelay: 80
+				startingDelay: 120
 			}
 		);
 	}

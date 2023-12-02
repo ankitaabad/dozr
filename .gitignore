@@ -6,3 +6,5 @@ csv/generated
 */.env
 */.dozer*
 */dozer.lock
+
+*/node_modules
