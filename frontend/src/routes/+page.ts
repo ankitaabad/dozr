@@ -5,9 +5,10 @@ export const prerender = true
 
 /** @type {import('./$types').PageLoad} */
 export async function load({url}) {
-  // if(browser){
-  //   if(url.pathname!=="/"){
-  //     goto(url.pathname+url.search)
-  //   }
-  // }
+  if(browser){
+    console.log({pathnamee:url.pathname})
+    // if(url.pathname!=="/"){
+    //   goto(url.pathname+url.search)
+    // }
+  }
 }
