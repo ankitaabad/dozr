@@ -15,20 +15,19 @@ const modalStore = getModalStore();
   }
 
   function randomUserLogin(){
-    customerId.set(randomIntFromInterval(1001,1100))
-    userLogin()
-    goto("/dashboard")
+    const customer_id = randomIntFromInterval(1001,1100)
+    userLogin(customer_id)
   }
-  function userLogin() {
-    if(userId){
-      console.log("inside user login")
-  
-      customerId.set(userId)
-      goto("/dashboard")
+  function loginById(){
+    if(!userId){
+      return
+    }
+    userLogin(userId)
+  } 
+  function userLogin(user_id) { 
+      console.log("inside user login") 
+      goto(`/customer?customer_id=${user_id}`)	
 
-		
-	
-		}
 	}
 </script>
 
@@ -57,7 +56,7 @@ const modalStore = getModalStore();
 				/>
 				<button
 					class="btn btn-sm variant-filled-primary rounded rounded-s-none w-1/3 py-3 px-6"
-					on:click={userLogin}>Login</button
+					on:click={loginById}>Login</button
 				>
 			</div>
 		</div>

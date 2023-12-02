@@ -81,10 +81,17 @@ function createCustomersStore() {
 			update(() => response.data);
 		});
 	}
+ 
 
-	return { subscribe, set, update, fetchData };
+	return { subscribe, set, update, fetchData,getInitials };
 }
 
+export function getInitials() {
+  const customer = get(customersStore)
+  console.log("getinitials called",customer)
+
+  customer[0].first_name[0] + customer[0].last_name[0]
+}
 function createAllStocksStore() {
 	const { subscribe, set, update } = writable([]);
 
@@ -129,6 +136,8 @@ function creaeCustomerStocksStore() {
 			update(() => response.data);
 		});
 	}
+
+
 
 	return { subscribe, set, update, fetchData };
 }

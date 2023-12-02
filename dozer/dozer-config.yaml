@@ -11,10 +11,10 @@ connections:
   - config: !Postgres
       user: postgres
       password: pgpass
-      host: 68.183.85.136
-      port: 5689  
-      # host: srv-captain--pgdb
-      # port: 5432
+      # host: 68.183.85.136
+      # port: 5689  
+      host: srv-captain--pgdb
+      port: 5432
       database: postgres
       schema: public
       sslmode: disable

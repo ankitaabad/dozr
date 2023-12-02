@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Manager from '$lib/components/Manager.svelte';
-	import { isManager } from '$lib/store';
+	import { customersStore, getInitials, isManager } from '$lib/store';
 	import Table from '../../components/table.svelte';
 	import StocksTable from '../../components/stocksTable.svelte';
 	import {
@@ -10,7 +10,7 @@
 		getModalStore
 	} from '@skeletonlabs/skeleton';
 	import Customer from '$lib/components/Customer.svelte';
-	import logo from '../dashboard/images/logo.svg';
+	import logo from '../customer/images/logo.svg';
 	import { TabGroup, Tab, TabAnchor } from '@skeletonlabs/skeleton';
 	import { customerBalanceStore } from '$lib/store';
 	import RecentTransactions from '$lib/components/RecentTransactions.svelte';
@@ -55,7 +55,8 @@
 		</div>
 		<div class="flex items-center gap-2">
 			<div>
-				<Avatar initials="HK" background="bg-secondary-500" class="w-10" />
+        <div>{$customersStore[0]?.first_name} {$customersStore[0]?.last_name}</div>
+				<!-- <Avatar initials="HK" background="bg-secondary-500" class="w-10" /> -->
 			</div>
 			{#if $isManager}
 				<Manager />
