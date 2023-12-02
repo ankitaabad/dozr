@@ -23,8 +23,8 @@
 			<tbody>
 				{#each $rows as row}
 					<tr>
-						<td>{row.date}</td>
-						<td>{row.amount}</td>
+						<td>{row.date} </td>
+						<td>₹{row.amount}</td>
 						<td>{row.desc}</td>
 					</tr>
 				{/each}

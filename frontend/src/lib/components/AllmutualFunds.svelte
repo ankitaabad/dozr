@@ -10,17 +10,17 @@
 		<table>
 			<thead>
 				<tr>
-					<Th {handler} orderBy="date">Name</Th>
-					<Th {handler} orderBy="amount">1Y</Th>
-					<Th {handler} orderBy="desc">3Y</Th>
-					<Th {handler} orderBy="desc1">5Y</Th>
+					<Th {handler} orderBy="Name">Name</Th>
+					<Th {handler} orderBy="1y">1Y</Th>
+					<Th {handler} orderBy="3y">3Y</Th>
+					<Th {handler} orderBy="5y">5Y</Th>
 					<Th {handler} orderBy="">&nbsp;</Th>
 				</tr>
 				<tr>
-					<ThFilter {handler} filterBy="date" />
-					<ThFilter {handler} filterBy="amount" />
-					<ThFilter {handler} filterBy="desc" />
-					<ThFilter {handler} filterBy="desc1" />
+					<ThFilter {handler} filterBy="Name" />
+					<ThFilter {handler} filterBy="1y" />
+					<ThFilter {handler} filterBy="3y" />
+					<ThFilter {handler} filterBy="5y" />
 					<ThFilter {handler} filterBy="" />
 				</tr>
 			</thead>

@@ -12,8 +12,8 @@
 			<thead>
 				<tr>
 					<Th {handler} orderBy="company_name">Stock</Th>
-					<Th {handler} orderBy="daily_change">Gain</Th>
-					<Th {handler} orderBy="price">Price</Th>
+					<Th {handler} orderBy="industry">Industry</Th>
+					<Th {handler} orderBy="market_capital">Market Capital</Th>
 					<Th {handler} orderBy="">&nbsp;</Th>
 				</tr>
 			</thead>
@@ -21,8 +21,8 @@
 				{#each $rows as row}
 					<tr>
 						<td>{row.company_name}</td>
-						<td>{row.daily_change}</td>
-						<td>{row.price}</td>
+						<td>{row.industry}</td>
+						<td>{row.market_capital.toFixed(2)}</td>
 						<td
 							><button
 								type="button"
