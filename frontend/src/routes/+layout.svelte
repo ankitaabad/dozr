@@ -1,6 +1,6 @@
 <script lang="ts">
 	import '../app.postcss';
-
+	import { isLoggedIn } from '$lib/store';
 	// Floating UI for Popups
 	import { computePosition, autoUpdate, flip, shift, offset, arrow } from '@floating-ui/dom';
 	import { storePopup, type ModalComponent, Modal } from '@skeletonlabs/skeleton';
@@ -38,8 +38,12 @@
 
 <QueryClientProvider client={queryClient}>
 	<div class="flex flex-col h-screen">
-		<Header />
+		{#if $isLoggedIn}
+			<Header />
+		{/if}
 		<slot />
-		<Footer />
+		{#if $isLoggedIn}
+			<Footer />
+		{/if}
 	</div>
 </QueryClientProvider>

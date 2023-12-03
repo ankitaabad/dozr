@@ -1,6 +1,8 @@
 import { get, writable, type Writable } from 'svelte/store';
 import { dozerRest } from './utils';
 export const isManager = writable(false);
+export const isLoggedIn = writable(false);
+
 export const customerId = writable(0);
 export const currentStockId = writable('');
 import { backOff } from 'exponential-backoff';
