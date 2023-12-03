@@ -4,18 +4,22 @@
 	import type { ConicStop } from '@skeletonlabs/skeleton';
 	// Stores
 	import { getModalStore } from '@skeletonlabs/skeleton';
-	import { buyStocksApi } from '$lib/apis';
+	import { sellStocksApi } from '$lib/apis';
 
 	// Props
 	/** Exposes parent props to this component. */
 	export let parent: SvelteComponent;
 
 	const modalStore = getModalStore();
+	let quantity = 0;
 
-	// Form Data
-	const formData = {
-		quantity: ''
-	};
+	$: required = quantity * $modalStore[0]?.meta.price || 0;
+	// $: orderMsg = quantity ? `${required.toFixed(2)} will be deducted from your a/c` : ''
+	
+	const price = $modalStore[0]?.meta?.price?.toFixed(2);
+	const availableStocks = $modalStore[0]?.meta.quantity;
+	console.log('inside meta vale', $modalStore[0]?.meta);
+	$: enoughStocks = availableStocks > quantity;
 
 	// We've created a custom submit function to pass the response and close the modal.
 	let loading;
@@ -23,8 +27,8 @@
 		loading = true;
 		console.log({ 'inside modal store': $modalStore });
 		const { stock_id, company_name } = $modalStore[0].meta;
-		await buyStocksApi(stock_id, formData.quantity, company_name);
-		if ($modalStore[0].response) $modalStore[0].response(formData);
+		await sellStocksApi(stock_id, quantity, company_name);
+		if ($modalStore[0].response) $modalStore[0].response(quantity);
 		modalStore.close();
 	}
 
@@ -42,32 +46,34 @@
 
 {#if $modalStore[0]}
 	<div class="modal-example-form w-96 {cBase}">
-		<header class={cHeader}>Buy Stocks</header>
-		<div class="font-semibold mb-3 mt-2">Yatharth Hospital & Trauma Care Services Ltd.</div>
+		<header class={cHeader}>Sell Stocks</header>
+		<div class="font-semibold mb-3 mt-2">{$modalStore[0]?.meta.company_name}</div>
 		<!-- Enable for debugging: -->
 		<form class="modal-form {cForm}">
 			<label class="label">
 				<span>Enter Quantity</span>
-				<input class="input" type="number" bind:value={formData.quantity} placeholder="" />
+				<input class="input" type="number" bind:value={quantity} placeholder="" />
 			</label>
 			<label class="label">
 				<span>Price</span>
-				<input class="input" type="number" value="234" disabled placeholder="" />
+				<input class="input" type="number" value={price} disabled placeholder="" />
 			</label>
 		</form>
 		<div class="mt-24">
-			<div class="bg-orange-100 text-orange-950 p-1 text-sm rounded-sm mb-3 text-center">
-				Available amount is not enough
-			</div>
-			<div class="text-sm text-center text-gray-500 mb-3">
+			{#if !enoughStocks}
+				<div class="bg-orange-100 text-orange-950 p-1 text-sm rounded-sm mb-3 text-center">
+					Not enough stocks to sell.
+				</div>
+			{/if}
+			<!-- <div class="text-sm text-center text-gray-500 mb-3">
 				Order will be executed at ₹2,325.00 or lower price
-			</div>
+			</div> -->
 		</div>
 		<div
 			class="mb-2 pt-3 flex justify-between items-center text-gray-500 text-sm border-t border-gray-200 border-solid"
 		>
-			<div>Balance: <span>₹ 102</span></div>
-			<div>Required: <span>₹ 102</span></div>
+			<div>Stocks to Sell: <span>{quantity || 0}</span></div>
+			<div>Available Stocks: <span>{availableStocks}</span></div>
 		</div>
 		<footer class="modal-footer {parent.regionFooter}">
 			<button class="btn rounded w-[50%] {parent.buttonNeutral}" on:click={parent.onClose}
@@ -76,6 +82,7 @@
 			<button
 				class="btn rounded w-[50%] bg-primary-500 variant-filled-primary min-w-[124px] {parent.buttonPositive}"
 				on:click={onFormSubmit}
+				disabled={!enoughStocks || !quantity}
 			>
 				{#if loading}
 					<ConicGradient width="w-4" stops={conicStops} spin />

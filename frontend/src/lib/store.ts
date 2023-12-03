@@ -474,7 +474,8 @@ const storeMap = {
 	customersStore,
 	customerBalanceStore,
 	customerStockInvestmentValueStore,
-	customerTotalInvestmentValueStore
+	customerTotalInvestmentValueStore,
+  customersStocksStore,
 };
 type StoreNames = keyof typeof storeMap;
 

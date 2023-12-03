@@ -4,12 +4,12 @@
 	import { DataHandler, Datatable, Th, ThFilter } from '@vincjo/datatables';
 	import { getModalStore, type ModalSettings } from '@skeletonlabs/skeleton';
 	const modalStore = getModalStore();
-	function sellStocks(stock_id, company_name) {
+	function sellStocks(row) {
 		console.log('inside add money');
 		const modal: ModalSettings = {
 			type: 'component',
 			component: 'sellStocksModel',
-			meta: { stock_id, company_name }
+			meta: row
 		};
 		console.log({ modal });
 
@@ -43,7 +43,7 @@
 							><button
 								type="button"
 								class=" btn btn-sm rounded-md px-6 bg-primary-500 variant-filled-primary"
-								on:click={() => sellStocks(row.stock_id, row.company_name)}>Sell</button
+								on:click={() => sellStocks(row)}>Sell</button
 							></td
 						>
 					</tr>

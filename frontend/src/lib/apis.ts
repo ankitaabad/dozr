@@ -45,6 +45,7 @@ export async function buyStocksApi(stock_id, quantity, company_name) {
 			refreshDozerStores(
 				'recentTransactionsStore',
 				'customerBalanceStore',
+        'customersStocksStore',
 				'customerStockInvestmentValueStore',
 				'customerTotalInvestmentValueStore'
 			);
@@ -64,7 +65,7 @@ export async function sellStocksApi(stock_id, quantity, company_name) {
 	});
 	const config = {
 		method: 'put',
-		url: `stocks/${stock_id}/buy`,
+		url: `stocks/${stock_id}/sell`,
 
 		data: data
 	};
@@ -75,6 +76,7 @@ export async function sellStocksApi(stock_id, quantity, company_name) {
 			refreshDozerStores(
 				'recentTransactionsStore',
 				'customerBalanceStore',
+        'customersStocksStore',
 				'customerStockInvestmentValueStore',
 				'customerTotalInvestmentValueStore'
 			);
