@@ -1,6 +1,6 @@
 <script lang="ts">
 	import '../app.postcss';
-	import { isHome } from '$lib/store';
+	import { isHome, isLoading } from '$lib/store';
 	// Floating UI for Popups
 	import { computePosition, autoUpdate, flip, shift, offset, arrow } from '@floating-ui/dom';
 	import {
@@ -57,7 +57,9 @@
 			<Footer />
 		{/if}
 	</div>
-	<!-- <div class="fixed inset-0 bg-gray-100 h-screen z-50 flex items-center justify-center">
-		<ConicGradient stops={conicStops} spin width="w-12" />
-	</div> -->
+	{#if $isLoading}
+		<div class="fixed inset-0 bg-gray-100 h-screen z-50 flex items-center justify-center">
+			<ConicGradient stops={conicStops} spin width="w-12" />
+		</div>
+	{/if}
 </QueryClientProvider>

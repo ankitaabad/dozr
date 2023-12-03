@@ -1,6 +1,7 @@
 import { get, writable, type Writable } from 'svelte/store';
 import { dozerRest } from './utils';
 export const isManager = writable(false);
+export const isLoading = writable(false);
 export const isHome = writable(false);
 
 export const customerId = writable(0);
@@ -59,18 +60,18 @@ function createStockDetailStore() {
 
 		Promise.all([
 			dozerRest.request(configPrice).then((response) => {
-        console.log({price: response.data})
+				console.log({ price: response.data });
 				update((x) => {
-					 x.dailyPrices = response.data;
-          return x
+					x.dailyPrices = response.data;
+					return x;
 				});
 			}),
 			dozerRest.request(configDetail).then((response) => {
-        console.log({details: response.data})
+				console.log({ details: response.data });
 
 				update((x) => {
-					 x.details = response.data?.[0];
-           return x
+					x.details = response.data?.[0];
+					return x;
 				});
 			})
 		]);
@@ -83,10 +84,9 @@ function createDailyStockGainers() {
 	const { subscribe, set, update } = writable([]);
 	async function fetchData() {
 		const data = JSON.stringify({
-      "$order_by": {"daily_change": "desc"},
-      "$limit": 10
-  
-  });
+			$order_by: { daily_change: 'desc' },
+			$limit: 10
+		});
 		// "$filter": {"date":DateTime.now().toSQLDate()}
 
 		const config = {
@@ -107,10 +107,9 @@ function createDailyStockLosers() {
 	const { subscribe, set, update } = writable([]);
 	async function fetchData() {
 		const data = JSON.stringify({
-      "$order_by": {"daily_change": "asc"},
-      "$limit": 10
-  
-  });
+			$order_by: { daily_change: 'asc' },
+			$limit: 10
+		});
 		// "$filter": {"date":DateTime.now().toSQLDate()}
 
 		const config = {
@@ -475,7 +474,7 @@ const storeMap = {
 	customerBalanceStore,
 	customerStockInvestmentValueStore,
 	customerTotalInvestmentValueStore,
-  customersStocksStore,
+	customersStocksStore
 };
 type StoreNames = keyof typeof storeMap;
 
