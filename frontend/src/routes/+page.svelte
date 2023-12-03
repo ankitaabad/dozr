@@ -1,5 +1,5 @@
 <script>
-	import { customerId, isLoggedIn, isManager } from '$lib/store';
+	import { customerId, isManager } from '$lib/store';
 
 	import { get } from 'svelte/store';
 	import { goto } from '$app/navigation';
@@ -10,7 +10,6 @@
 	let userId;
 
 	async function managerLogin() {
-    isLoggedIn.set(true)
 
 		isManager.set(true);
 		console.log(get(isManager));
@@ -28,7 +27,6 @@
 		userLogin(userId);
 	}
 	function userLogin(user_id) {
-    isLoggedIn.set(true)
 		console.log('inside user login');
 		goto(`/customer?customer_id=${user_id}`);
 	}

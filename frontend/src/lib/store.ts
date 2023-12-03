@@ -1,7 +1,7 @@
 import { get, writable, type Writable } from 'svelte/store';
 import { dozerRest } from './utils';
 export const isManager = writable(false);
-export const isLoggedIn = writable(false);
+export const isHome = writable(false);
 
 export const customerId = writable(0);
 export const currentStockId = writable('');

@@ -23,7 +23,11 @@
 			>
 				HK
 			</div>
-			<div>{$customersStore[0]?.first_name} {$customersStore[0]?.last_name}</div>
+			{#if $isManager}
+				<div>Manager</div>
+			{:else}
+				<div>{$customersStore[0]?.first_name} {$customersStore[0]?.last_name}</div>
+			{/if}
 		</div>
 	</div>
 </div>
