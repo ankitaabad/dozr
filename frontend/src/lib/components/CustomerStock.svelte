@@ -35,7 +35,11 @@
 			<tbody>
 				{#each $rows as row}
 					<tr>
-						<td>{row.company_name} <br />Buy Price: {row.avg_price.toFixed(2)}</td>
+						<td
+							>{row.company_name} <br /><span class="text-sm text-gray-500"
+								>Buy Price: {row.avg_price.toFixed(2)}</span
+							></td
+						>
 						<td>{row.quantity}</td>
 						<td class="font-medium s-FI5Y16UXR6H0">₹{row.price.toFixed(2)}</td>
 						<td class="font-medium s-FI5Y16UXR6H0">₹{row.market_capital.toFixed(2)} (Cr)</td>

@@ -23,11 +23,11 @@
 			<tbody>
 				{#each $rows as row}
 					<tr>
-						<td>{row.company_name}</td>
-						<td>{row.industry}</td>
-						<td class="font-medium">₹{row.market_capital.toFixed(2)} (Cr)</td>
-						<td class="font-medium">₹{row.price.toFixed(2)}</td>
-						<td class="font-medium">{row.yearly_change.toFixed(2)}%</td>
+						<td>{row?.company_name}</td>
+						<td>{row?.industry}</td>
+						<td class="font-medium">₹{row?.market_capital.toFixed(2)} (Cr)</td>
+						<td class="font-medium">₹{row?.price.toFixed(2)}</td>
+						<td class="font-medium">{row?.yearly_change.toFixed(2)}%</td>
 					</tr>
 				{/each}
 			</tbody>

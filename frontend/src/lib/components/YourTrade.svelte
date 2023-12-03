@@ -23,8 +23,9 @@
 		$customerTotalInvestmentValueStore[0]?.total_present_value -
 		$customerTotalInvestmentValueStore[0]?.total_investment;
 
-	$: totalChangePercentage = (totalChange / $customerTotalInvestmentValueStore[0]?.total_investment) * 100;
-$: console.log({totalChange})
+	$: totalChangePercentage =
+		(totalChange / $customerTotalInvestmentValueStore[0]?.total_investment) * 100;
+	$: console.log({ totalChange });
 	$: totalChangeString = totalChangePercentage && getChangeString('total');
 
 	$: mfChange =
@@ -51,7 +52,7 @@ $: console.log({totalChange})
 			s += change.toFixed(2);
 
 			s += ` (${sign}${per.toFixed(2)}%)`;
-      return s
+			return s;
 			console.log({ s });
 		};
 		switch (type) {
@@ -89,66 +90,70 @@ $: console.log({totalChange})
 		<h2 class="font-medium text-lg">Summary</h2>
 	</div>
 	<div class="flex gap-6">
-		<div class="card grow w-[25%]">
-			<h3 class="font-medium mb-4 p-6 pb-0">Stocks</h3>
-			<div class="flex justify-between pt-0 p-6 border-b border-gray-100 border-solid">
-				<div class="flex justify-between flex-col">
-					<div class="flex flex-col mb-8">
+		<div class="card grow w-[25%] p-6">
+			<h3 class="font-medium mb-4">Stocks</h3>
+			<div class="flex justify-between flex-col gap-8">
+				<div class="flex justify-between">
+					<div class="flex flex-col">
 						<span class="text-xs text-gray-400">Invested</span>
 						<span>₹{$customerStockInvestmentValueStore[0]?.investment.toFixed(2)}</span>
 					</div>
 
 					<div class="flex flex-col">
-						<span class="text-xs text-gray-400">Total return</span>
-						<span  class = {stockChange> 0?"text-green-500":"text-red-500"}>{stockChangeString}</span>
-					</div>
-				</div>
-				<div class="flex justify-between flex-col">
-					<div class="flex flex-col">
 						<span class="text-xs text-gray-400">Current</span>
 						<span>₹{$customerStockInvestmentValueStore[0]?.present_value.toFixed(2)}</span>
 					</div>
 				</div>
+				<div class="flex justify-between flex-col">
+					<div class="flex flex-col">
+						<span class="text-xs text-gray-400">Total return</span>
+						<span class={stockChange > 0 ? 'text-green-500' : 'text-red-500'}
+							>{stockChangeString}</span
+						>
+					</div>
+				</div>
 			</div>
 		</div>
-		<div class="card grow w-[25%]">
-			<h3 class="font-medium mb-4 p-6 pb-0">Mutual Funds</h3>
-			<div class="flex justify-between pt-0 p-6 border-b border-gray-100 border-solid">
-				<div class="flex justify-between flex-col">
-					<div class="flex flex-col mb-8">
+		<div class="card grow w-[25%] p-6">
+			<h3 class="font-medium mb-4">Mutual Funds</h3>
+			<div class="flex justify-between flex-col gap-8">
+				<div class="flex justify-between">
+					<div class="flex flex-col">
 						<span class="text-xs text-gray-400">Invested</span>
 						<span>₹{$customerMFInvestmentValueStore[0]?.investment.toFixed(2)}</span>
 					</div>
-					<div class="flex flex-col">
-						<span class="text-xs text-gray-400">Total return</span>
-						<span class = {mfChange> 0?"text-green-500":"text-red-500"}>{mfChangeString}</span>
-					</div>
-				</div>
-				<div class="flex justify-between flex-col">
 					<div class="flex flex-col">
 						<span class="text-xs text-gray-400">Current</span>
 						<span>₹{$customerMFInvestmentValueStore[0]?.present_value.toFixed(2)}</span>
 					</div>
 				</div>
+				<div class="flex justify-between flex-col">
+					<div class="flex flex-col">
+						<span class="text-xs text-gray-400">Total return</span>
+						<span class={mfChange > 0 ? 'text-green-500' : 'text-red-500'}>{mfChangeString}</span>
+					</div>
+				</div>
 			</div>
 		</div>
-		<div class="card grow w-[25%]">
-			<h3 class="font-medium mb-4 p-6 pb-0">Total Investment</h3>
-			<div class="flex justify-between pt-0 p-6 border-b border-gray-100 border-solid">
-				<div class="flex justify-between flex-col">
-					<div class="flex flex-col mb-8">
+		<div class="card grow w-[25%] p-6">
+			<h3 class="font-medium mb-4">Total Investment</h3>
+			<div class="flex justify-between flex-col gap-8">
+				<div class="flex justify-between">
+					<div class="flex flex-col">
 						<span class="text-xs text-gray-400">Invested</span>
 						<span>{$customerTotalInvestmentValueStore[0]?.total_investment.toFixed(2)}</span>
 					</div>
 					<div class="flex flex-col">
-						<span class="text-xs text-gray-400">Total return</span>
-						<span class = {totalChange> 0?"text-green-500":"text-red-500"}>{totalChangeString}</span>
+						<span class="text-xs text-gray-400">Current</span>
+						<span>{$customerTotalInvestmentValueStore[0]?.total_present_value.toFixed(2)}</span>
 					</div>
 				</div>
 				<div class="flex justify-between flex-col">
 					<div class="flex flex-col">
-						<span class="text-xs text-gray-400">Current</span>
-						<span>{$customerTotalInvestmentValueStore[0]?.total_present_value.toFixed(2)}</span>
+						<span class="text-xs text-gray-400">Total return</span>
+						<span class={totalChange > 0 ? 'text-green-500' : 'text-red-500'}
+							>{totalChangeString}</span
+						>
 					</div>
 				</div>
 			</div>

@@ -1,20 +1,19 @@
 <script>
-	import { customersStore, getInitials, isManager,customerId } from '$lib/store';
+	import { customersStore, getInitials, isManager, customerId } from '$lib/store';
 	import logo from '$lib/assets/logo.svg';
 	import { goto } from '$app/navigation';
 
-  function logout() {
-    goto('/')
-    customerId.set(0)
-
-  }
+	function logout() {
+		goto('/');
+		customerId.set(0);
+	}
 </script>
 
 <div
 	class="flex bg-white items-center px-6 justify-between border-b border-gray-200 border-solid py-4"
 >
 	<div class="logo">
-		<a href="/"><img src={logo} alt="Logo" /></a>
+		<img src={logo} alt="Logo" />
 	</div>
 	<!-- <div class="search min-w-[20%]">
 		<form action="">
@@ -24,7 +23,7 @@
 		</form>
 	</div> -->
 	<div class="flex items-center">
-		<div class="flex items-center justify-center gap-2 pr-6 border-r border-gray-200 border-solid">
+		<div class="flex items-center justify-center gap-2 pr-8 border-r border-gray-200 border-solid">
 			<div
 				class="flex items-center justify-center w-10 h-10 rounded-full bg-primary-500 text-white"
 			>
@@ -56,7 +55,7 @@
 				</div>
 			{/if}
 		</div>
-		<button class="btn  flex gap-2 pl-6" on:click={logout}>
+		<button class="btn flex gap-2 ml-2 hover:bg-gray-300 rounded" on:click={logout}>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				class="icon icon-tabler icon-tabler-logout"
@@ -72,6 +71,6 @@
 					d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2"
 				/><path d="M9 12h12l-3 -3" /><path d="M18 15l3 -3" /></svg
 			><span>Logout</span>
-    </button>
+		</button>
 	</div>
 </div>
