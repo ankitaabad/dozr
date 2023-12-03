@@ -29,7 +29,7 @@
 				{#each $rows as row}
 					<tr>
 						<td>{convertDate(row.date)} </td>
-						<td>₹{row.amount}</td>
+						<td>₹{row?.amount.toFixed(2)}</td>
 						<td>{row.desc}</td>
 					</tr>
 				{/each}

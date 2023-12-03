@@ -1,6 +1,13 @@
 <script>
-	import { customersStore, getInitials, isManager } from '$lib/store';
+	import { customersStore, getInitials, isManager,customerId } from '$lib/store';
 	import logo from '$lib/assets/logo.svg';
+	import { goto } from '$app/navigation';
+
+  function logout() {
+    goto('/')
+    customerId.set(0)
+
+  }
 </script>
 
 <div
@@ -45,11 +52,11 @@
 						{$customersStore[0]?.first_name}
 						{$customersStore[0]?.last_name}
 					</div>
-					<div class="text-xs text-gray-500">ID: 2Z1mqipabgtctkgpKlDMU2NLyOY</div>
+					<div class="text-xs text-gray-500">ID: {$customerId}</div>
 				</div>
 			{/if}
 		</div>
-		<div class="flex gap-2 pl-6">
+		<button class="btn  flex gap-2 pl-6" on:click={logout}>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				class="icon icon-tabler icon-tabler-logout"
@@ -65,6 +72,6 @@
 					d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2"
 				/><path d="M9 12h12l-3 -3" /><path d="M18 15l3 -3" /></svg
 			><span>Logout</span>
-		</div>
+    </button>
 	</div>
 </div>

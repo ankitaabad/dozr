@@ -18,6 +18,52 @@
 
 		modalStore.trigger(modal);
 	}
+
+	$: totalChange =
+		$customerTotalInvestmentValueStore[0]?.total_present_value -
+		$customerTotalInvestmentValueStore[0]?.total_investment;
+
+	$: totalChangePercentage = (totalChange / $customerTotalInvestmentValueStore[0]?.total_investment) * 100;
+$: console.log({totalChange})
+	$: totalChangeString = totalChangePercentage && getChangeString('total');
+
+	$: mfChange =
+		$customerMFInvestmentValueStore[0]?.present_value -
+		$customerMFInvestmentValueStore[0]?.investment;
+
+	$: mfChangePercentage = (mfChange / $customerMFInvestmentValueStore[0]?.investment) * 100;
+	$: mfChangeString = mfChangePercentage && getChangeString('mf');
+
+	$: stockChange =
+		$customerStockInvestmentValueStore[0]?.present_value -
+		$customerStockInvestmentValueStore[0]?.investment;
+	$: stockChangePercentage =
+		(stockChange / $customerStockInvestmentValueStore[0]?.investment) * 100;
+	$: stockChangeString = stockChangePercentage && getChangeString('stock');
+
+	const getChangeString = (type: 'stock' | 'mf' | 'total') => {
+		const getStr = (change, per) => {
+			let s = '₹ ';
+			let sign = '';
+			if (change > 0) sign = '+';
+			// else if (change < 0) sign = '-';
+			// s += sign + '₹';
+			s += change.toFixed(2);
+
+			s += ` (${sign}${per.toFixed(2)}%)`;
+      return s
+			console.log({ s });
+		};
+		switch (type) {
+			case 'stock':
+				return getStr(stockChange, stockChangePercentage);
+
+			case 'mf':
+				return getStr(mfChange, mfChangePercentage);
+			case 'total':
+				return getStr(totalChange, totalChangePercentage);
+		}
+	};
 </script>
 
 <!-- <fieldset>
@@ -54,7 +100,7 @@
 
 					<div class="flex flex-col">
 						<span class="text-xs text-gray-400">Total return</span>
-						<span class=" text-success-500">+₹39,227 (18.59%)</span>
+						<span  class = {stockChange> 0?"text-green-500":"text-red-500"}>{stockChangeString}</span>
 					</div>
 				</div>
 				<div class="flex justify-between flex-col">
@@ -75,7 +121,7 @@
 					</div>
 					<div class="flex flex-col">
 						<span class="text-xs text-gray-400">Total return</span>
-						<span class="text-success-500">+₹39,227 (18.59%)</span>
+						<span class = {mfChange> 0?"text-green-500":"text-red-500"}>{mfChangeString}</span>
 					</div>
 				</div>
 				<div class="flex justify-between flex-col">
@@ -96,7 +142,7 @@
 					</div>
 					<div class="flex flex-col">
 						<span class="text-xs text-gray-400">Total return</span>
-						<span class="text-success-500">+₹39,227 (18.59%)</span>
+						<span class = {totalChange> 0?"text-green-500":"text-red-500"}>{totalChangeString}</span>
 					</div>
 				</div>
 				<div class="flex justify-between flex-col">
