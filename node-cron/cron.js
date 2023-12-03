@@ -5,9 +5,10 @@ var cron = require('node-cron');
 const axios = require('axios')
 
 
-cron.schedule('* * * * *', () => {
+cron.schedule('* * * * *', async () => {
   const healthCheckEndpoint = process.env.healthChecksBaseURL
   console.log('running a task every minute', healthCheckEndpoint );
+  await job()
 });
 async function job() {
   try {
