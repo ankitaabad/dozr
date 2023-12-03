@@ -12,7 +12,8 @@ import {
   allMutualFundsStore,
   customerStockInvestmentValueStore,
   customerMFInvestmentValueStore,
-  customerTotalInvestmentValueStore
+  customerTotalInvestmentValueStore,
+  topYearlyStock
 } from '$lib/store';
 import { browser } from '$app/environment';
 
@@ -41,7 +42,8 @@ export async function load({url}) {
     allMutualFundsStore.fetchData(),
     customerStockInvestmentValueStore.fetchData(),
     customerMFInvestmentValueStore.fetchData(),
-    customerTotalInvestmentValueStore.fetchData()
+    customerTotalInvestmentValueStore.fetchData(),
+    topYearlyStock.fetchData()
 
 	]);
 }

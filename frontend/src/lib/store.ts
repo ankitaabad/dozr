@@ -2,6 +2,7 @@ import { get, writable, type Writable } from 'svelte/store';
 import { dozerRest } from './utils';
 export const isManager = writable(false);
 export const customerId = writable(0);
+export const currentStockId = writable('');
 import { backOff } from 'exponential-backoff';
 import { DateTime } from 'luxon';
 
@@ -28,6 +29,49 @@ function createRecentTransactions() {
 			console.log('before updating recent transactino store');
 			update(() => response.data);
 		});
+	}
+
+	return { subscribe, set, update, fetchData };
+}
+
+function createStockDetailStore() {
+	const { subscribe, set, update } = writable({ dailyPrices: [], details: {} });
+	async function fetchData() {
+		const data = JSON.stringify({ $limit: 365, $order_by: { date: 'desc' } });
+		// "$filter": {"date":DateTime.now().toSQLDate()}
+
+		const configPrice = {
+			method: 'post',
+			url: '/stocks_daily_price/query',
+			data: data
+		};
+		const configDetail = {
+			method: 'post',
+			url: '/stocks/query',
+			data: JSON.stringify({
+				$filter: {
+					stock_id: get(currentStockId)
+				}
+			})
+		};
+
+		Promise.all([
+			dozerRest.request(configPrice).then((response) => {
+        console.log({price: response.data})
+				update((x) => {
+					 x.dailyPrices = response.data;
+          return x
+				});
+			}),
+			dozerRest.request(configDetail).then((response) => {
+        console.log({details: response.data})
+
+				update((x) => {
+					 x.details = response.data?.[0];
+           return x
+				});
+			})
+		]);
 	}
 
 	return { subscribe, set, update, fetchData };
@@ -129,6 +173,31 @@ function createAllStocksStore() {
 
 		dozerRest.request(config).then((response) => {
 			console.log('before updating stocks store');
+			update(() => response.data);
+		});
+	}
+
+	return { subscribe, set, update, fetchData };
+}
+
+function createTopYearlyStocksStore() {
+	const { subscribe, set, update } = writable([]);
+
+	async function fetchData() {
+		let data = JSON.stringify({
+			$order_by: {
+				yearly_change: 'desc'
+			},
+			$limit: 10
+		});
+		const config = {
+			method: 'post',
+			url: '/stocks/query',
+			data
+		};
+
+		dozerRest.request(config).then((response) => {
+			console.log('top stocks', response.data);
 			update(() => response.data);
 		});
 	}
@@ -381,7 +450,7 @@ export const topStockLosersStore = createDailyStockLosers();
 export const customersStore = createCustomersStore();
 export const allStocksStore = createAllStocksStore();
 export const allMutualFundsStore = creatAllMutualFundsStore();
-
+export const topYearlyStock = createTopYearlyStocksStore();
 export const customersStocksStore = creaeCustomerStocksStore();
 export const customerBalanceStore = createCustomerBalanceStore();
 export const customerMutualFundsStore = createCustomerMutualFundsStore();
@@ -390,6 +459,7 @@ export const customerStockInvestmentValueStore = creatCustomerStockInvestmentVal
 export const customerMFInvestmentValueStore = creatCustomerMFInvestmentValueStore();
 export const customerTotalInvestmentValueStore = creatCustomerTotalInvestmentValueStore();
 export const topInvestorsStore = createTopInvestorsStore();
+export const stockDetailStore = createStockDetailStore();
 
 function getStoreDozerId(store: Writable<any>) {
 	const data = get(store);

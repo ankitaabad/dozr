@@ -32,6 +32,8 @@ const modalStore = getModalStore();
 	}
 </script>
 
+<button class="btn btn-primary btn-sm" on:click={()=> goto("/stockdetail?stock_id=001r7tOv0gSeoQ0S7nLA3szpLT2qCXfH")}> stocks </button>
+
 <div class="h-screen flex">
 	<div
 		class="container h-80 justify-center my-auto gap-y-4 items-center flex flex-col max-w-sm mx-auto"
