@@ -12,12 +12,12 @@ cron.schedule('* * * * *', () => {
 async function job() {
   try {
     
-    const p1 = axios.default.get(`${healthCheckEndpoint/start}`)
+    const p1 = axios.default.get(`${healthCheckEndpoint}/start}`)
     console.log("work here")
     const p2 = axios.default.get(`${healthCheckEndpoint}`)
     await Promise.all([p1,p2])
   }catch(err){
-    await axios.default.get(`${healthCheckEndpoint/fail}`).catch(err=> {})
+    await axios.default.get(`${healthCheckEndpoint}/fail}`).catch(err=> {})
 
   }
   // const client = new Client({
