@@ -39,7 +39,7 @@
 			{#if tabSet === 0}
 				<div class="flex gap-6">
 					<YourTrade />
-					<AccountBalance />
+					<!-- <AccountBalance /> -->
 				</div>
 
 				<div class="flex gap-6 mt-6">
@@ -58,6 +58,32 @@
 							<h2 class="font-medium text-lg">Your Loan</h2>
 						</div>
 						<PayableLoans />
+						<div class="h-[90%] flex items-center justify-center font-medium">
+							<div class="flex flex-col gap-4 justify-center items-center">
+								<div>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										class="icon icon-tabler icon-tabler-file"
+										width="56"
+										height="56"
+										viewBox="0 0 24 24"
+										stroke-width="1"
+										stroke="#495a8f"
+										fill="none"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path
+											d="M14 3v4a1 1 0 0 0 1 1h4"
+										/><path
+											d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"
+										/></svg
+									>
+								</div>
+								<div class="font-medium text-gray-500 text-center">
+									You don't have any active loans.
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			{:else if tabSet === 1}
