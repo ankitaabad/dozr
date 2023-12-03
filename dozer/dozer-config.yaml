@@ -62,8 +62,9 @@ sources:
 
 sql: |
   select sdp."date" , sdp.stock_id ,round(sdp.daily_change,2) daily_change, sdp.price, s.company_name into dailyStocks from stocks_daily_price sdp join stocks s on sdp.stock_id = s.stock_id;
- 
-  select * into customer_stocks_nonzero from customer_stocks where quantity != 0;
+  
+  select cs.customer_id,cs.stock_id, cs.quantity , cs.avg_price , s.company_name , s.symbol , s.industry , s.market_capital , s.price into customer_stocks_nonzero from customer_stocks cs join stocks s on cs.stock_id = s.stock_id  where quantity != 0;
+
   
   select customer_id, balance into customer_balance from customers;
 
