@@ -7,6 +7,6 @@ COPY ./node-cron/package-lock.json package-lock.json
  
 RUN npm install
  
-COPY ./node-cron .
+COPY ./node-cron/* .
  
 CMD [ "node", "cron.js" ]
