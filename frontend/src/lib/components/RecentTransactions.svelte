@@ -1,8 +1,13 @@
 <script lang="ts">
 	import { recentTransactionsStore } from '$lib/store';
 	import { DataHandler, Datatable, Th, ThFilter } from '@vincjo/datatables';
+	import { DateTime } from 'luxon';
 	$: handler = new DataHandler($recentTransactionsStore, { rowsPerPage: 5 });
 	$: rows = handler.getRows();
+
+  function convertDate(date) {
+    return DateTime.fromISO(date).toFormat("MM-dd-yyyy hh:mm")
+  }
 </script>
 
 <div class="w-full card px-4 py-6">
@@ -10,7 +15,7 @@
 		<table>
 			<thead>
 				<tr>
-					<Th {handler} orderBy="date">Date</Th>
+					<Th {handler} orderBy="date"> Date</Th>
 					<Th {handler} orderBy="amount">Amount</Th>
 					<Th {handler} orderBy="desc">Description</Th>
 				</tr>
@@ -23,7 +28,7 @@
 			<tbody>
 				{#each $rows as row}
 					<tr>
-						<td>{row.date} </td>
+						<td>{convertDate(row.date)} </td>
 						<td>₹{row.amount}</td>
 						<td>{row.desc}</td>
 					</tr>
