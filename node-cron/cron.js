@@ -1,7 +1,12 @@
 const { DateTime } = require("luxon");
 const { Pool, Client } = require("pg");
 const { randomPricePercentageChange, change } = require("./utils");
-async function cron() {
+var cron = require('node-cron');
+
+cron.schedule('* * * * *', () => {
+  console.log('running a task every minute');
+});
+async function job() {
   const client = new Client({
     user: "postgres",
     host: "68.183.85.136",
@@ -70,4 +75,4 @@ async function cron() {
   await client.end();
 }
 
-cron();
+
