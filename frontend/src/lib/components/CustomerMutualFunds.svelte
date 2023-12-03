@@ -5,21 +5,14 @@
 	$: rows = handler.getRows();
 </script>
 
-<div class="w-full card px-4 py-6">
+<div class="w-full card p-4">
 	<Datatable {handler} search={false} rowsPerPage={false} rowCount={true}>
 		<table>
 			<thead>
 				<tr>
 					<Th {handler} orderBy="fund_name">Name</Th>
-					<Th {handler} orderBy="amount">Return</Th>
-					<Th {handler} orderBy="desc">Current</Th>
-					<Th {handler} orderBy="">&nbsp;</Th>
-				</tr>
-				<tr>
-					<ThFilter {handler} filterBy="date" />
-					<ThFilter {handler} filterBy="amount" />
-					<ThFilter {handler} filterBy="desc" />
-					<ThFilter {handler} filterBy="" />
+					<Th {handler} orderBy="amount">Quantity</Th>
+					<Th {handler} orderBy="desc">Avg. buy Price</Th>
 				</tr>
 			</thead>
 			<tbody>
@@ -34,25 +27,8 @@
 								<div>{row.fund_name}</div>
 							</div>
 						</td>
-						<td
-							><div class="flex flex-col items-start">
-								<div>₹3,168.90</div>
-								<div class="text-success-500 text-xs">38.60(1.23%)</div>
-							</div></td
-						>
-						<td
-							><div class="flex flex-col items-start">
-								<div>₹3,168.90</div>
-								<div class=" text-xs">38.60(1.23%)</div>
-							</div></td
-						>
-						<td
-							><button
-								type="button"
-								class=" btn btn-sm rounded-md px-6 bg-primary-500 variant-filled-primary"
-								>Sell</button
-							></td
-						>
+						<td>{row.quantity}</td>
+						<td class="font-medium s-FI5Y16UXR6H0">₹{row.avg_price.toFixed(2)}</td>
 					</tr>
 				{/each}
 			</tbody>

@@ -1,14 +1,14 @@
 <script lang="ts">
-	import { allStocksStore } from '$lib/store';
+	import { customersStocksStore } from '$lib/store';
 	import { dozerRest, server } from '$lib/utils';
 	import { DataHandler, Datatable, Th, ThFilter } from '@vincjo/datatables';
 	import { getModalStore, type ModalSettings } from '@skeletonlabs/skeleton';
 	const modalStore = getModalStore();
-	function buyStocks(stock_id, company_name) {
+	function sellStocks(stock_id, company_name) {
 		console.log('inside add money');
 		const modal: ModalSettings = {
 			type: 'component',
-			component: 'buyStocksModel',
+			component: 'sellStocksModel',
 			meta: { stock_id, company_name }
 		};
 		console.log({ modal });
@@ -16,18 +16,18 @@
 		modalStore.trigger(modal);
 	}
 
-	$: handler = new DataHandler($allStocksStore, { rowsPerPage: 10 });
+	$: handler = new DataHandler($customersStocksStore, { rowsPerPage: 10 });
 	$: rows = handler.getRows();
 </script>
 
-<div class="w-full card px-4 py-6">
+<div class="w-full card p-4">
 	<Datatable {handler} search={false} rowsPerPage={false} rowCount={true}>
 		<table>
 			<thead>
 				<tr>
-					<Th {handler} orderBy="company_name">Stock</Th>
-					<Th {handler} orderBy="industry">Industry</Th>
-					<Th {handler} orderBy="price">Price</Th>
+					<Th {handler} orderBy="company_name">Name</Th>
+					<Th {handler} orderBy="quantity">Quantity</Th>
+					<Th {handler} orderBy="avg_price">Current Price</Th>
 					<Th {handler} orderBy="market_capital">Market Capital</Th>
 					<Th {handler} orderBy="">&nbsp;</Th>
 				</tr>
@@ -35,15 +35,15 @@
 			<tbody>
 				{#each $rows as row}
 					<tr>
-						<td>{row.company_name}</td>
-						<td>{row.industry}</td>
+						<td>{row.company_name} <br />Buy Price: {row.avg_price.toFixed(2)}</td>
+						<td>{row.quantity}</td>
 						<td class="font-medium s-FI5Y16UXR6H0">₹{row.price.toFixed(2)}</td>
-						<td class="font-medium s-FI5Y16UXR6H0">₹{row.market_capital.toFixed(2)}</td>
+						<td class="font-medium s-FI5Y16UXR6H0">₹{row.market_capital.toFixed(2)} (Cr)</td>
 						<td
 							><button
 								type="button"
 								class=" btn btn-sm rounded-md px-6 bg-primary-500 variant-filled-primary"
-								on:click={() => buyStocks(row.stock_id, row.company_name)}>Buy</button
+								on:click={() => sellStocks(row.stock_id, row.company_name)}>Sell</button
 							></td
 						>
 					</tr>

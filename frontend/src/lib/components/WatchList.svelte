@@ -1,4 +1,4 @@
-<div class="card px-4 py-6">
+<div class="w-full card p-4">
 	<div class="">
 		<div class="pb-4 border-b border-solid border-gray-100 flex justify-between w-full">
 			<div>SBI</div>

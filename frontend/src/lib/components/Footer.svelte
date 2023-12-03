@@ -4,11 +4,17 @@
 	<div class="max-w-7xl w-full mx-auto text-center">
 		<div class="flex justify-between gap-3">
 			<div>
-				ⓒ 2023 TradeGo. All rights reserved, Built with <span class="text-pink-500 text-lg">♥</span>
+				Built with <span class="text-pink-500 text-lg">♥</span>
 				By Twin Titans
 			</div>
 			<div>
-				<ul class="flex gap-3 justify-center">
+				<div>
+					<a
+						class="text-primary-500 underline hover:text-primary-400 transition-all"
+						href="https://www.techgig.com/hackathon/growthgenie">GrowthGenie Hackathon</a
+					>
+				</div>
+				<!-- <ul class="flex gap-3 justify-center">
 					<li>
 						<a href="/" class="text-primary-500 underline hover:text-primary-400 transition-all"
 							>Term and Condition</a
@@ -19,7 +25,7 @@
 							>Privacy Policy</a
 						>
 					</li>
-				</ul>
+				</ul> -->
 			</div>
 		</div>
 	</div>

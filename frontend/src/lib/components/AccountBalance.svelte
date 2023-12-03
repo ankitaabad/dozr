@@ -14,12 +14,14 @@
 	}
 </script>
 
-<div class="w-[25%] card p-6">
-	<div class="heading mb-6">
-		<h2 class="font-medium text-lg">Account balance</h2>
+<div class="w-[25%] card p-6 flex flex-col">
+	<div>
+		<div class="heading mb-6">
+			<h2 class="font-medium text-lg">Account balance</h2>
+		</div>
+		<div class="text-2xl font-semibold">₹{$customerBalanceStore[0]?.balance}</div>
 	</div>
-	<div class="text-2xl font-semibold">₹{$customerBalanceStore[0]?.balance}</div>
-	<div class="my-6">
+	<!-- <div class="my-6">
 		<div class=" ">
 			<a
 				href="#"
@@ -86,10 +88,10 @@
 				</div>
 			</a>
 		</div>
-	</div>
+	</div> -->
 	<button
 		type="button"
-		class="mt-8 btn w-full rounded bg-primary-500 variant-filled-primary"
+		class="mt-auto btn w-full rounded bg-primary-500 variant-filled-primary"
 		on:click={showAddMoneyModal}>Add Money</button
 	>
 </div>

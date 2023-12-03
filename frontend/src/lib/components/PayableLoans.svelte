@@ -8,7 +8,7 @@
 
 <div class="flex flex-col gap-3">
 	{#each $rows as row}
-		<div class="w-full card px-4 py-6">
+		<div class="w-full card p-4">
 			<div class="flex gap-2 items-center">
 				<div
 					class="p-3 rounded border border-solid border-gray-300 flex justify-between items-center"
@@ -20,7 +20,7 @@
 					<div class="font-semibold text-sm">EMI: {row.EMI}</div>
 				</div>
 			</div>
-			<div class="mt-4 mb-0 text-gray-400"><em>{row.repayment_schedule}</em></div>
+			<div class="mt-3 mb-0 text-gray-400"><em>{row.repayment_schedule}</em></div>
 		</div>
 	{/each}
 </div>

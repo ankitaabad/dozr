@@ -10,7 +10,7 @@
   }
 </script>
 
-<div class="w-full card px-4 py-6">
+<div class="w-full card p-4">
 	<Datatable {handler} search={false} rowsPerPage={false} rowCount={true}>
 		<table>
 			<thead>

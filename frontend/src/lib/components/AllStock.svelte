@@ -20,7 +20,7 @@
 	$: rows = handler.getRows();
 </script>
 
-<div class="w-full card px-4 py-6">
+<div class="w-full card p-4">
 	<Datatable {handler} search={false} rowsPerPage={false} rowCount={true}>
 		<table>
 			<thead>
@@ -37,8 +37,8 @@
 					<tr>
 						<td>{row.company_name}</td>
 						<td>{row.industry}</td>
-						<td class="font-medium s-FI5Y16UXR6H0">₹{row.price.toFixed(2)}</td>
-						<td class="font-medium s-FI5Y16UXR6H0">₹{row.market_capital.toFixed(2)}</td>
+						<td class="font-medium">₹{row.price.toFixed(2)}</td>
+						<td class="font-medium">₹{row.market_capital.toFixed(2)} (Cr)</td>
 						<td
 							><button
 								type="button"

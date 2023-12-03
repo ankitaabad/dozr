@@ -22,6 +22,8 @@
 	import YourTrade from '$lib/components/YourTrade.svelte';
 	import AccountBalance from '$lib/components/AccountBalance.svelte';
 	import WatchList from '$lib/components/WatchList.svelte';
+	import TopYearlyStock from '$lib/components/TopYearlyStock.svelte';
+	import Stocks from '$lib/components/Stocks.svelte';
 	let tabSet: number = 0;
 	let StocktabSet: number = 0;
 </script>
@@ -45,7 +47,7 @@
 						<div class="w-[100%] card p-6">
 							<div class="heading mb-6 flex justify-between items-center">
 								<h2 class="font-medium text-lg">Recent transactions</h2>
-								<a href="#" class="text-primary-500 font-medium">View all</a>
+								<!-- <a href="#" class="text-primary-500 font-medium">View all</a> -->
 							</div>
 							<RecentTransactions />
 						</div>
@@ -63,7 +65,7 @@
 					<div class="w-[100%] card p-6">
 						<div class="heading mb-6 flex justify-between items-center">
 							<h2 class="font-medium text-lg">Holding</h2>
-							<a href="#" class="text-primary-500 font-medium">View all</a>
+							<!-- <a href="#" class="text-primary-500 font-medium">View all</a> -->
 						</div>
 						<div class="customer-stocks">
 							<CustomerStock />
@@ -72,22 +74,9 @@
 					<div class="w-[100%] card p-6">
 						<div class=" heading mb-6 flex justify-between items-center">
 							<h2 class="font-medium text-lg">All Stocks</h2>
-							<a href="#" class="text-primary-500 font-medium">View all</a>
+							<!-- <a href="#" class="text-primary-500 font-medium">View all</a> -->
 						</div>
-						<TabGroup>
-							<Tab bind:group={StocktabSet} name="tab2" value={0}>All Stocks</Tab>
-							<Tab bind:group={StocktabSet} name="tab2" value={1}>Top ganiner</Tab>
-							<Tab bind:group={StocktabSet} name="tab3" value={2}>Top losers Funds</Tab>
-							<svelte:fragment slot="panel">
-								{#if StocktabSet === 0}
-									<AllStock />
-								{:else if StocktabSet === 1}
-									<TopGainer />
-								{:else if StocktabSet === 2}
-									<TopLosers />
-								{/if}
-							</svelte:fragment>
-						</TabGroup>
+						<Stocks />
 					</div>
 					<!-- <div class="w-[25%] card p-6">Stocks</div> -->
 				</div>
@@ -96,7 +85,7 @@
 					<div class="w-[100%] card p-6">
 						<div class="heading mb-6 flex justify-between items-center">
 							<h2 class="font-medium text-lg">Investments</h2>
-							<a href="#" class="text-primary-500 font-medium">View all</a>
+							<!-- <a href="#" class="text-primary-500 font-medium">View all</a> -->
 						</div>
 						<div class="customer-mutualfunds">
 							<CustomerMutualFunds />
@@ -105,7 +94,7 @@
 					<div class="w-[100%] card p-6">
 						<div class="heading mb-6 flex justify-between items-center">
 							<h2 class="font-medium text-lg">All Mutual Funds</h2>
-							<a href="#" class="text-primary-500 font-medium">View all</a>
+							<!-- <a href="#" class="text-primary-500 font-medium">View all</a> -->
 						</div>
 						<TabGroup>
 							<Tab bind:group={StocktabSet} name="tab2" value={0}>Mutual Funds</Tab>
@@ -122,8 +111,3 @@
 		</svelte:fragment>
 	</TabGroup>
 </div>
-
-<CustomerInvestmentValue />
-<div
-	class="flex bg-white items-center px-6 justify-between border-t border-gray-200 border-solid py-6"
-/>

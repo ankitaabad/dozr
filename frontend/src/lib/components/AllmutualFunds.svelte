@@ -11,15 +11,13 @@
 			<thead>
 				<tr>
 					<Th {handler} orderBy="fund_name">Name</Th>
-					<Th {handler} orderBy="price">Price</Th>
-					<Th {handler} orderBy="3y">3Y</Th>
-					<Th {handler} orderBy="5y">5Y</Th>
+					<Th {handler} orderBy="quantity">Quantity</Th>
+					<Th {handler} orderBy="price">Avg. buy Price</Th>
 				</tr>
 				<tr>
 					<ThFilter {handler} filterBy="fund_name" />
+					<ThFilter {handler} filterBy="amount" />
 					<ThFilter {handler} filterBy="price" />
-					<ThFilter {handler} filterBy="3y" />
-					<ThFilter {handler} filterBy="5y" />
 				</tr>
 			</thead>
 			<tbody>
@@ -34,9 +32,8 @@
 								<div>{row.fund_name}</div>
 							</div>
 						</td>
+						<td class="font-medium s-FI5Y16UXR6H0">₹{row.quantity}</td>
 						<td class="font-medium s-FI5Y16UXR6H0">₹{row.price}</td>
-						<td>27.46%</td>
-						<td>27.46%</td>
 					</tr>
 				{/each}
 			</tbody>

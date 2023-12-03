@@ -9,28 +9,46 @@
 	<div class="heading mb-6 flex justify-between items-center">
 		<h2 class="font-medium text-lg">Top Customers</h2>
 	</div>
-	<div class="w-full card px-4 py-6">
-		<Datatable {handler} search={false} rowsPerPage={false} rowCount={true}>
+	<div class="w-full card p-4">
+		<Datatable {handler} search={false} rowsPerPage={false} rowCount={false} pagination={false}>
 			<table>
 				<thead>
 					<tr>
 						<Th {handler} orderBy="Name">Name</Th>
-						<Th {handler} orderBy="balance">Balance</Th>
+						<Th {handler} orderBy="total_investment">Investment</Th>
 						<Th {handler} orderBy="email">Email</Th>
 						<Th {handler} orderBy="phone">Phone</Th>
-					</tr>
-					<tr>
-						<ThFilter {handler} filterBy="Name" />
-						<ThFilter {handler} filterBy="balance" />
-						<ThFilter {handler} filterBy="email" />
-						<ThFilter {handler} filterBy="phone" />
 					</tr>
 				</thead>
 				<tbody>
 					{#each $rows as row}
 						<tr>
-							<td>{row.first_name} {row.last_name}</td>
-							<td class="font-medium">₹{row.balance}</td>
+							<td>
+								<div class="flex gap-3 items-center">
+									<div
+										class="flex items-center justify-center w-10 h-10 rounded-full bg-gray-400 text-white"
+									>
+										<svg
+											xmlns="http://www.w3.org/2000/svg"
+											class="icon icon-tabler icon-tabler-user"
+											width="24"
+											height="24"
+											viewBox="0 0 24 24"
+											stroke-width="2"
+											stroke="currentColor"
+											fill="none"
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path
+												d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"
+											/><path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" /></svg
+										>
+									</div>
+									{row.first_name}
+									{row.last_name}
+								</div>
+							</td>
+							<td class="font-medium">₹{row.total_investment.toFixed(2)}</td>
 							<td>{row.email}</td>
 							<td>{row.phone}</td>
 						</tr>

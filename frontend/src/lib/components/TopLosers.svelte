@@ -6,30 +6,22 @@
 	$: rows = handler.getRows();
 </script>
 
-<div class="w-full card px-4 py-6">
+<div class="w-full card p-4">
 	<Datatable {handler} search={false} rowsPerPage={false} rowCount={true}>
 		<table>
 			<thead>
 				<tr>
-					<Th {handler} orderBy="company_name">Stock</Th>
+					<Th {handler} orderBy="company_name">Name</Th>
 					<Th {handler} orderBy="daily_change">Gain</Th>
 					<Th {handler} orderBy="price">Price</Th>
-					<Th {handler} orderBy="">&nbsp;</Th>
 				</tr>
 			</thead>
 			<tbody>
 				{#each $rows as row}
 					<tr>
 						<td>{row.company_name}</td>
-						<td>{row.daily_change}</td>
-						<td>{row.price.toFixed(2)}</td>
-						<td
-							><button
-								type="button"
-								class=" btn btn-sm rounded-md px-6 bg-primary-500 variant-filled-primary"
-								>Buy</button
-							></td
-						>
+						<td class="font-medium">{row.daily_change.toFixed(2)}%</td>
+						<td class="font-medium">₹{row.price.toFixed(2)}</td>
 					</tr>
 				{/each}
 			</tbody>
