@@ -12,6 +12,7 @@ const modalStore = getModalStore();
   async function managerLogin() {
     isManager.set(true)
     console.log(get(isManager))
+    goto("/manager")
   }
 
   function randomUserLogin(){

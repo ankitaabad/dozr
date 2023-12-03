@@ -5,7 +5,6 @@ export const customerId = writable(0);
 import { backOff } from 'exponential-backoff';
 import { DateTime } from 'luxon';
 
-
 function createRecentTransactions() {
 	const { subscribe, set, update } = writable([]);
 	async function fetchData() {
@@ -83,7 +82,6 @@ function createDailyStockLosers() {
 	return { subscribe, set, update, fetchData };
 }
 
-
 function createCustomersStore() {
 	const { subscribe, set, update } = writable([]);
 
@@ -107,16 +105,15 @@ function createCustomersStore() {
 			update(() => response.data);
 		});
 	}
- 
 
-	return { subscribe, set, update, fetchData,getInitials };
+	return { subscribe, set, update, fetchData, getInitials };
 }
 
 export function getInitials() {
-  const customer = get(customersStore)
-  console.log("getinitials called",customer)
+	const customer = get(customersStore);
+	console.log('getinitials called', customer);
 
-  customer[0].first_name[0] + customer[0].last_name[0]
+	customer[0].first_name[0] + customer[0].last_name[0];
 }
 function createAllStocksStore() {
 	const { subscribe, set, update } = writable([]);
@@ -162,8 +159,6 @@ function creaeCustomerStocksStore() {
 			update(() => response.data);
 		});
 	}
-
-
 
 	return { subscribe, set, update, fetchData };
 }
@@ -248,7 +243,6 @@ function createLoansStore() {
 	return { subscribe, set, update, fetchData };
 }
 
-
 function creatAllMutualFundsStore() {
 	const { subscribe, set, update } = writable([]);
 
@@ -263,7 +257,7 @@ function creatAllMutualFundsStore() {
 
 		const config = {
 			method: 'post',
-			url: '/mutual_funds/query',
+			url: '/mutual_funds/query'
 			// data: data
 		};
 
@@ -328,6 +322,33 @@ function creatCustomerTotalInvestmentValueStore() {
 
 	return { subscribe, set, update, fetchData };
 }
+
+function createTopInvestorsStore() {
+	const { subscribe, set, update } = writable([]);
+
+	async function fetchData() {
+		const cid = get(customerId);
+		console.log({ cid });
+		let data = JSON.stringify({
+			$order_by: {
+				total_investment: 'desc'
+			},
+			$limit: 10
+		});
+
+		const config = {
+			method: 'post',
+			url: '/top_investors/query',
+			data: data
+		};
+
+		dozerRest.request(config).then((response) => {
+			update(() => response.data);
+		});
+	}
+
+	return { subscribe, set, update, fetchData };
+}
 function creatCustomerStockInvestmentValueStore() {
 	const { subscribe, set, update } = writable([]);
 
@@ -356,7 +377,7 @@ function creatCustomerStockInvestmentValueStore() {
 }
 export const recentTransactionsStore = createRecentTransactions();
 export const topStockGainersStore = createDailyStockGainers();
-export const topStockLosersStore = createDailyStockLosers()
+export const topStockLosersStore = createDailyStockLosers();
 export const customersStore = createCustomersStore();
 export const allStocksStore = createAllStocksStore();
 export const allMutualFundsStore = creatAllMutualFundsStore();
@@ -365,10 +386,10 @@ export const customersStocksStore = creaeCustomerStocksStore();
 export const customerBalanceStore = createCustomerBalanceStore();
 export const customerMutualFundsStore = createCustomerMutualFundsStore();
 export const loansStore = createLoansStore();
-export const customerStockInvestmentValueStore = creatCustomerStockInvestmentValueStore()
-export const customerMFInvestmentValueStore = creatCustomerMFInvestmentValueStore()
-export const customerTotalInvestmentValueStore = creatCustomerTotalInvestmentValueStore()
-
+export const customerStockInvestmentValueStore = creatCustomerStockInvestmentValueStore();
+export const customerMFInvestmentValueStore = creatCustomerMFInvestmentValueStore();
+export const customerTotalInvestmentValueStore = creatCustomerTotalInvestmentValueStore();
+export const topInvestorsStore = createTopInvestorsStore();
 
 function getStoreDozerId(store: Writable<any>) {
 	const data = get(store);
@@ -380,9 +401,8 @@ const storeMap = {
 	recentTransactionsStore,
 	customersStore,
 	customerBalanceStore,
-  customerStockInvestmentValueStore,
-  customerTotalInvestmentValueStore
-
+	customerStockInvestmentValueStore,
+	customerTotalInvestmentValueStore
 };
 type StoreNames = keyof typeof storeMap;
 

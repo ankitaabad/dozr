@@ -1,6 +1,7 @@
 import {
 	recentTransactionsStore,
 	topStockGainersStore,
+  topStockLosersStore,
 	customersStore,
 	allStocksStore,
 	customersStocksStore,
@@ -30,6 +31,7 @@ export async function load({url}) {
 	await Promise.all([
 		recentTransactionsStore.fetchData(),
 		topStockGainersStore.fetchData(),
+    topStockLosersStore.fetchData(),
 		customersStore.fetchData(),
 		allStocksStore.fetchData(),
 		customersStocksStore.fetchData(),
