@@ -15,8 +15,8 @@ async function job() {
     console.log("inside job")
     const {user,host, port,database,password} = process.env
     console.log({user,host, port,database,password})
-    console.log("endpoit",`${healthCheckEndpoint}/start}`)
-    const p1 = axios.default.get(`${healthCheckEndpoint}/start}`)
+    console.log("endpoit",`${healthCheckEndpoint}/start`)
+    const p1 = await axios.default.get(`${healthCheckEndpoint}/start`)
     console.log("after healthcheck 1")
     
     const client = new Client({
