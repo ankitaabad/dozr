@@ -83,15 +83,15 @@ function createDailyStockGainers() {
 	const { subscribe, set, update } = writable([]);
 	async function fetchData() {
 		const data = JSON.stringify({
-			$order_by: { daily_change: 'desc' },
-			$limit: 10,
-			$filter: { date: DateTime.now().toSQLDate() }
-		});
+      "$order_by": {"daily_change": "desc"},
+      "$limit": 10
+  
+  });
 		// "$filter": {"date":DateTime.now().toSQLDate()}
 
 		const config = {
 			method: 'post',
-			url: '/dailyStocks/query',
+			url: '/stocks/query',
 			data: data
 		};
 
@@ -107,15 +107,15 @@ function createDailyStockLosers() {
 	const { subscribe, set, update } = writable([]);
 	async function fetchData() {
 		const data = JSON.stringify({
-			$order_by: { daily_change: 'asc' },
-			$limit: 10,
-			$filter: { date: DateTime.now().toSQLDate() }
-		});
+      "$order_by": {"daily_change": "asc"},
+      "$limit": 10
+  
+  });
 		// "$filter": {"date":DateTime.now().toSQLDate()}
 
 		const config = {
 			method: 'post',
-			url: '/dailyStocks/query',
+			url: '/stocks/query',
 			data: data
 		};
 
