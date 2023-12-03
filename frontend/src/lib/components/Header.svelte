@@ -1,7 +1,5 @@
 <script>
-	import Manager from '$lib/components/Manager.svelte';
 	import { customersStore, getInitials, isManager } from '$lib/store';
-	import Customer from '$lib/components/Customer.svelte';
 	import logo from '$lib/assets/logo.svg';
 </script>
 
@@ -26,12 +24,6 @@
 				HK
 			</div>
 			<div>{$customersStore[0]?.first_name} {$customersStore[0]?.last_name}</div>
-			<!-- <Avatar initials="HK" background="bg-secondary-500" class="w-10" /> -->
 		</div>
-		{#if $isManager}
-			<Manager />
-		{:else}
-			<Customer />
-		{/if}
 	</div>
 </div>

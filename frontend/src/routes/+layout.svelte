@@ -10,14 +10,16 @@
 	import AddMoneyModel from '$lib/models/AddMoneyModel.svelte';
 	import BuyStocksModel from '$lib/models/BuyStocksModel.svelte';
 	import SellStocksModel from '$lib/models/SellStocksModel.svelte';
+	import Header from '$lib/components/Header.svelte';
+	import Footer from '$lib/components/Footer.svelte';
 
 	initializeStores();
 
 	const modalRegistry: Record<string, ModalComponent> = {
 		// Set a unique modal ID, then pass the component reference
 		addMoneyModel: { ref: AddMoneyModel },
-    buyStocksModel: {ref: BuyStocksModel},
-    sellStocksModel: {ref: SellStocksModel}
+		buyStocksModel: { ref: BuyStocksModel },
+		sellStocksModel: { ref: SellStocksModel }
 
 		// ...
 	};
@@ -35,5 +37,9 @@
 <Modal components={modalRegistry} />
 
 <QueryClientProvider client={queryClient}>
-	<slot />
+	<div class="flex flex-col h-screen">
+		<Header />
+		<slot />
+		<Footer />
+	</div>
 </QueryClientProvider>

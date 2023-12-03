@@ -1,27 +1,25 @@
 <script lang="ts">
-	import { recentTransactionsStore } from '$lib/store';
+	import { allMutualFundsStore } from '$lib/store';
 	import { DataHandler, Datatable, Th, ThFilter } from '@vincjo/datatables';
-	$: handler = new DataHandler($recentTransactionsStore, { rowsPerPage: 5 });
+	$: handler = new DataHandler($allMutualFundsStore, { rowsPerPage: 5 });
 	$: rows = handler.getRows();
 </script>
 
 <div class="w-full card px-4 py-6">
-	<Datatable {handler} search={false} rowsPerPage={false} rowCount={false}>
+	<Datatable {handler} search={false} rowsPerPage={false} rowCount={true}>
 		<table>
 			<thead>
 				<tr>
-					<Th {handler} orderBy="Name">Name</Th>
-					<Th {handler} orderBy="1y">1Y</Th>
+					<Th {handler} orderBy="fund_name">Name</Th>
+					<Th {handler} orderBy="price">Price</Th>
 					<Th {handler} orderBy="3y">3Y</Th>
 					<Th {handler} orderBy="5y">5Y</Th>
-					<Th {handler} orderBy="">&nbsp;</Th>
 				</tr>
 				<tr>
-					<ThFilter {handler} filterBy="Name" />
-					<ThFilter {handler} filterBy="1y" />
+					<ThFilter {handler} filterBy="fund_name" />
+					<ThFilter {handler} filterBy="price" />
 					<ThFilter {handler} filterBy="3y" />
 					<ThFilter {handler} filterBy="5y" />
-					<ThFilter {handler} filterBy="" />
 				</tr>
 			</thead>
 			<tbody>
@@ -29,21 +27,16 @@
 					<tr>
 						<td>
 							<div class="flex gap-2 items-center">
-								<div class="w-12 h-12 rounded backdrop-brightness-50" />
-								<div>HSBC Small Cap Fund Direct Growth</div>
+								<img
+									src={row.image_src}
+									class="w-12 h-12 rounded border border-solid border-gray-300"
+								/>
+								<div>{row.fund_name}</div>
 							</div>
 						</td>
+						<td class="font-medium s-FI5Y16UXR6H0">₹{row.price}</td>
 						<td>27.46%</td>
 						<td>27.46%</td>
-						<td>27.46%</td>
-
-						<td
-							><button
-								type="button"
-								class=" btn btn-sm rounded-md px-6 bg-primary-500 variant-filled-primary"
-								>Buy</button
-							></td
-						>
 					</tr>
 				{/each}
 			</tbody>

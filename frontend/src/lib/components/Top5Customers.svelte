@@ -10,7 +10,7 @@
 		<h2 class="font-medium text-lg">Top Customers</h2>
 	</div>
 	<div class="w-full card px-4 py-6">
-		<Datatable {handler} search={false} rowsPerPage={false} rowCount={false}>
+		<Datatable {handler} search={false} rowsPerPage={false} rowCount={true}>
 			<table>
 				<thead>
 					<tr>

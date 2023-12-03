@@ -20,22 +20,18 @@
 	let StocktabSet: number = 0;
 </script>
 
-<div class="flex flex-col h-screen">
-	<Header />
-	<div class="max-w-7xl w-full mx-auto my-6">
-		<div class="flex gap-6 mt-6">
-			<div class="w-[100%] flex gap-6">
-				<Top5Customers />
-			</div>
-		</div>
-		<div class="flex gap-6 mt-6">
-			<div class="w-[50%] flex gap-6">
-				<TopGainer />
-			</div>
-			<div class="w-[50%] flex gap-6">
-				<TopLosers />
-			</div>
+<div class="max-w-7xl w-full mx-auto my-6">
+	<div class="flex gap-6 mt-6">
+		<div class="w-[100%] flex gap-6">
+			<Top5Customers />
 		</div>
 	</div>
-	<Footer />
+	<div class="flex gap-6 mt-6">
+		<div class="w-[50%] flex gap-6">
+			<TopGainer />
+		</div>
+		<div class="w-[50%] flex gap-6">
+			<TopLosers />
+		</div>
+	</div>
 </div>

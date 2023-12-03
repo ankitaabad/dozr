@@ -5,51 +5,45 @@
 	import { getModalStore, type ModalSettings } from '@skeletonlabs/skeleton';
 	const modalStore = getModalStore();
 	function buyStocks(stock_id, company_name) {
-    console.log("inside add money")
+		console.log('inside add money');
 		const modal: ModalSettings = {
 			type: 'component',
 			component: 'buyStocksModel',
-      meta:{stock_id,company_name}
+			meta: { stock_id, company_name }
 		};
-    console.log({modal})
+		console.log({ modal });
 
 		modalStore.trigger(modal);
 	}
 
-  $: handler = new DataHandler($allStocksStore, { rowsPerPage: 10 });
+	$: handler = new DataHandler($allStocksStore, { rowsPerPage: 10 });
 	$: rows = handler.getRows();
 </script>
 
 <div class="w-full card px-4 py-6">
-	<Datatable {handler} search={false} rowsPerPage={false} rowCount={false}>
+	<Datatable {handler} search={false} rowsPerPage={false} rowCount={true}>
 		<table>
 			<thead>
 				<tr>
 					<Th {handler} orderBy="company_name">Stock</Th>
 					<Th {handler} orderBy="industry">Industry</Th>
 					<Th {handler} orderBy="price">Price</Th>
-
+					<Th {handler} orderBy="market_capital">Market Capital</Th>
 					<Th {handler} orderBy="">&nbsp;</Th>
 				</tr>
-        <!-- <tr>
-					<ThFilter {handler} orderBy="company_name"/>
-					<ThFilter {handler} orderBy="industry"/>
-					<ThFilter {handler} orderBy="price"/>
-
-				</tr> -->
 			</thead>
 			<tbody>
 				{#each $rows as row}
 					<tr>
 						<td>{row.company_name}</td>
 						<td>{row.industry}</td>
-						<td>{row.price.toFixed(2)}</td>
+						<td class="font-medium s-FI5Y16UXR6H0">₹{row.price.toFixed(2)}</td>
+						<td class="font-medium s-FI5Y16UXR6H0">₹{row.market_capital.toFixed(2)}</td>
 						<td
 							><button
 								type="button"
 								class=" btn btn-sm rounded-md px-6 bg-primary-500 variant-filled-primary"
-								on:click={()=> buyStocks(row.stock_id,row.company_name)}
-                >Buy</button
+								on:click={() => buyStocks(row.stock_id, row.company_name)}>Buy</button
 							></td
 						>
 					</tr>

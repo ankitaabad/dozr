@@ -1,5 +1,5 @@
 <script lang="ts">
-	import {  topStockLosersStore } from '$lib/store';
+	import { topStockLosersStore } from '$lib/store';
 	import { dozerRest, server } from '$lib/utils';
 	import { DataHandler, Datatable, Th, ThFilter } from '@vincjo/datatables';
 	$: handler = new DataHandler($topStockLosersStore, { rowsPerPage: 10 });
@@ -7,7 +7,7 @@
 </script>
 
 <div class="w-full card px-4 py-6">
-	<Datatable {handler} search={false} rowsPerPage={false} rowCount={false}>
+	<Datatable {handler} search={false} rowsPerPage={false} rowCount={true}>
 		<table>
 			<thead>
 				<tr>

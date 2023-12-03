@@ -1,38 +1,42 @@
 <script>
-  import { customerId, isManager } from "$lib/store";
-  
-  import {get } from "svelte/store"
-  import {goto} from '$app/navigation'
-  import { getModalStore } from '@skeletonlabs/skeleton';
-	import { randomIntFromInterval } from "$lib/utils";
-			
-const modalStore = getModalStore();
- let userId
- 
-  async function managerLogin() {
-    isManager.set(true)
-    console.log(get(isManager))
-    goto("/manager")
-  }
+	import { customerId, isManager } from '$lib/store';
 
-  function randomUserLogin(){
-    const customer_id = randomIntFromInterval(1001,1100)
-    userLogin(customer_id)
-  }
-  function loginById(){
-    if(!userId){
-      return
-    }
-    userLogin(userId)
-  } 
-  function userLogin(user_id) { 
-      console.log("inside user login") 
-      goto(`/customer?customer_id=${user_id}`)	
+	import { get } from 'svelte/store';
+	import { goto } from '$app/navigation';
+	import { getModalStore } from '@skeletonlabs/skeleton';
+	import { randomIntFromInterval } from '$lib/utils';
 
+	const modalStore = getModalStore();
+	let userId;
+
+	async function managerLogin() {
+		isManager.set(true);
+		console.log(get(isManager));
+		goto('/manager');
+	}
+
+	function randomUserLogin() {
+		const customer_id = randomIntFromInterval(1001, 1100);
+		userLogin(customer_id);
+	}
+	function loginById() {
+		if (!userId) {
+			return;
+		}
+		userLogin(userId);
+	}
+	function userLogin(user_id) {
+		console.log('inside user login');
+		goto(`/customer?customer_id=${user_id}`);
 	}
 </script>
 
-<button class="btn btn-primary btn-sm" on:click={()=> goto("/stockdetail?stock_id=001r7tOv0gSeoQ0S7nLA3szpLT2qCXfH")}> stocks </button>
+<button
+	class="btn btn-primary btn-sm"
+	on:click={() => goto('/stockdetail?stock_id=001r7tOv0gSeoQ0S7nLA3szpLT2qCXfH')}
+>
+	stocks
+</button>
 
 <div class="h-screen flex">
 	<div
