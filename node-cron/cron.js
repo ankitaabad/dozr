@@ -1,10 +1,6 @@
 const { DateTime } = require("luxon");
 const { Pool, Client } = require("pg");
-const {
-  mfChangePercentage,
-  randomPricePercentageChange,
-  change,
-} = require("./utils");
+const { randomPricePercentageChange, change } = require("./utils");
 async function cron() {
   const client = new Client({
     user: "postgres",
@@ -26,10 +22,9 @@ async function cron() {
     `select stock_id,price, (select price from stocks_daily_price sdpold where "date" = '${aYearBefore.toSQLDate()}' and stock_id = sdp.stock_id) year_old_price from stocks_daily_price sdp where date = '${today.toSQLDate()}'`
   );
 
-  const stockChanges = {}
-    let sq = "with ss as (SELECT * FROM (VALUES" 
-  const x = result.rows
-x.forEach((row,i) => {
+  let sq = "with ss as (SELECT * FROM (VALUES";
+  // const x = result.rows;
+  result.rows.forEach((row, i) => {
     const newPrice = randomPricePercentageChange(row.price);
     const dailyChange = change(newPrice, row.price);
     const yearlyChange = change(newPrice, row.year_old_price);
@@ -37,16 +32,41 @@ x.forEach((row,i) => {
       row.stock_id
     }', '${tomorrow.toSQLDate()}'::date, ${newPrice}, ${dailyChange}, ${yearlyChange})`;
 
-
-    if(i< x.length-1){
-      sq+=','
+    if (i < result.rows.length - 1) {
+      sq += ",";
     }
   });
-  sq += `) AS t (stock_id,date,price,daily_change,yearly_change)), ist as ( INSERT INTO stocks_daily_price (stock_id, "date", price)  select stock_id, "date", price from ss) update stocks s set price = sstable.price, daily_change = sstable.daily_change, yearly_change = sstable.yearly_change  from ss sstable where s.stock_id = sstable.stock_id `
+  sq += `) AS t (stock_id,date,price,daily_change,yearly_change)), ist as ( INSERT INTO stocks_daily_price (stock_id, "date", price)  select stock_id, "date", price from ss) update stocks s set price = sstable.price, daily_change = sstable.daily_change, yearly_change = sstable.yearly_change  from ss sstable where s.stock_id = sstable.stock_id `;
   // console.log({sq})
 
-  const r = await client.query(sq)
+  // const sqResult = await client.query(sq);
 
+  // console.log({ sqResult });
+  console.log("generating mf data");
+  const mfdaily = await client.query(
+    `select mf_id,price, (select price from mf_daily_price mfrold where "date" = '${aYearBefore.toSQLDate()}' and mf_id = mfdp.mf_id) year_old_price from mf_daily_price mfdp where date = '${today.toSQLDate()}'`
+  );
+  let mfsq = "with mfs as (SELECT * FROM (VALUES";
+  const mfr = mfdaily.rows;
+  mfr.forEach((row, i) => {
+    const newPrice = randomPricePercentageChange(row.price);
+    const dailyChange = change(newPrice, row.price);
+    const yearlyChange = change(newPrice, row.year_old_price);
+    mfsq += `('${
+      row.mf_id
+    }', '${tomorrow.toSQLDate()}'::date, ${newPrice}, ${dailyChange}, ${yearlyChange})`;
+
+    if (i < mfr.length - 1) {
+      mfsq += ",";
+    }
+  });
+  mfsq += `) AS t (mf_id,date,price,daily_change,yearly_change)), ist as ( INSERT INTO mf_daily_price (mf_id, "date", price)  select mf_id, "date", price from mfs) update mutual_funds mf set price = mfstable.price, daily_change = mfstable.daily_change, yearly_change = mfstable.yearly_change  from mfs mfstable where mf.mf_id = mfstable.mf_id `;
+  // console.log({sq})
+  console.log({ mfsq });
+
+  const mfsqResult = await client.query(mfsq);
+  // mfsqResult.rowCount
+  console.log({ mfsqResult });
   await client.end();
 }
 

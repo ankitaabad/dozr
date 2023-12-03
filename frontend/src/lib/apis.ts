@@ -71,7 +71,7 @@ export async function sellStocksApi(stock_id, quantity, company_name) {
 
 	await server(config)
 		.then(async (response) => {
-			console.log('bought the stocks, refreshing other data');
+			console.log('sold the stocks, refreshing other data');
 			refreshDozerStores(
 				'recentTransactionsStore',
 				'customerBalanceStore',
