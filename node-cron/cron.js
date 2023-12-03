@@ -5,7 +5,7 @@ var cron = require('node-cron');
 const axios = require('axios')
 
 
-cron.schedule('* * * * *', async () => {
+cron.schedule('58 23 * * *', async () => {
   const healthCheckEndpoint = process.env.healthChecksBaseURL
   console.log('running a task every minute', healthCheckEndpoint );
   await job()
@@ -14,10 +14,7 @@ async function job() {
   try {
     console.log("inside job")
     const {user,host, port,database,password} = process.env
-    console.log({user,host, port,database,password})
-    console.log("endpoit",`${healthCheckEndpoint}/start`)
-    const p1 = await axios.default.get(`${healthCheckEndpoint}/start`)
-    console.log("after healthcheck 1")
+    const p1 =  axios.default.get(`${healthCheckEndpoint}/start`)
     
     const client = new Client({
     user,
@@ -28,7 +25,7 @@ async function job() {
   });
 
   await client.connect();
-  return
+ 
   const today = DateTime.now();
   const tomorrow = today.plus({ days: 1 });
   const aYearBefore = tomorrow.plus({ year: -1 });
