@@ -4,7 +4,7 @@
 	import type { ConicStop } from '@skeletonlabs/skeleton';
 	// Stores
 	import { getModalStore } from '@skeletonlabs/skeleton';
-	import { buyStocksApi, sellStocksApi } from '$lib/apis';
+	import { buyStocksApi } from '$lib/apis';
 
 	// Props
 	/** Exposes parent props to this component. */
@@ -23,14 +23,14 @@
 		loading = true;
 		console.log({ 'inside modal store': $modalStore });
 		const { stock_id, company_name } = $modalStore[0].meta;
-		await sellStocksApi(stock_id, formData.quantity, company_name);
+		await buyStocksApi(stock_id, formData.quantity, company_name);
 		if ($modalStore[0].response) $modalStore[0].response(formData);
 		modalStore.close();
 	}
 
 	// Base Classes
-	const cBase = 'card p-4 w-modal shadow-xl space-y-4 ';
-	const cHeader = 'text-2xl font-bold';
+	const cBase = 'card p-4 w-modal shadow-xl   ';
+	const cHeader = 'text-2xl font-bold mb-4';
 	const cForm = 'space-y-4 ';
 	const conicStops: ConicStop[] = [
 		{ color: 'transparent', start: 0, end: 25 },
@@ -41,28 +41,46 @@
 <!-- @component This example creates a simple form modal. -->
 
 {#if $modalStore[0]}
-	<div class="modal-example-form {cBase}">
-		<header class={cHeader}>Quantity</header>
-
+	<div class="modal-example-form w-96 {cBase}">
+		<header class={cHeader}>Buy Stocks</header>
+		<div class="font-semibold mb-3 mt-2">Yatharth Hospital & Trauma Care Services Ltd.</div>
 		<!-- Enable for debugging: -->
 		<form class="modal-form {cForm}">
 			<label class="label">
 				<span>Enter Quantity</span>
 				<input class="input" type="number" bind:value={formData.quantity} placeholder="" />
 			</label>
+			<label class="label">
+				<span>Price</span>
+				<input class="input" type="number" value="234" disabled placeholder="" />
+			</label>
 		</form>
-		<footer class="modal-footer border-t border-gray-200 border-solid pt-4 {parent.regionFooter}">
-			<button class="btn rounded {parent.buttonNeutral}" on:click={parent.onClose}
+		<div class="mt-24">
+			<div class="bg-orange-100 text-orange-950 p-1 text-sm rounded-sm mb-3 text-center">
+				Available amount is not enough
+			</div>
+			<div class="text-sm text-center text-gray-500 mb-3">
+				Order will be executed at ₹2,325.00 or lower price
+			</div>
+		</div>
+		<div
+			class="mb-2 pt-3 flex justify-between items-center text-gray-500 text-sm border-t border-gray-200 border-solid"
+		>
+			<div>Balance: <span>₹ 102</span></div>
+			<div>Required: <span>₹ 102</span></div>
+		</div>
+		<footer class="modal-footer {parent.regionFooter}">
+			<button class="btn rounded w-[50%] {parent.buttonNeutral}" on:click={parent.onClose}
 				>{parent.buttonTextCancel}</button
 			>
 			<button
-				class="btn rounded bg-primary-500 variant-filled-primary min-w-[124px] {parent.buttonPositive}"
+				class="btn rounded w-[50%] bg-primary-500 variant-filled-primary min-w-[124px] {parent.buttonPositive}"
 				on:click={onFormSubmit}
 			>
 				{#if loading}
 					<ConicGradient width="w-4" stops={conicStops} spin />
 				{:else}
-					Buy
+					Sell
 				{/if}
 			</button>
 		</footer>
