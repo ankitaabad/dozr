@@ -24,7 +24,7 @@ const formData = {
   quantity: ''
 }
   const price = $modalStore[0]?.meta.price.toFixed(2)
-  $: enoughAmount = $customerBalanceStore[0]?.balance > required
+  $: enoughAmount = $customerBalanceStore[0]?.balance >= required
 
 
 console.log($modalStore[0]?.meta.price)

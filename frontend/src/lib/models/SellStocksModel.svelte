@@ -19,7 +19,7 @@
 	const price = $modalStore[0]?.meta?.price?.toFixed(2);
 	const availableStocks = $modalStore[0]?.meta.quantity;
 	console.log('inside meta vale', $modalStore[0]?.meta);
-	$: enoughStocks = availableStocks > quantity;
+	$: enoughStocks = availableStocks >= quantity;
 
 	// We've created a custom submit function to pass the response and close the modal.
 	let loading;
