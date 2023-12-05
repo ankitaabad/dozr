@@ -18,7 +18,7 @@ import {
 } from '$lib/store';
 import { browser } from '$app/environment';
 
-export const prerender = true;
+export const ssr = false;
 /** @type {import('./$types').PageLoad} */
 export async function load({url}) {
   isHome.set(false)
@@ -49,4 +49,5 @@ export async function load({url}) {
     topYearlyStock.fetchData()
 
 	]);
+  return {"isLoading":false}
 }

@@ -3,9 +3,10 @@
 		Avatar,
 		tableMapperValues,
 		type ModalSettings,
-		getModalStore
+		getModalStore,
+		ConicGradient
 	} from '@skeletonlabs/skeleton';
-
+	// export let data = { isLoading: true };
 	import { TabGroup, Tab } from '@skeletonlabs/skeleton';
 
 	import RecentTransactions from '$lib/components/RecentTransactions.svelte';
@@ -26,6 +27,10 @@
 	import Stocks from '$lib/components/Stocks.svelte';
 	let tabSet: number = 0;
 	let StocktabSet: number = 0;
+	const conicStops: ConicStop[] = [
+		{ color: 'transparent', start: 0, end: 25 },
+		{ color: 'rgb(var(--color-primary-500))', start: 75, end: 100 }
+	];
 </script>
 
 <div class="max-w-7xl w-full mx-auto my-6">
@@ -58,7 +63,6 @@
 							<h2 class="font-medium text-lg">Your Loans</h2>
 						</div>
 						<PayableLoans />
-						
 					</div>
 				</div>
 			{:else if tabSet === 1}
