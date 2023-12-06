@@ -13,12 +13,10 @@ rule.tz = 'Asia/Kolkata';
 
 // runs at 15:00:00
 rule.second = 0;
-rule.minute = 22;
-rule.hour = 10;
-console.log(process.env.healthChecksBaseURL);
+rule.minute = process.env.minute;
+rule.hour = process.env.hour;
+console.log({rule});
 schedule.scheduleJob(rule, async () => {
-  const healthChecksBaseURL = process.env.healthChecksBaseURL;
-  console.log("running a task at 10 20", healthChecksBaseURL);
   await job();
 });
 async function job() {
@@ -27,6 +25,13 @@ async function job() {
 
   try {
     console.log("inside job");
+    let dateBeforeToGenerate  = DateTime.fromSQL(process.env.dateBeforeToGenerate)
+
+    if(!dateBeforeToGenerate.isValid){
+      dateBeforeToGenerate = DateTime.now()
+    }
+    console.log("day before to generate",dateBeforeToGenerate)
+
 
       console.log({user,host,port,database,password,healthChecksBaseURL})
     const p1 = axios.default.get(`${healthChecksBaseURL}/start`);
@@ -41,12 +46,16 @@ async function job() {
 
     await client.connect();
 
-    const today = DateTime.now();
-    const tomorrow = today.plus({ days: 1 });
+
+
+    
+    DateTime.fromSQL(process.env.dateBeforeToGenerate) || DateTime.now()
+    const tomorrow = dateBeforeToGenerate.plus({ days: 1 });
     const aYearBefore = tomorrow.plus({ year: -1 });
+
     console.log();
     const result = await client.query(
-      `select stock_id,price, (select price from stocks_daily_price sdpold where "date" = '${aYearBefore.toSQLDate()}' and stock_id = sdp.stock_id) year_old_price from stocks_daily_price sdp where date = '${today.toSQLDate()}'`
+      `select stock_id,price, (select price from stocks_daily_price sdpold where "date" = '${aYearBefore.toSQLDate()}' and stock_id = sdp.stock_id) year_old_price from stocks_daily_price sdp where date = '${dateBeforeToGenerate.toSQLDate()}'`
     );
     console.log({ result });
     let sq = "with ss as (SELECT * FROM (VALUES";
@@ -71,7 +80,7 @@ async function job() {
     // console.log({ sqResult });
     console.log("generating mf data");
     const mfdaily = await client.query(
-      `select mf_id,price, (select price from mf_daily_price mfrold where "date" = '${aYearBefore.toSQLDate()}' and mf_id = mfdp.mf_id) year_old_price from mf_daily_price mfdp where date = '${today.toSQLDate()}'`
+      `select mf_id,price, (select price from mf_daily_price mfrold where "date" = '${aYearBefore.toSQLDate()}' and mf_id = mfdp.mf_id) year_old_price from mf_daily_price mfdp where date = '${dateBeforeToGenerate.toSQLDate()}'`
     );
     let mfsq = "with mfs as (SELECT * FROM (VALUES";
     const mfr = mfdaily.rows;
@@ -99,6 +108,9 @@ async function job() {
     await Promise.all([p1, p2]);
   } catch (err) {
     console.log("error occured")
-    await axios.default.get(`${healthChecksBaseURL}/fail}`).catch((err) => {});
+    await axios.default.get(`${healthChecksBaseURL}/fail`).catch((err) => {
+      console.log("healthcheck fail endpoint error",err)
+    });
   }
 }
+
