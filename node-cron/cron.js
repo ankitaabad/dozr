@@ -13,7 +13,7 @@ rule.tz = 'Asia/Kolkata';
 
 // runs at 15:00:00
 rule.second = 0;
-rule.minute = 19;
+rule.minute = 22;
 rule.hour = 10;
 console.log(process.env.healthChecksBaseURL);
 schedule.scheduleJob(rule, async () => {
