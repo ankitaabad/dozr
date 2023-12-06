@@ -20,7 +20,7 @@
 				{#each $rows as row}
 					<tr>
 						<td>{row.company_name}</td>
-						<td class="font-medium">{row.daily_change.toFixed(2)}%</td>
+						<td class="font-medium text-success-500">{row.daily_change.toFixed(2)}%</td>
 						<td class="font-medium">₹{row.price.toFixed(2)}</td>
 					</tr>
 				{/each}
@@ -30,6 +30,9 @@
 </div>
 
 <style>
+	table {
+		table-layout: fixed;
+	}
 	thead {
 		background: #fff;
 	}

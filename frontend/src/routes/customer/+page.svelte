@@ -38,7 +38,7 @@
 		<Tab bind:group={tabSet} name="tab1" value={0}><span>Portfolio</span></Tab>
 		<Tab bind:group={tabSet} name="tab2" value={1}>Stocks</Tab>
 		<Tab bind:group={tabSet} name="tab3" value={2}>Mutual Funds</Tab>
-
+		<Tab bind:group={tabSet} name="tab3" value={3}>Fixed Deposit</Tab>
 		<!-- Tab Panels --->
 		<svelte:fragment slot="panel">
 			{#if tabSet === 0}
@@ -112,6 +112,8 @@
 					</div>
 					<!-- <div class="w-[25%] card p-6">Mutual Funds</div> -->
 				</div>
+			{:else if tabSet === 3}
+				fixed deposit
 			{/if}
 		</svelte:fragment>
 	</TabGroup>

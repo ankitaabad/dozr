@@ -27,8 +27,8 @@
 				<tr>
 					<Th {handler} orderBy="company_name">Name</Th>
 					<Th {handler} orderBy="quantity">Quantity</Th>
-					<Th {handler} orderBy="avg_price">Current Price</Th>
 					<Th {handler} orderBy="market_capital">Market Capital</Th>
+					<Th {handler} orderBy="avg_price">Current Price</Th>
 					<Th {handler} orderBy="">&nbsp;</Th>
 				</tr>
 			</thead>
@@ -41,8 +41,8 @@
 							></td
 						>
 						<td>{row.quantity}</td>
-						<td class="font-medium s-FI5Y16UXR6H0">₹{row.price.toFixed(2)}</td>
 						<td class="font-medium s-FI5Y16UXR6H0">₹{row.market_capital.toFixed(2)} (Cr)</td>
+						<td class="font-medium s-FI5Y16UXR6H0">₹{row.price.toFixed(2)}</td>
 						<td
 							><button
 								type="button"

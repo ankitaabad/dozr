@@ -5,9 +5,9 @@
 	$: handler = new DataHandler($recentTransactionsStore, { rowsPerPage: 5 });
 	$: rows = handler.getRows();
 
-  function convertDate(date) {
-    return DateTime.fromISO(date).toFormat("MM-dd-yyyy hh:mm")
-  }
+	function convertDate(date) {
+		return DateTime.fromISO(date).toFormat('MM-dd-yyyy hh:mm');
+	}
 </script>
 
 <div class="w-full card p-4">
@@ -15,22 +15,22 @@
 		<table>
 			<thead>
 				<tr>
-					<Th {handler} orderBy="date"> Date</Th>
 					<Th {handler} orderBy="amount">Amount</Th>
 					<Th {handler} orderBy="desc">Description</Th>
+					<Th {handler} orderBy="date">Date</Th>
 				</tr>
 				<tr>
-					<ThFilter {handler} filterBy="date" />
 					<ThFilter {handler} filterBy="amount" />
 					<ThFilter {handler} filterBy="desc" />
+					<ThFilter {handler} filterBy="date" />
 				</tr>
 			</thead>
 			<tbody>
 				{#each $rows as row}
 					<tr>
-						<td>{convertDate(row.date)} </td>
-						<td>₹{row?.amount.toFixed(2)}</td>
+						<td class="font-medium">₹{row?.amount.toFixed(2)}</td>
 						<td>{row.desc}</td>
+						<td>{convertDate(row.date)} </td>
 					</tr>
 				{/each}
 			</tbody>
