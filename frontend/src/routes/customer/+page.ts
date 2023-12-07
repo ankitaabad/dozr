@@ -17,7 +17,7 @@ import {
   isHome
 } from '$lib/store';
 import { browser } from '$app/environment';
-
+import {goto} from '$app/navigation'
 export const ssr = false;
 /** @type {import('./$types').PageLoad} */
 export async function load({url}) {

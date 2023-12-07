@@ -1,13 +1,19 @@
 <script>
 	import { customerId, isManager } from '$lib/store';
-
+import {onMount} from 'svelte'
 	import { get } from 'svelte/store';
 	import { goto } from '$app/navigation';
 	import { getModalStore } from '@skeletonlabs/skeleton';
-	import { randomIntFromInterval } from '$lib/utils';
+	import { enterBind, randomIntFromInterval } from '$lib/utils';
 
 	const modalStore = getModalStore();
 	let userId;
+
+  let customerInputField, loginButton
+
+  onMount(() =>{
+    enterBind(loginButton,customerInputField)
+  })
 
 	async function managerLogin() {
 		isManager.set(true);
@@ -56,12 +62,13 @@
 			>
 			<div class="flex">
 				<input
+        bind:this={customerInputField}
 					type="number"
 					placeholder="Customer Id"
 					class="text-gray-900 text-sm rounded-sm w-2/3"
 					bind:value={userId}
 				/>
-				<button
+				<button bind:this={loginButton}
 					class="btn btn-sm variant-filled-primary rounded rounded-s-none w-1/3 py-3 px-6"
 					on:click={loginById}>Login</button
 				>

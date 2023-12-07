@@ -29,5 +29,13 @@ export const payableLoans = (loans) => {
   DateTime.fromSQL(l.disbursement_date).plus({ years: l.loan_term }).toSQLDate())
 }
 
-
+export const enterBind = (button,input) =>{
+  console.log("binding")
+  input.addEventListener("keyup", ({key}) => {
+    if (key === "Enter") {
+      console.log("detected")
+      button.click()
+    }
+})
+}
 

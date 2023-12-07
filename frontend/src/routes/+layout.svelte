@@ -8,7 +8,10 @@
 		type ModalComponent,
 		Modal,
 		type ConicStop,
-		ConicGradient
+		ConicGradient,
+
+		Toast
+
 	} from '@skeletonlabs/skeleton';
 	import { browser } from '$app/environment';
 	import { QueryClient, QueryClientProvider } from '@tanstack/svelte-query';
@@ -46,6 +49,7 @@
 </script>
 
 <Modal components={modalRegistry} />
+<Toast />
 
 <QueryClientProvider client={queryClient}>
 	<div class="flex flex-col h-screen">
