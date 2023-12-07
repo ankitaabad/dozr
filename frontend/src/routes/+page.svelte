@@ -48,7 +48,7 @@ import {onMount} from 'svelte'
 	<div
 		class="container h-80 justify-center my-auto gap-y-4 items-center flex flex-col max-w-sm mx-auto"
 	>
-		<div class="card px-8 py-12 flex flex-col w-full gap-4">
+		<div class="bg-white rounded-md p-6 border  border-solid border-gray-200 px-8 py-12 flex flex-col w-full gap-4">
 			<img src="./logo.svg" alt="" class="w-40 mt-3 mb-10 mx-auto" />
 			<button
 				class="btn btn-sm bg-primary-500 variant-filled-primary rounded-sm w-full py-3 px-6 font-medium"

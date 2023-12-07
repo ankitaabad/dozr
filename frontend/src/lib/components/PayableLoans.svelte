@@ -11,7 +11,7 @@
 		<div class="flex flex-col gap-4 justify-center items-center">
 			<div>
 				<svg
-					xmlns="http://www.w3.org/2000/svg"
+					xmlns="http://www.w3.org/3000/svg"
 					class="icon icon-tabler icon-tabler-file"
 					width="56"
 					height="56"
@@ -30,12 +30,12 @@
 		</div>
 	</div>
 {:else}
-	<div class="flex flex-col gap-3">
+	<div class="flex flex-col gap-4">
 		{#each $rows as row}
-			<div class="w-full card p-4">
+			<div class="w-full border border-solid border-gray-300 rounded-md p-4 ">
 				<div class="flex gap-2 items-center">
 					<div
-						class="p-3 rounded border border-solid border-gray-300 flex justify-between items-center"
+						class=" p-3 rounded border border-solid border-gray-300 flex justify-between items-center"
 					>
 						<Loansvg loan_type={row.loan_type} />
 					</div>

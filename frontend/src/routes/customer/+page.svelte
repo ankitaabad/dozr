@@ -11,19 +11,10 @@
 
 	import RecentTransactions from '$lib/components/RecentTransactions.svelte';
 	import CustomerStock from '$lib/components/CustomerStock.svelte';
-	import TopGainer from '$lib/components/TopGainer.svelte';
-	import TopLosers from '$lib/components/TopLosers.svelte';
-	import AllStock from '$lib/components/AllStock.svelte';
 	import AllmutualFunds from '$lib/components/AllmutualFunds.svelte';
 	import CustomerMutualFunds from '$lib/components/CustomerMutualFunds.svelte';
 	import PayableLoans from '$lib/components/PayableLoans.svelte';
-	import CustomerInvestmentValue from '$lib/components/CustomerInvestmentValue.svelte';
-	import Header from '$lib/components/Header.svelte';
-	import Footer from '$lib/components/Footer.svelte';
 	import YourTrade from '$lib/components/YourTrade.svelte';
-	import AccountBalance from '$lib/components/AccountBalance.svelte';
-	import WatchList from '$lib/components/WatchList.svelte';
-	import TopYearlyStock from '$lib/components/TopYearlyStock.svelte';
 	import Stocks from '$lib/components/Stocks.svelte';
 	let tabSet: number = 0;
 	let StocktabSet: number = 0;
@@ -49,7 +40,7 @@
 
 				<div class="flex gap-6 mt-6">
 					<div class="w-[75%] flex gap-6">
-						<div class="w-[100%] card p-6">
+						<div class="w-[100%] bg-white rounded-md p-6 border  border-solid border-gray-200 ">
 							<div class="heading mb-6 flex justify-between items-center">
 								<h2 class="font-medium text-lg">Recent transactions</h2>
 								<!-- <a href="#" class="text-primary-500 font-medium">View all</a> -->
@@ -58,7 +49,7 @@
 						</div>
 					</div>
 
-					<div class="w-[25%] card p-6">
+					<div class="w-[25%] bg-white rounded-md p-6 border  border-solid border-gray-200 ">
 						<div class="heading mb-6 flex justify-between items-center">
 							<h2 class="font-medium text-lg">Your Loans</h2>
 						</div>
@@ -67,7 +58,7 @@
 				</div>
 			{:else if tabSet === 1}
 				<div class="stock flex gap-6 flex-col">
-					<div class="w-[100%] card p-6">
+					<div class="w-[100%] bg-white rounded-md p-6 border  border-solid border-gray-200 ">
 						<div class="heading mb-6 flex justify-between items-center">
 							<h2 class="font-medium text-lg">Holding</h2>
 							<!-- <a href="#" class="text-primary-500 font-medium">View all</a> -->
@@ -76,18 +67,18 @@
 							<CustomerStock />
 						</div>
 					</div>
-					<div class="w-[100%] card p-6">
+					<div class="w-[100%] bg-white rounded-md p-6 border  border-solid border-gray-200 ">
 						<div class=" heading mb-6 flex justify-between items-center">
 							<h2 class="font-medium text-lg">All Stocks</h2>
 							<!-- <a href="#" class="text-primary-500 font-medium">View all</a> -->
 						</div>
 						<Stocks />
 					</div>
-					<!-- <div class="w-[25%] card p-6">Stocks</div> -->
+					<!-- <div class="w-[25%] bg-white rounded-md p-6 border  border-solid border-gray-200 ">Stocks</div> -->
 				</div>
 			{:else if tabSet === 2}
 				<div class="stock flex gap-6 flex-col">
-					<div class="w-[100%] card p-6">
+					<div class="w-[100%] bg-white rounded-md p-6 border  border-solid border-gray-200 ">
 						<div class="heading mb-6 flex justify-between items-center">
 							<h2 class="font-medium text-lg">Investments</h2>
 							<!-- <a href="#" class="text-primary-500 font-medium">View all</a> -->
@@ -96,7 +87,7 @@
 							<CustomerMutualFunds />
 						</div>
 					</div>
-					<div class="w-[100%] card p-6">
+					<div class="w-[100%] bg-white rounded-md p-6 border  border-solid border-gray-200 ">
 						<div class="heading mb-6 flex justify-between items-center">
 							<h2 class="font-medium text-lg">All Mutual Funds</h2>
 							<!-- <a href="#" class="text-primary-500 font-medium">View all</a> -->
@@ -110,10 +101,10 @@
 							</svelte:fragment>
 						</TabGroup>
 					</div>
-					<!-- <div class="w-[25%] card p-6">Mutual Funds</div> -->
+					<!-- <div class="w-[25%] bg-white rounded-md p-6 border  border-solid border-gray-200 ">Mutual Funds</div> -->
 				</div>
 			{:else if tabSet === 3}
-				fixed deposit
+				Fixed Deposit
 			{/if}
 		</svelte:fragment>
 	</TabGroup>

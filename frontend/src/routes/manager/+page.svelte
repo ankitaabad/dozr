@@ -12,7 +12,7 @@
 		</div>
 	</div>
 	<div class="flex gap-6 mt-6">
-		<div class="w-full card p-6">
+		<div class="w-full bg-white rounded-md p-6 border  border-solid border-gray-200 ">
 			<div class="heading mb-6 flex justify-between items-center">
 				<h2 class="font-medium text-lg">All Stocks</h2>
 			</div>

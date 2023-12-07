@@ -14,10 +14,10 @@
 	}
 </script>
 
-<div class="w-[25%] card p-6 flex flex-col">
+<div class="w-[25%] bg-white rounded-md p-6 border  border-solid border-gray-200 flex flex-col">
 	<div>
 		<div class="heading mb-6">
-			<h2 class="font-medium text-lg">Account balance</h2>
+			<h2 class="font-medium text-lg">Balance</h2>
 		</div>
 		<div class="text-2xl font-semibold">₹{$customerBalanceStore[0]?.balance}</div>
 	</div>
