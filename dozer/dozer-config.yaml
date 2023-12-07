@@ -61,7 +61,7 @@ sources:
 
 
 sql: |
-  select sdp."date" , sdp.stock_id ,round(sdp.daily_change,2) daily_change, sdp.price, s.company_name into dailyStocks from stocks_daily_price sdp join stocks s on sdp.stock_id = s.stock_id;
+  select sdp."date" , sdp.stock_id ,round(s.daily_change,2) daily_change, sdp.price, s.company_name into dailyStocks from stocks_daily_price sdp join stocks s on sdp.stock_id = s.stock_id;
   
   select cs.customer_id,cs.stock_id, cs.quantity , cs.avg_price , s.company_name , s.symbol , s.industry , s.market_capital , s.price into customer_stocks_nonzero from customer_stocks cs join stocks s on cs.stock_id = s.stock_id  where quantity != 0;
 
@@ -188,24 +188,12 @@ endpoints:
   - name: stocks_daily_price
     path: /stocks_daily_price
     table_name: stocks_daily_price
-    index:
-      secondary:
-        create:
-          - !SortedInverted
-              fields:
-                - date
-                - yearly_change
+  
   
   - name: mf_daily_price
     path: /mf_daily_price
     table_name: mf_daily_price
-    index:
-      secondary:
-        create:
-          - !SortedInverted
-              fields:
-                - date
-                - yearly_change
+
       
 
   
