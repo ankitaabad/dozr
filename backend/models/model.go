@@ -20,7 +20,7 @@ type SellStocksModel struct {
 
 type SellMFModel struct {
 	MFId       string `param:"mf_id"`
-	FundName   string `json:"company_name"`
+	FundName   string `json:"fund_name"`
 	CustomerId int    `json:"customer_id"`
 	Quantity   int    `json:"quantity"`
 	//Price       float32 `json:"price"`
@@ -28,7 +28,7 @@ type SellMFModel struct {
 
 type BuyMFModel struct {
 	MFId       string `param:"mf_id"`
-	FundName   string `json:"Fund_name"`
+	FundName   string `json:"fund_name"`
 	CustomerId int    `json:"customer_id"`
 	Quantity   int    `json:"quantity"`
 	//Price       float32 `json:"price"`
