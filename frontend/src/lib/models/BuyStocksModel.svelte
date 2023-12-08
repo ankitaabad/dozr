@@ -5,6 +5,7 @@
 // Stores
 	import { customerBalanceStore } from '$lib/store';
 	import { getModalStore } from '@skeletonlabs/skeleton';
+	import { buyStocksApi } from '$lib/apis';
 
 	// Props
 	/** Exposes parent props to this component. */
