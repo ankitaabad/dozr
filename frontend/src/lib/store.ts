@@ -103,6 +103,54 @@ function createDailyStockGainers() {
 
 	return { subscribe, set, update, fetchData };
 }
+
+function createDailyMFGainers() {
+	const { subscribe, set, update } = writable([]);
+	async function fetchData() {
+		const data = JSON.stringify({
+      "$order_by": {"daily_change": "desc"},
+      "$limit": 10
+  
+  });
+		// "$filter": {"date":DateTime.now().toSQLDate()}
+
+		const config = {
+			method: 'post',
+			url: '/mutual_funds/query',
+			data: data
+		};
+
+		dozerRest.request(config).then((response) => {
+			update(() => response.data);
+		});
+	}
+
+	return { subscribe, set, update, fetchData };
+}
+
+function createDailyMFLosers() {
+	const { subscribe, set, update } = writable([]);
+	async function fetchData() {
+		const data = JSON.stringify({
+      "$order_by": {"daily_change": "asc"},
+      "$limit": 10
+  
+  });
+		// "$filter": {"date":DateTime.now().toSQLDate()}
+
+		const config = {
+			method: 'post',
+			url: '/mutual_funds/query',
+			data: data
+		};
+
+		dozerRest.request(config).then((response) => {
+			update(() => response.data);
+		});
+	}
+
+	return { subscribe, set, update, fetchData };
+}
 function createDailyStockLosers() {
 	const { subscribe, set, update } = writable([]);
 	async function fetchData() {
@@ -200,6 +248,31 @@ function createTopYearlyStocksStore() {
 
 		dozerRest.request(config).then((response) => {
 			console.log('top stocks', response.data);
+			update(() => response.data);
+		});
+	}
+
+	return { subscribe, set, update, fetchData };
+}
+
+function createTopYearlyMFStore() {
+	const { subscribe, set, update } = writable([]);
+
+	async function fetchData() {
+		let data = JSON.stringify({
+			$order_by: {
+				yearly_change: 'desc'
+			},
+			$limit: 10
+		});
+		const config = {
+			method: 'post',
+			url: '/mutual_funds/query',
+			data
+		};
+
+		dozerRest.request(config).then((response) => {
+			console.log('top MFs', response.data);
 			update(() => response.data);
 		});
 	}
@@ -449,10 +522,16 @@ function creatCustomerStockInvestmentValueStore() {
 export const recentTransactionsStore = createRecentTransactions();
 export const topStockGainersStore = createDailyStockGainers();
 export const topStockLosersStore = createDailyStockLosers();
+export const topMFGainersStore = createDailyMFGainers();
+export const topMFLosersStore = createDailyMFLosers();
+
+
 export const customersStore = createCustomersStore();
 export const allStocksStore = createAllStocksStore();
 export const allMutualFundsStore = creatAllMutualFundsStore();
 export const topYearlyStock = createTopYearlyStocksStore();
+export const topYearlyMF = createTopYearlyMFStore();
+
 export const customersStocksStore = creaeCustomerStocksStore();
 export const customerBalanceStore = createCustomerBalanceStore();
 export const customerMutualFundsStore = createCustomerMutualFundsStore();

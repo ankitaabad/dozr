@@ -17,9 +17,9 @@
   let addMoneyInput, addMoneyButton
 
 
-  onMount(() =>{
-    enterBind(addMoneyButton,addMoneyInput)
-  })
+  // onMount(() =>{
+  //   enterBind(addMoneyButton,addMoneyInput)
+  // })
 	const modalStore = getModalStore();
 
 	// Form Data
@@ -30,6 +30,7 @@
 	// We've created a custom submit function to pass the response and close the modal.
 	let loading;
 	async function onFormSubmit() {
+    console.log("this is triggered")
     if(!formData.amount){
       return
     }
@@ -64,7 +65,7 @@
 		<header class={cHeader}>Add Money</header>
 
 		<!-- Enable for debugging: -->
-		<form class="modal-form {cForm}" >
+		<form class="modal-form {cForm}" on:submit={onFormSubmit}>
 			<label class="label">
 				<span>Enter Amount</span>
 				<input bind:this={addMoneyInput} class="input" type="number" bind:value={formData.amount} placeholder="" />

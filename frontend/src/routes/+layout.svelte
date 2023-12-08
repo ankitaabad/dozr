@@ -49,7 +49,7 @@
 </script>
 
 <Modal components={modalRegistry} />
-<Toast />
+<Toast position="tr"/>
 
 <QueryClientProvider client={queryClient}>
 	<div class="flex flex-col h-screen">

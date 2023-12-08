@@ -2,6 +2,8 @@ import {
 	recentTransactionsStore,
 	topStockGainersStore,
   topStockLosersStore,
+  topMFGainersStore,
+  topMFLosersStore,
 	customersStore,
 	allStocksStore,
 	customersStocksStore,
@@ -14,6 +16,7 @@ import {
   customerMFInvestmentValueStore,
   customerTotalInvestmentValueStore,
   topYearlyStock,
+  topYearlyMF,
   isHome
 } from '$lib/store';
 import { browser } from '$app/environment';
@@ -46,7 +49,10 @@ export async function load({url}) {
     customerStockInvestmentValueStore.fetchData(),
     customerMFInvestmentValueStore.fetchData(),
     customerTotalInvestmentValueStore.fetchData(),
-    topYearlyStock.fetchData()
+    topYearlyStock.fetchData(),
+    topMFGainersStore.fetchData(),
+    topMFLosersStore.fetchData(),
+    topYearlyMF.fetchData()
 
 	]);
   return {"isLoading":false}
