@@ -24,5 +24,6 @@ $: values = $stockDetailStore.dailyPrices.map(d =>{
     ]
   };
 </script>
-<!-- <div>{JSON.stringify($stockDetailStore)}</div> -->
 <Chart data={data} type="line" />
+<div>{JSON.stringify($stockDetailStore.details)}</div>
+
