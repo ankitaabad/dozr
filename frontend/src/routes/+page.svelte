@@ -33,6 +33,7 @@ import {onMount} from 'svelte'
 	}
 	function userLogin(user_id) {
 		console.log('inside user login');
+    isManager.set(false);
 		goto(`/customer?customer_id=${user_id}`);
 	}
 </script>
