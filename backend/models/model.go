@@ -5,7 +5,7 @@ package models
 type BuyStocksModel struct {
 	StockId     string `param:"stock_id"`
 	CompanyName string `json:"company_name"`
-	CustomerId  int `json:"customer_id"`
+	CustomerId  int    `json:"customer_id"`
 	Quantity    int    `json:"quantity"`
 	//Price       float32 `json:"price"`
 }
@@ -13,8 +13,24 @@ type BuyStocksModel struct {
 type SellStocksModel struct {
 	StockId     string `param:"stock_id"`
 	CompanyName string `json:"company_name"`
-	CustomerId  int `json:"customer_id"`
+	CustomerId  int    `json:"customer_id"`
 	Quantity    int    `json:"quantity"`
+	//Price       float32 `json:"price"`
+}
+
+type SellMFModel struct {
+	MFId       string `param:"mf_id"`
+	FundName   string `json:"company_name"`
+	CustomerId int    `json:"customer_id"`
+	Quantity   int    `json:"quantity"`
+	//Price       float32 `json:"price"`
+}
+
+type BuyMFModel struct {
+	MFId       string `param:"mf_id"`
+	FundName   string `json:"Fund_name"`
+	CustomerId int    `json:"customer_id"`
+	Quantity   int    `json:"quantity"`
 	//Price       float32 `json:"price"`
 }
 

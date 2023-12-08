@@ -2,7 +2,6 @@ package main
 
 import (
 	"backend/db"
-	"backend/dozer/generated/mutual_funds"
 	"backend/dozer/generated/recent_transactions"
 	"backend/models"
 	"context"
@@ -39,50 +38,50 @@ func main() {
 	//	AllowOrigins: []string{"*"},
 	//	AllowHeaders: []string{"*"},
 	//}))
-	e.GET("/", func(c echo.Context) error {
-		fmt.Println("inside the req")
-		var conn *grpc.ClientConn
-		conn, err := grpc.Dial("host.docker.internal:50051", grpc.WithTransportCredentials(insecure.NewCredentials()))
-		if err != nil {
-			log.Fatal("could not connect")
+	// e.GET("/", func(c echo.Context) error {
+	// 	fmt.Println("inside the req")
+	// 	var conn *grpc.ClientConn
+	// 	conn, err := grpc.Dial("host.docker.internal:50051", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	// 	if err != nil {
+	// 		log.Fatal("could not connect")
 
-		}
-		log.Print(conn)
-		// defer conn.Close()
-		cc := mutual_funds.NewMutualFundsClient(conn)
+	// 	}
+	// 	log.Print(conn)
+	// 	// defer conn.Close()
+	// 	cc := mutual_funds.NewMutualFundsClient(conn)
 
-		qr := mutual_funds.QueryMutualFundsRequest{}
-		res, err := cc.Query(context.Background(), &qr)
-		if err != nil {
-			log.Printf("response %s", res)
-			log.Printf("error while querying %s", err)
-			return c.String(200, strings.Join(env, ","))
-		}
-		return c.JSON(200, res.GetRecords())
-	})
+	// 	qr := mutual_funds.QueryMutualFundsRequest{}
+	// 	res, err := cc.Query(context.Background(), &qr)
+	// 	if err != nil {
+	// 		log.Printf("response %s", res)
+	// 		log.Printf("error while querying %s", err)
+	// 		return c.String(200, strings.Join(env, ","))
+	// 	}
+	// 	return c.JSON(200, res.GetRecords())
+	// })
 
-	e.GET("/dashboard/manager", func(c echo.Context) error {
-		fmt.Println("inside the req")
-		var conn *grpc.ClientConn
-		conn, err := grpc.Dial("host.docker.internal:50051", grpc.WithTransportCredentials(insecure.NewCredentials()))
-		if err != nil {
-			log.Fatal("could not connect")
+	// e.GET("/dashboard/manager", func(c echo.Context) error {
+	// 	fmt.Println("inside the req")
+	// 	var conn *grpc.ClientConn
+	// 	conn, err := grpc.Dial("host.docker.internal:50051", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	// 	if err != nil {
+	// 		log.Fatal("could not connect")
 
-		}
-		log.Print(conn)
-		// defer conn.Close()
-		cc := mutual_funds.NewMutualFundsClient(conn)
+	// 	}
+	// 	log.Print(conn)
+	// 	// defer conn.Close()
+	// 	cc := mutual_funds.NewMutualFundsClient(conn)
 
-		qr := mutual_funds.QueryMutualFundsRequest{}
-		res, err := cc.Query(context.Background(), &qr)
-		if err != nil {
-			log.Printf("response %s", res)
-			log.Printf("error while querying %s", err)
-			return c.String(200, strings.Join(env, ","))
-		}
-		return c.JSON(200, res.GetRecords())
+	// 	qr := mutual_funds.QueryMutualFundsRequest{}
+	// 	res, err := cc.Query(context.Background(), &qr)
+	// 	if err != nil {
+	// 		log.Printf("response %s", res)
+	// 		log.Printf("error while querying %s", err)
+	// 		return c.String(200, strings.Join(env, ","))
+	// 	}
+	// 	return c.JSON(200, res.GetRecords())
 
-	})
+	// })
 
 	e.PUT("/stocks/:stock_id/buy", func(c echo.Context) error {
 
@@ -119,7 +118,41 @@ func main() {
 		return c.JSON(200, stocksSell)
 
 	})
+	e.PUT("/mf/:mf_id/buy", func(c echo.Context) error {
 
+		fmt.Println("buying mfs", c.Param("mf_id"))
+		conn := db.GetDbConn()
+		var mfBuy models.BuyMFModel
+		if err := c.Bind(&mfBuy); err != nil {
+			return echo.ErrBadRequest
+		}
+		fmt.Println(mfBuy)
+		err := conn.BuyMF(mfBuy)
+		if err != nil {
+			return err
+		}
+
+		return c.JSON(200, mfBuy)
+
+	})
+
+	e.PUT("/mf/:mf_id/sell", func(c echo.Context) error {
+
+		fmt.Println("selling mf", c.Param("mf_id"))
+		conn := db.GetDbConn()
+		var mfSell models.SellMFModel
+		if err := c.Bind(&mfSell); err != nil {
+			return echo.ErrBadRequest
+		}
+		fmt.Println(mfSell)
+		err := conn.SellMF(mfSell)
+		if err != nil {
+			return err
+		}
+
+		return c.JSON(200, mfSell)
+
+	})
 	e.PUT("/customers/:customer_id/addMoney", func(c echo.Context) error {
 
 		log.Println("adding money to customer")
