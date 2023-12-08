@@ -16,10 +16,10 @@ $: values = $stockDetailStore.dailyPrices.map(d =>{
 
 
  $: data = {
-    labels: labels,
+    labels: labels.slice(0,12),
     datasets: [
       {
-        values: values
+        values: values.slice(0,12)
       }
     ]
   };
