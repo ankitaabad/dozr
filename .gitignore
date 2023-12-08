@@ -9,3 +9,4 @@ csv/generated
 deprecated
 */node_modules
 script.md
+docker-compose-deprecated.yml
