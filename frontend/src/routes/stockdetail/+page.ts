@@ -2,7 +2,7 @@ import { stockDetailStore,currentStockId,isHome} from '$lib/store';
 import { browser } from '$app/environment';
 import { goto } from '$app/navigation';
 
-export const prerender = true;
+export const ssr = false
 /** @type {import('./$types').PageLoad} */
 export async function load({ url }) {
   isHome.set(false)
