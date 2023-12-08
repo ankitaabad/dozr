@@ -28,7 +28,7 @@
 	const formData = {
 		quantity: ''
 	};
-	$: price = $modalStore[0]?.meta.price.toLocaleString('en-in');
+	$: price = $modalStore[0]?.meta.price;
 	$: enoughAmount = $customerBalanceStore[0]?.balance >= required;
 
 	console.log($modalStore[0]?.meta.price);
@@ -73,7 +73,7 @@
 			</label>
 			<label class="label">
 				<span>Price</span>
-				<input class="input" type="number" value={price} disabled placeholder="" />
+				<input class="input" type="number" value={price.toFixed(2)} disabled placeholder="" />
 			</label>
 		</div>
 		<div class="mt-24">

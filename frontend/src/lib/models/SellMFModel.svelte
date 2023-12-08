@@ -23,7 +23,7 @@
 	$: required = quantity * $modalStore[0]?.meta.price || 0;
 	// $: orderMsg = quantity ? `${required.toLocaleString('en-in')} will be deducted from your a/c` : ''
 
-	const price = $modalStore[0]?.meta?.price?.toLocaleString('en-in');
+	const price = $modalStore[0]?.meta?.price;
 	const availableMFs = $modalStore[0]?.meta.quantity;
 	console.log('inside meta vale', $modalStore[0]?.meta);
 	$: enoughMFs = availableMFs >= quantity;
@@ -69,7 +69,7 @@
 			</label>
 			<label class="label">
 				<span>Price</span>
-				<input class="input" type="number" value={price} disabled placeholder="" />
+				<input class="input" type="number" value={price.toFixed(2)} disabled placeholder="" />
 			</label>
 		</div>
 		<div class="mt-24">

@@ -5,7 +5,7 @@
 	import { getModalStore, type ModalSettings } from '@skeletonlabs/skeleton';
 	const modalStore = getModalStore();
 	function buyStocks(row) {
-		console.log('inside add money');
+		console.log('inside buy top performing ',row);
 		const modal: ModalSettings = {
 			type: 'component',
 			component: 'buyStocksModel',
