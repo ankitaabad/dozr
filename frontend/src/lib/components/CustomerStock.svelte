@@ -16,8 +16,12 @@
 		modalStore.trigger(modal);
 	}
 
-	$: handler = new DataHandler($customersStocksStore, { rowsPerPage: 10 });
-	$: rows = handler.getRows();
+	const handler = new DataHandler($customersStocksStore, { rowsPerPage: 10 });
+	const rows = handler.getRows();
+
+  customersStocksStore.subscribe((data) => {
+		handler?.setRows(data);
+	});
 </script>
 
 <div class="w-full card p-4">

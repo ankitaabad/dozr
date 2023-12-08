@@ -16,8 +16,12 @@
 		modalStore.trigger(modal);
 	}
 
-	$: handler = new DataHandler($allStocksStore, { rowsPerPage: 10 });
-	$: rows = handler.getRows();
+	const handler = new DataHandler($allStocksStore, { rowsPerPage: 10 });
+	let rows = handler.getRows();
+
+	allStocksStore.subscribe((data) => {
+		handler?.setRows(data);
+	});
 </script>
 
 <div class="w-full card p-4">
@@ -27,8 +31,8 @@
 				<tr>
 					<Th {handler} orderBy="company_name">Name</Th>
 					<Th {handler} orderBy="industry">Industry</Th>
-					<Th {handler} orderBy="market_capital">Market Capital</Th>
 					<Th {handler} orderBy="price">Price</Th>
+					<Th {handler} orderBy="market_capital">Market Capital</Th>
 					<Th {handler} orderBy="">&nbsp;</Th>
 				</tr>
 			</thead>
@@ -37,8 +41,8 @@
 					<tr>
 						<td>{row.company_name}</td>
 						<td>{row.industry}</td>
-						<td class="font-medium">₹{row.market_capital.toFixed(2)} (Cr)</td>
 						<td class="font-medium">₹{row.price.toFixed(2)}</td>
+						<td class="font-medium">₹{row.market_capital.toFixed(2)} (Cr)</td>
 						<td
 							><button
 								type="button"
