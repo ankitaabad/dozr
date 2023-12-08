@@ -34,8 +34,8 @@
 				{#each $rows as row}
 					<tr>
 						<td>{row.company_name}</td>
-						<td class="text-success-500">{row.daily_change.toFixed(2)}%</td>
-						<td class="font-medium">₹{row.price.toFixed(2)}</td>
+						<td class="text-success-500">{row.daily_change.toLocaleString('en-in')}%</td>
+						<td class="font-medium">₹{row.price.toLocaleString('en-in')}</td>
 						<td><button
 							type="button"
 							class=" btn btn-sm rounded-md px-6 bg-primary-500 variant-filled-primary"

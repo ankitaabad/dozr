@@ -28,7 +28,7 @@
 				<tr>
 					<Th {handler} orderBy="fund_name">Name</Th>
 					<Th {handler} orderBy="fund_size">Quantity</Th>
-					<Th {handler} orderBy="price">Avg. buy Price</Th>
+					<Th {handler} orderBy="price">Price</Th>
 					<Th {handler} orderBy="">&nbsp;</Th>
 				</tr>
 				<tr>
@@ -50,7 +50,7 @@
 							</div>
 						</td>
 						<td>{row.fund_size}</td>
-						<td class="font-medium s-FI5Y16UXR6H0">₹{row.price.toFixed(2)}</td>
+						<td class="font-medium s-FI5Y16UXR6H0">₹{row.price.toLocaleString('en-in')}</td>
 						<td><button
 							type="button"
 							class=" btn btn-sm rounded-md px-6 bg-primary-500 variant-filled-primary"

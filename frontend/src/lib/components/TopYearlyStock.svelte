@@ -37,12 +37,12 @@
 						
 							<td
 							>{row?.company_name} <br /><span class="text-sm text-gray-500"
-								>Yearly Change: {row?.yearly_change.toFixed(2)}%</span
+								>Yearly Change: {row?.yearly_change.toLocaleString('en-in')}%</span
 							></td
 						>
 						<td>{row?.industry}</td>
-						<td >₹{row?.market_capital.toFixed(2)} (Cr)</td>
-						<td class="font-medium">₹{row?.price.toFixed(2)}</td>
+						<td >₹{row?.market_capital.toLocaleString('en-in')} (Cr)</td>
+						<td class="font-medium">₹{row?.price.toLocaleString('en-in')}</td>
 						<td><button
 							type="button"
 							class=" btn btn-sm rounded-md px-6 bg-primary-500 variant-filled-primary"

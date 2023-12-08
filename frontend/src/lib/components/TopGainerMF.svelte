@@ -41,8 +41,8 @@
 								<div>{row.fund_name}</div>
 							</div>
 						</td>
-						<td class="text-success-500">{row.daily_change.toFixed(2)}</td>
-						<td class="font-medium s-FI5Y16UXR6H0">₹{row.price.toFixed(2)}</td>
+						<td class="text-success-500">{row.daily_change.toLocaleString('en-in')}</td>
+						<td class="font-medium s-FI5Y16UXR6H0">₹{row.price.toLocaleString('en-in')}</td>
 						<td><button
 							type="button"
 							class=" btn btn-sm rounded-md px-6 bg-primary-500 variant-filled-primary"

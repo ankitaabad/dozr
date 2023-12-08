@@ -15,9 +15,9 @@
 				<thead>
 					<tr>
 						<Th {handler} orderBy="Name">Name</Th>
-						<Th {handler} orderBy="total_investment">Investment</Th>
 						<Th {handler} orderBy="email">Email</Th>
 						<Th {handler} orderBy="phone">Phone</Th>
+						<Th {handler} orderBy="total_investment">Investment</Th>
 					</tr>
 				</thead>
 				<tbody>
@@ -44,13 +44,17 @@
 											/><path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" /></svg
 										>
 									</div>
-									{row.first_name}
-									{row.last_name}
+									<div>
+										<div>{row.first_name}
+											{row.last_name}</div>
+										
+										<span class="text-sm text-gray-500 ">Customer Id: {row.customer_id}</span>
+									</div>
 								</div>
 							</td>
-							<td class="font-medium">₹{row.total_investment.toFixed(2)}</td>
 							<td>{row.email}</td>
 							<td>{row.phone}</td>
+							<td class="font-medium">₹{row.total_investment.toLocaleString('en-in')}</td>
 						</tr>
 					{/each}
 				</tbody>

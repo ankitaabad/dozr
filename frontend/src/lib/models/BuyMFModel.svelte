@@ -19,11 +19,11 @@
   let quantity 
 
   $: required = quantity * $modalStore[0]?.meta.price || 0
-  // $: orderMsg = quantity ? `${required.toFixed(2)} will be deducted from your a/c` : ''
+  // $: orderMsg = quantity ? `${required.toLocaleString('en-in')} will be deducted from your a/c` : ''
 const formData = {
   quantity: ''
 }
-  const price = $modalStore[0]?.meta.price.toFixed(2)
+  const price = $modalStore[0]?.meta.price.toLocaleString('en-in')
   $: enoughAmount = $customerBalanceStore[0]?.balance >= required
 
 
@@ -79,8 +79,8 @@ console.log($modalStore[0]?.meta.price)
 		<div
 			class="mb-2 pt-3 flex justify-between items-center text-gray-500 text-sm border-t border-gray-200 border-solid"
 		>
-			<div>Balance: <span>₹ {$customerBalanceStore[0]?.balance.toFixed(2)}</span></div>
-			<div>Required: <span>₹ {required.toFixed(2)}</span></div>
+			<div>Balance: <span>₹ {$customerBalanceStore[0]?.balance.toLocaleString('en-in')}</span></div>
+			<div>Required: <span>₹ {required.toLocaleString('en-in')}</span></div>
 		</div>
 		<footer class="modal-footer {parent.regionFooter}">
 			<button class="btn rounded w-[50%] {parent.buttonNeutral}" on:click={parent.onClose}

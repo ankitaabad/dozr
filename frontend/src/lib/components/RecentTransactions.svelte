@@ -30,7 +30,7 @@
 					<tr>
 						<td>{convertDate(row.date)} </td>
 						<td>{row.desc}</td>
-						<td class="font-medium">₹{row?.amount.toFixed(2)}</td>
+						<td class="font-medium">₹{row?.amount.toLocaleString('en-in')}</td>
 					</tr>
 				{/each}
 			</tbody>

@@ -3,6 +3,7 @@
 	import { dozerRest, server } from '$lib/utils';
 	import { DataHandler, Datatable, Th, ThFilter } from '@vincjo/datatables';
 	import { getModalStore, type ModalSettings } from '@skeletonlabs/skeleton';
+	import { goto } from '$app/navigation';
 	const modalStore = getModalStore();
 	function sellStocks(row) {
 		console.log('inside add money');
@@ -15,10 +16,9 @@
 
 		modalStore.trigger(modal);
 	}
-
+	
 	const handler = new DataHandler($customersStocksStore, { rowsPerPage: 10 });
 	const rows = handler.getRows();
-
   customersStocksStore.subscribe((data) => {
 		handler?.setRows(data);
 	});
@@ -38,15 +38,17 @@
 			</thead>
 			<tbody>
 				{#each $rows as row}
+				
 					<tr>
+						
 						<td
-							>{row.company_name} <br /><span class="text-sm text-gray-500"
-								>Buy Price: {row.avg_price.toFixed(2)}</span
+							><a href="/stockdetail?stock_id=001r7tOv0gSeoQ0S7nLA3szpLT2qCXfH" class="flex gap-2 items-center">{row.company_name} <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-external-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6" /><path d="M11 13l9 -9" /><path d="M15 4h5v5" /></svg></a> <br /><span class="text-sm text-gray-500"
+								>Buy Price: {row.avg_price.toLocaleString('en-in')}</span
 							></td
 						>
 						<td>{row.quantity}</td>
-						<td class="">₹{row.market_capital.toFixed(2)} (Cr)</td>
-						<td class="font-medium ">₹{row.price.toFixed(2)}</td>
+						<td class="">₹{row.market_capital.toLocaleString('en-in')} (Cr)</td>
+						<td class="font-medium ">₹{row.price.toLocaleString('en-in')}</td>
 						<td
 							><button
 								type="button"
@@ -72,6 +74,7 @@
 	tbody td {
 		border: 1px solid #e5e7eb;
 		padding: 4px 20px;
+		position: relative;
 	}
 	tbody tr {
 		transition: all, 0.2s;

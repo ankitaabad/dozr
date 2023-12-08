@@ -41,8 +41,8 @@
 					<tr>
 						<td>{row.company_name}</td>
 						<td>{row.industry}</td>
-						<td >₹{row.market_capital.toFixed(2)} (Cr)</td>
-						<td class="font-medium">₹{row.price.toFixed(2)}</td>
+						<td >₹{row.market_capital.toLocaleString('en-in')} (Cr)</td>
+						<td class="font-medium">₹{row.price.toLocaleString('en-in')}</td>
 						<td
 							><button
 								type="button"

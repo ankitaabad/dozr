@@ -7,6 +7,7 @@
 
 	import { customerBalanceStore } from '$lib/store';
 	import { getModalStore, type ModalSettings } from '@skeletonlabs/skeleton';
+	import Chart from 'svelte-frappe-charts';
 
 	const modalStore = getModalStore();
 	function showAddMoneyModal() {
@@ -49,9 +50,9 @@
 			if (change > 0) sign = '+';
 			// else if (change < 0) sign = '-';
 			// s += sign + '₹';
-			s += change.toFixed(2);
+			s += change.toLocaleString('en-in');
 
-			s += ` (${sign}${per.toFixed(2)}%)`;
+			s += ` (${sign}${per.toLocaleString('en-in')}%)`;
 			return s;
 			console.log({ s });
 		};
@@ -65,43 +66,59 @@
 				return getStr(totalChange, totalChangePercentage);
 		}
 	};
+
+	const data= {
+	labels: ["Stocks", "Mutual Funds", "Total Investment"],
+
+	datasets: [
+		{
+			name: "Investment", chartType: 'bar',
+			values: [$customerStockInvestmentValueStore[0]?.investment, $customerMFInvestmentValueStore[0]?.investment, $customerTotalInvestmentValueStore[0]?.total_investment ]
+		},
+		{
+			name: "Present Values", chartType: 'bar',
+			values: [$customerStockInvestmentValueStore[0]?.present_value, $customerMFInvestmentValueStore[0]?.present_value, $customerTotalInvestmentValueStore[0]?.total_present_value]
+		}
+	],
+
+	
+	}
+
+	// title: "My Awesome Chart",
+	// type: 'axis-mixed', // or 'bar', 'line', 'pie', 'percentage'
+	// height: 300,
+	// colors: ['purple', '#ffa3ef', 'light-blue'],
+
+	// tooltipOptions: {
+	// 	formatTooltipX: d => (d + '').toUpperCase(),
+	// 	formatTooltipY: d => d + ' pts',
+	// }
+
 </script>
 
-<!-- <fieldset>
-	<legend> stock investment</legend>
-	<div>₹{$customerStockInvestmentValueStore[0]?.investment.toFixed(2)}</div>
-	<div>₹{$customerStockInvestmentValueStore[0]?.present_value.toFixed(2)}</div>
-</fieldset>
 
-<fieldset>
-	<legend> mf investment</legend>
-	<div>₹{$customerMFInvestmentValueStore[0]?.investment.toFixed(2)}</div>
-	<div>₹{$customerMFInvestmentValueStore[0]?.present_value.toFixed(2)}</div>
-</fieldset>
-
-<fieldset>
-	<legend> total investment</legend>
-	<div>₹{$customerTotalInvestmentValueStore[0]?.total_investment.toFixed(2)}</div>
-	<div>₹{$customerTotalInvestmentValueStore[0]?.total_present_value.toFixed(2)}</div>
-</fieldset> -->
 
 <div class="w-[100%] bg-white rounded-md p-6 border  border-solid border-gray-200">
 	<div class="heading mb-6 flex justify-between items-center">
 		<h2 class="font-medium text-lg">Summary</h2>
 	</div>
-	<div class="flex gap-6">
+	
+		<Chart data={data} type="bar" height="400" />
+	
+	 <div class="flex gap-6">
 		<div class="bg-white rounded-md p-6 border  border-solid border-gray-200 grow w-[25%] p-6">
+			
 			<h3 class="font-medium mb-4">Stocks</h3>
 			<div class="flex justify-between flex-col gap-8">
 				<div class="flex justify-between">
 					<div class="flex flex-col">
 						<span class="text-xs text-gray-400">Invested</span>
-						<span>₹{$customerStockInvestmentValueStore[0]?.investment.toFixed(2)}</span>
+						<span>₹{$customerStockInvestmentValueStore[0]?.investment.toLocaleString('en-in')}</span>
 					</div>
 
 					<div class="flex flex-col">
 						<span class="text-xs text-gray-400">Current</span>
-						<span>₹{$customerStockInvestmentValueStore[0]?.present_value.toFixed(2)}</span>
+						<span>₹{$customerStockInvestmentValueStore[0]?.present_value.toLocaleString('en-in')}</span>
 					</div>
 				</div>
 				<div class="flex justify-between flex-col">
@@ -120,11 +137,11 @@
 				<div class="flex justify-between">
 					<div class="flex flex-col">
 						<span class="text-xs text-gray-400">Invested</span>
-						<span>₹{$customerMFInvestmentValueStore[0]?.investment.toFixed(2)}</span>
+						<span>₹{$customerMFInvestmentValueStore[0]?.investment.toLocaleString('en-in')}</span>
 					</div>
 					<div class="flex flex-col">
 						<span class="text-xs text-gray-400">Current</span>
-						<span>₹{$customerMFInvestmentValueStore[0]?.present_value.toFixed(2)}</span>
+						<span>₹{$customerMFInvestmentValueStore[0]?.present_value.toLocaleString('en-in')}</span>
 					</div>
 				</div>
 				<div class="flex justify-between flex-col">
@@ -141,11 +158,11 @@
 				<div class="flex justify-between">
 					<div class="flex flex-col">
 						<span class="text-xs text-gray-400">Invested</span>
-						<span>{$customerTotalInvestmentValueStore[0]?.total_investment.toFixed(2)}</span>
+						<span>{$customerTotalInvestmentValueStore[0]?.total_investment.toLocaleString('en-in')}</span>
 					</div>
 					<div class="flex flex-col">
 						<span class="text-xs text-gray-400">Current</span>
-						<span>{$customerTotalInvestmentValueStore[0]?.total_present_value.toFixed(2)}</span>
+						<span>{$customerTotalInvestmentValueStore[0]?.total_present_value.toLocaleString('en-in')}</span>
 					</div>
 				</div>
 				<div class="flex justify-between flex-col">
@@ -171,5 +188,5 @@
 				>
 			</div>
 		</div>
-	</div>
+	</div> 
 </div>

@@ -30,7 +30,7 @@
 				<tr>
 					<Th {handler} orderBy="fund_name">Name</Th>
 					<Th {handler} orderBy="amount">Quantity</Th>
-					<Th {handler} orderBy="desc">Avg. buy Price</Th>
+					<Th {handler} orderBy="desc">Current Price</Th>
 					<Th {handler} orderBy="">&nbsp;</Th>
 				</tr>
 			</thead>
@@ -43,11 +43,12 @@
 									src={row.image_src}
 									class="w-12 h-12 rounded border border-solid border-gray-300"
 								/>
-								<div>{row.fund_name}</div>
+								<div>{row.fund_name}
+									<span class="text-sm text-gray-500 ">Avg. buy Price: ₹{row.avg_price.toLocaleString('en-in')}</span></div>
 							</div>
 						</td>
 						<td>{row.quantity}</td>
-						<td class="font-medium s-FI5Y16UXR6H0">₹{row.avg_price.toFixed(2)}</td>
+						<td class="font-medium s-FI5Y16UXR6H0">₹{row.price.toLocaleString('en-in')}</td>
 						<td
 							><button
 								type="button"
