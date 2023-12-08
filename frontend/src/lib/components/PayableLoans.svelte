@@ -33,7 +33,7 @@
 	<div class="flex flex-col gap-4">
 		{#each $rows as row}
 			<div class="w-full border border-solid border-gray-300 rounded-md p-4 ">
-				<div class="flex gap-2 items-center">
+				<div class="flex gap-3 items-center">
 					<div
 						class=" p-3 rounded border border-solid border-gray-300 flex justify-between items-center"
 					>

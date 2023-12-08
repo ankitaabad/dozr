@@ -45,8 +45,8 @@
 							></td
 						>
 						<td>{row.quantity}</td>
-						<td class="font-medium s-FI5Y16UXR6H0">₹{row.market_capital.toFixed(2)} (Cr)</td>
-						<td class="font-medium s-FI5Y16UXR6H0">₹{row.price.toFixed(2)}</td>
+						<td class="">₹{row.market_capital.toFixed(2)} (Cr)</td>
+						<td class="font-medium ">₹{row.price.toFixed(2)}</td>
 						<td
 							><button
 								type="button"

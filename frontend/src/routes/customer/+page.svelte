@@ -16,8 +16,8 @@
 	import PayableLoans from '$lib/components/PayableLoans.svelte';
 	import YourTrade from '$lib/components/YourTrade.svelte';
 	import Stocks from '$lib/components/Stocks.svelte';
+	import MutualFunds from '$lib/components/MutualFunds.svelte';
 	let tabSet: number = 0;
-	let StocktabSet: number = 0;
 	const conicStops: ConicStop[] = [
 		{ color: 'transparent', start: 0, end: 25 },
 		{ color: 'rgb(var(--color-primary-500))', start: 75, end: 100 }
@@ -92,14 +92,7 @@
 							<h2 class="font-medium text-lg">All Mutual Funds</h2>
 							<!-- <a href="#" class="text-primary-500 font-medium">View all</a> -->
 						</div>
-						<TabGroup>
-							<Tab bind:group={StocktabSet} name="tab2" value={0}>Mutual Funds</Tab>
-							<svelte:fragment slot="panel">
-								{#if StocktabSet === 0}
-									<AllmutualFunds />
-								{/if}
-							</svelte:fragment>
-						</TabGroup>
+						<MutualFunds/>	
 					</div>
 					<!-- <div class="w-[25%] bg-white rounded-md p-6 border  border-solid border-gray-200 ">Mutual Funds</div> -->
 				</div>

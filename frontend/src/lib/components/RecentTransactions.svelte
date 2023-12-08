@@ -15,22 +15,22 @@
 		<table>
 			<thead>
 				<tr>
-					<Th {handler} orderBy="amount">Amount</Th>
-					<Th {handler} orderBy="desc">Description</Th>
 					<Th {handler} orderBy="date">Date</Th>
+					<Th {handler} orderBy="desc">Description</Th>
+					<Th {handler} orderBy="amount">Amount</Th>
 				</tr>
 				<tr>
-					<ThFilter {handler} filterBy="amount" />
-					<ThFilter {handler} filterBy="desc" />
 					<ThFilter {handler} filterBy="date" />
+					<ThFilter {handler} filterBy="desc" />
+					<ThFilter {handler} filterBy="amount" />
 				</tr>
 			</thead>
 			<tbody>
 				{#each $rows as row}
 					<tr>
-						<td class="font-medium">₹{row?.amount.toFixed(2)}</td>
-						<td>{row.desc}</td>
 						<td>{convertDate(row.date)} </td>
+						<td>{row.desc}</td>
+						<td class="font-medium">₹{row?.amount.toFixed(2)}</td>
 					</tr>
 				{/each}
 			</tbody>

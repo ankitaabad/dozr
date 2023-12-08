@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { topStockGainersStore } from '$lib/store';
+	import { topMFGainersStore } from '$lib/store';
 	import { dozerRest, server } from '$lib/utils';
 	import { DataHandler, Datatable, Th, ThFilter } from '@vincjo/datatables';
 	import { getModalStore, type ModalSettings } from '@skeletonlabs/skeleton';
@@ -8,14 +8,14 @@
 		console.log('inside add money');
 		const modal: ModalSettings = {
 			type: 'component',
-			component: 'buyStocksModel',
+			component: 'buyMFsModel',
 			meta: row
 		};
 		console.log({ modal });
 
 		modalStore.trigger(modal);
 	}
-	$: handler = new DataHandler($topStockGainersStore, { rowsPerPage: 10 });
+	$: handler = new DataHandler($topMFGainersStore, { rowsPerPage: 10 });
 	$: rows = handler.getRows();
 </script>
 
@@ -24,18 +24,25 @@
 		<table>
 			<thead>
 				<tr>
-					<Th {handler} orderBy="company_name">Name</Th>
+					<Th {handler} orderBy="fund_name">Name</Th>
 					<Th {handler} orderBy="daily_change">Gain</Th>
 					<Th {handler} orderBy="price">Price</Th>
-					<Th {handler} orderBy="">&nbsp;</Th>
 				</tr>
 			</thead>
 			<tbody>
 				{#each $rows as row}
 					<tr>
-						<td>{row.company_name}</td>
-						<td class="text-success-500">{row.daily_change.toFixed(2)}%</td>
-						<td class="font-medium">₹{row.price.toFixed(2)}</td>
+						<td>
+							<div class="flex gap-3 items-center">
+								<img
+									src={row.image_src}
+									class="w-12 h-12 rounded border border-solid border-gray-300"
+								/>
+								<div>{row.fund_name}</div>
+							</div>
+						</td>
+						<td class="text-success-500">{row.daily_change.toFixed(2)}</td>
+						<td class="font-medium s-FI5Y16UXR6H0">₹{row.price.toFixed(2)}</td>
 						<td><button
 							type="button"
 							class=" btn btn-sm rounded-md px-6 bg-primary-500 variant-filled-primary"

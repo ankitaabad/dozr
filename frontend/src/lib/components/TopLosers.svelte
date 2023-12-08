@@ -2,6 +2,19 @@
 	import { topStockLosersStore } from '$lib/store';
 	import { dozerRest, server } from '$lib/utils';
 	import { DataHandler, Datatable, Th, ThFilter } from '@vincjo/datatables';
+	import { getModalStore, type ModalSettings } from '@skeletonlabs/skeleton';
+	const modalStore = getModalStore();
+	function buyStocks(row) {
+		console.log('inside add money');
+		const modal: ModalSettings = {
+			type: 'component',
+			component: 'buyStocksModel',
+			meta: row
+		};
+		console.log({ modal });
+
+		modalStore.trigger(modal);
+	}
 	$: handler = new DataHandler($topStockLosersStore, { rowsPerPage: 10 });
 	$: rows = handler.getRows();
 </script>
@@ -14,14 +27,20 @@
 					<Th {handler} orderBy="company_name">Name</Th>
 					<Th {handler} orderBy="daily_change">Gain</Th>
 					<Th {handler} orderBy="price">Price</Th>
+					<Th {handler} orderBy="">&nbsp;</Th>
 				</tr>
 			</thead>
 			<tbody>
 				{#each $rows as row}
 					<tr>
 						<td>{row.company_name}</td>
-						<td class="font-medium text-error-500">{row.daily_change.toFixed(2)}%</td>
+						<td class="text-error-500">{row.daily_change.toFixed(2)}%</td>
 						<td class="font-medium">₹{row.price.toFixed(2)}</td>
+						<td><button
+							type="button"
+							class=" btn btn-sm rounded-md px-6 bg-primary-500 variant-filled-primary"
+							on:click={() => buyStocks(row)}>Buy</button
+						></td>
 					</tr>
 				{/each}
 			</tbody>

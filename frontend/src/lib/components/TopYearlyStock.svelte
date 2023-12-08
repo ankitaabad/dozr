@@ -3,7 +3,18 @@
 	import { dozerRest, server } from '$lib/utils';
 	import { DataHandler, Datatable, Th, ThFilter } from '@vincjo/datatables';
 	import { getModalStore, type ModalSettings } from '@skeletonlabs/skeleton';
+	const modalStore = getModalStore();
+	function buyStocks(row) {
+		console.log('inside add money');
+		const modal: ModalSettings = {
+			type: 'component',
+			component: 'buyStocksModel',
+			meta: row
+		};
+		console.log({ modal });
 
+		modalStore.trigger(modal);
+	}
 	$: handler = new DataHandler($topYearlyStock, { rowsPerPage: 10 });
 	$: rows = handler.getRows();
 </script>
@@ -15,19 +26,28 @@
 				<tr>
 					<Th {handler} orderBy="company_name">Name</Th>
 					<Th {handler} orderBy="industry">Industry</Th>
-					<Th {handler} orderBy="yearly_change">Yearly Change</Th>
 					<Th {handler} orderBy="market_capital">Market Capital</Th>
 					<Th {handler} orderBy="price">Price</Th>
+					<Th {handler} orderBy="">&nbsp;</Th>
 				</tr>
 			</thead>
 			<tbody>
 				{#each $rows as row}
 					<tr>
-						<td>{row?.company_name}</td>
+						
+							<td
+							>{row?.company_name} <br /><span class="text-sm text-gray-500"
+								>Yearly Change: {row?.yearly_change.toFixed(2)}%</span
+							></td
+						>
 						<td>{row?.industry}</td>
-						<td class="font-medium">{row?.yearly_change.toFixed(2)}%</td>
-						<td class="font-medium">₹{row?.market_capital.toFixed(2)} (Cr)</td>
+						<td >₹{row?.market_capital.toFixed(2)} (Cr)</td>
 						<td class="font-medium">₹{row?.price.toFixed(2)}</td>
+						<td><button
+							type="button"
+							class=" btn btn-sm rounded-md px-6 bg-primary-500 variant-filled-primary"
+							on:click={() => buyStocks(row)}>Buy</button
+						></td>
 					</tr>
 				{/each}
 			</tbody>

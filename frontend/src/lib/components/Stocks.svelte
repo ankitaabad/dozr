@@ -4,8 +4,6 @@
 	import AllStock from './AllStock.svelte';
 	import TopGainer from './TopGainer.svelte';
 	import TopLosers from './TopLosers.svelte';
-
-	let tabSet: number = 0;
 	let StocktabSet: number = 0;
 </script>
 

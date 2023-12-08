@@ -31,8 +31,8 @@
 				<tr>
 					<Th {handler} orderBy="company_name">Name</Th>
 					<Th {handler} orderBy="industry">Industry</Th>
-					<Th {handler} orderBy="price">Price</Th>
 					<Th {handler} orderBy="market_capital">Market Capital</Th>
+					<Th {handler} orderBy="price">Price</Th>
 					<Th {handler} orderBy="">&nbsp;</Th>
 				</tr>
 			</thead>
@@ -41,8 +41,8 @@
 					<tr>
 						<td>{row.company_name}</td>
 						<td>{row.industry}</td>
+						<td >₹{row.market_capital.toFixed(2)} (Cr)</td>
 						<td class="font-medium">₹{row.price.toFixed(2)}</td>
-						<td class="font-medium">₹{row.market_capital.toFixed(2)} (Cr)</td>
 						<td
 							><button
 								type="button"

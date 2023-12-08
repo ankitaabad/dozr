@@ -1,7 +1,20 @@
 <script lang="ts">
 	import { allMutualFundsStore } from '$lib/store';
 	import { DataHandler, Datatable, Th, ThFilter } from '@vincjo/datatables';
-	$: handler = new DataHandler($allMutualFundsStore, { rowsPerPage: 5 });
+	import { getModalStore, type ModalSettings } from '@skeletonlabs/skeleton';
+	const modalStore = getModalStore();
+	function buyStocks(row) {
+		console.log('inside add money');
+		const modal: ModalSettings = {
+			type: 'component',
+			component: 'buyMFModel',
+			meta: row
+		};
+		console.log({ modal });
+
+		modalStore.trigger(modal);
+	}
+	$: handler = new DataHandler($allMutualFundsStore, { rowsPerPage: 10 });
 	$: rows = handler.getRows();
 </script>
 
@@ -13,6 +26,7 @@
 					<Th {handler} orderBy="fund_name">Name</Th>
 					<Th {handler} orderBy="fund_size">Quantity</Th>
 					<Th {handler} orderBy="price">Avg. buy Price</Th>
+					<Th {handler} orderBy="">&nbsp;</Th>
 				</tr>
 				<tr>
 					<ThFilter {handler} filterBy="fund_name" />
@@ -24,7 +38,7 @@
 				{#each $rows as row}
 					<tr>
 						<td>
-							<div class="flex gap-2 items-center">
+							<div class="flex gap-3 items-center">
 								<img
 									src={row.image_src}
 									class="w-12 h-12 rounded border border-solid border-gray-300"
@@ -32,8 +46,13 @@
 								<div>{row.fund_name}</div>
 							</div>
 						</td>
-						<td class="font-medium s-FI5Y16UXR6H0">{row.fund_size}</td>
+						<td>{row.fund_size}</td>
 						<td class="font-medium s-FI5Y16UXR6H0">₹{row.price.toFixed(2)}</td>
+						<td><button
+							type="button"
+							class=" btn btn-sm rounded-md px-6 bg-primary-500 variant-filled-primary"
+							on:click={() => buyStocks(row)}>Buy</button
+						></td>
 					</tr>
 				{/each}
 			</tbody>
@@ -45,7 +64,6 @@
 	table{
 		border: 1px solid #e5e7eb;
 		border-collapse: collapse;
-		table-layout: fixed;
 	}
 	thead {
 		background: #fff;
