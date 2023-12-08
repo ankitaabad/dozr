@@ -75,7 +75,7 @@ sql: |
 
   select count(*) count,stock_id into popular_stocks from stocks_buy sb group by stock_id, buy_date;
 
-  select  cm.customer_id, cm.mf_id, cm.quantity ,cm.avg_price, mf.fund_name, mf.image_src  into customer_mutual_funds from customer_mf cm join mutual_funds mf on cm.mf_id  = mf.mf_id; 
+  select  cm.customer_id, cm.mf_id, cm.quantity ,cm.avg_price, mf.fund_name, mf.image_src,mf.price  into customer_mutual_funds from customer_mf cm join mutual_funds mf on cm.mf_id  = mf.mf_id; 
 
   select  cs.customer_id , sum(cs.quantity* cs.avg_price) investment, sum(cs.quantity * s.price) present_value into customer_stock_investment_value from customer_stocks cs  join stocks s on cs.stock_id = s.stock_id  group by cs.customer_id ;
 
