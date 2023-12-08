@@ -6,6 +6,6 @@ csv/generated
 */.env
 */.dozer*
 */dozer.lock
-
+deprecated
 */node_modules
 script.md

@@ -25,10 +25,10 @@ async function job() {
 
   try {
     console.log("inside job");
-    let dateBeforeToGenerate  = DateTime.fromSQL(process.env.dateBeforeToGenerate)
+    let dateBeforeToGenerate  = DateTime.fromSQL(process.env.dateBeforeToGenerate,{'zone':'Asia/Kolkata'})
 
     if(!dateBeforeToGenerate.isValid){
-      dateBeforeToGenerate = DateTime.now()
+      dateBeforeToGenerate = DateTime.fromObject({'zone':'Asia/Kolkata'}).now()
     }
     console.log("day before to generate",dateBeforeToGenerate)
 
@@ -49,17 +49,16 @@ async function job() {
 
 
     
-    DateTime.fromSQL(process.env.dateBeforeToGenerate) || DateTime.now()
     const tomorrow = dateBeforeToGenerate.plus({ days: 1 });
     const aYearBefore = tomorrow.plus({ year: -1 });
-
+    console.log({tomorrow,aYearBefore,})
     console.log();
     const result = await client.query(
-      `select stock_id,price, (select price from stocks_daily_price sdpold where "date" = '${aYearBefore.toSQLDate()}' and stock_id = sdp.stock_id) year_old_price from stocks_daily_price sdp where date = '${dateBeforeToGenerate.toSQLDate()}'`
+      `select stock_id,price, (select price from stocks_daily_price sdpold where "date" = '${aYearBefore.toSQLDate()}' and stock_id = s.stock_id) year_old_price from stocks s`
     );
     console.log({ result });
     let sq = "with ss as (SELECT * FROM (VALUES";
-    const sr = result.rows;
+    const sr = result.rows.slice(0,1);
     sr.forEach((row, i) => {
       const newPrice = randomPricePercentageChange(row.price);
       const dailyChange = change(newPrice, row.price);
@@ -74,13 +73,14 @@ async function job() {
     });
     sq += `) AS t (stock_id,date,price,daily_change,yearly_change)), ist as ( INSERT INTO stocks_daily_price (stock_id, "date", price)  select stock_id, "date", price from ss) update stocks s set price = sstable.price, daily_change = sstable.daily_change, yearly_change = sstable.yearly_change  from ss sstable where s.stock_id = sstable.stock_id `;
     console.log({sq})
+    console.log({ sqResult });
 
+return 
     const sqResult = await client.query(sq);
 
-    console.log({ sqResult });
     console.log("generating mf data");
     const mfdaily = await client.query(
-      `select mf_id,price, (select price from mf_daily_price mfrold where "date" = '${aYearBefore.toSQLDate()}' and mf_id = mfdp.mf_id) year_old_price from mf_daily_price mfdp where date = '${dateBeforeToGenerate.toSQLDate()}'`
+      `select mf_id,price, (select price from mf_daily_price where "date" = '${aYearBefore.toSQLDate()}' and mf_id = mf.mf_id) year_old_price from mutual_funds mf`
     );
     let mfsq = "with mfs as (SELECT * FROM (VALUES";
     const mfr = mfdaily.rows;
@@ -114,3 +114,4 @@ async function job() {
   }
 }
 
+job()
