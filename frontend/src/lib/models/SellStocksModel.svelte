@@ -5,7 +5,14 @@
 	// Stores
 	import { getModalStore } from '@skeletonlabs/skeleton';
 	import { sellStocksApi } from '$lib/apis';
+	import { onMount } from 'svelte';
+	import { enterBind } from '$lib/utils';
 
+	let quantityInput, sellButton;
+
+	onMount(() => {
+		enterBind(sellButton, quantityInput);
+	});
 	// Props
 	/** Exposes parent props to this component. */
 	export let parent: SvelteComponent;
@@ -15,7 +22,7 @@
 
 	$: required = quantity * $modalStore[0]?.meta.price || 0;
 	// $: orderMsg = quantity ? `${required.toLocaleString('en-in')} will be deducted from your a/c` : ''
-	
+
 	const price = $modalStore[0]?.meta?.price?.toLocaleString('en-in');
 	const availableStocks = $modalStore[0]?.meta.quantity;
 	console.log('inside meta vale', $modalStore[0]?.meta);
@@ -49,16 +56,22 @@
 		<header class={cHeader}>Sell Stocks</header>
 		<div class="font-semibold mb-3 mt-2">{$modalStore[0]?.meta.company_name}</div>
 		<!-- Enable for debugging: -->
-		<form class="modal-form {cForm}">
+		<div class="modal-form {cForm}">
 			<label class="label">
 				<span>Enter Quantity</span>
-				<input class="input" type="number" bind:value={quantity} placeholder="" />
+				<input
+					bind:this={quantityInput}
+					class="input"
+					type="number"
+					bind:value={quantity}
+					placeholder=""
+				/>
 			</label>
 			<label class="label">
 				<span>Price</span>
 				<input class="input" type="number" value={price} disabled placeholder="" />
 			</label>
-		</form>
+		</div>
 		<div class="mt-24">
 			{#if !enoughStocks}
 				<div class="bg-orange-100 text-orange-950 p-1 text-sm rounded-sm mb-3 text-center">
@@ -80,6 +93,7 @@
 				>{parent.buttonTextCancel}</button
 			>
 			<button
+				bind:this={sellButton}
 				class="btn rounded w-[50%] bg-primary-500 variant-filled-primary min-w-[124px] {parent.buttonPositive}"
 				on:click={onFormSubmit}
 				disabled={!enoughStocks || !quantity}

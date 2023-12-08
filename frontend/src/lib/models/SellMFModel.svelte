@@ -2,10 +2,17 @@
 	import type { ConicStop } from '@skeletonlabs/skeleton';
 	import { ConicGradient } from '@skeletonlabs/skeleton';
 	import type { SvelteComponent } from 'svelte';
-// Stores
+
 	import { sellMFApi } from '$lib/apis';
 	import { getModalStore } from '@skeletonlabs/skeleton';
+	import { onMount } from 'svelte';
+	import { enterBind } from '$lib/utils';
 
+	let quantityInput, sellButton;
+
+	onMount(() => {
+		enterBind(sellButton, quantityInput);
+	});
 	// Props
 	/** Exposes parent props to this component. */
 	export let parent: SvelteComponent;
@@ -15,7 +22,7 @@
 
 	$: required = quantity * $modalStore[0]?.meta.price || 0;
 	// $: orderMsg = quantity ? `${required.toLocaleString('en-in')} will be deducted from your a/c` : ''
-	
+
 	const price = $modalStore[0]?.meta?.price?.toLocaleString('en-in');
 	const availableMFs = $modalStore[0]?.meta.quantity;
 	console.log('inside meta vale', $modalStore[0]?.meta);
@@ -26,7 +33,7 @@
 	async function onFormSubmit() {
 		loading = true;
 		console.log({ 'inside modal store': $modalStore });
-		const {  mf_id,  fund_name } = $modalStore[0].meta;
+		const { mf_id, fund_name } = $modalStore[0].meta;
 		await sellMFApi(mf_id, quantity, fund_name);
 		if ($modalStore[0].response) $modalStore[0].response(quantity);
 		modalStore.close();
@@ -49,16 +56,22 @@
 		<header class={cHeader}>Sell Mutual Funds</header>
 		<div class="font-semibold mb-3 mt-2">{$modalStore[0]?.meta.fund_name}</div>
 		<!-- Enable for debugging: -->
-		<form class="modal-form {cForm}">
+		<div class="modal-form {cForm}">
 			<label class="label">
 				<span>Enter Quantity</span>
-				<input class="input" type="number" bind:value={quantity} placeholder="" />
+				<input
+					bind:this={quantityInput}
+					class="input"
+					type="number"
+					bind:value={quantity}
+					placeholder=""
+				/>
 			</label>
 			<label class="label">
 				<span>Price</span>
 				<input class="input" type="number" value={price} disabled placeholder="" />
 			</label>
-		</form>
+		</div>
 		<div class="mt-24">
 			{#if !enoughMFs}
 				<div class="bg-orange-100 text-orange-950 p-1 text-sm rounded-sm mb-3 text-center">
@@ -80,6 +93,7 @@
 				>{parent.buttonTextCancel}</button
 			>
 			<button
+				bind:this={sellButton}
 				class="btn rounded w-[50%] bg-primary-500 variant-filled-primary min-w-[124px] {parent.buttonPositive}"
 				on:click={onFormSubmit}
 				disabled={!enoughMFs || !quantity}

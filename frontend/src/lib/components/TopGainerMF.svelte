@@ -5,7 +5,7 @@
 	import { getModalStore, type ModalSettings } from '@skeletonlabs/skeleton';
 	const modalStore = getModalStore();
 	function buyMF(row) {
-		console.log('inside buy MF');
+		console.log('inside buy MF', row);
 		const modal: ModalSettings = {
 			type: 'component',
 			component: 'buyMFModel',

@@ -2,32 +2,37 @@
 	import type { ConicStop } from '@skeletonlabs/skeleton';
 	import { ConicGradient } from '@skeletonlabs/skeleton';
 	import type { SvelteComponent } from 'svelte';
-// Stores
+	import { onMount } from 'svelte';
+
+	// Stores
 	import { customerBalanceStore } from '$lib/store';
 	import { getModalStore } from '@skeletonlabs/skeleton';
 	import { buyStocksApi } from '$lib/apis';
+	import { enterBind } from '$lib/utils';
 
 	// Props
 	/** Exposes parent props to this component. */
 	export let parent: SvelteComponent;
 
+
 	const modalStore = getModalStore();
+	let quantityInput, buyButton;
 
-  
-	// Form Data
+	onMount(() => {
+		enterBind(buyButton, quantityInput);
+	});
 
-  let quantity 
+	let quantity;
 
-  $: required = quantity * $modalStore[0]?.meta.price || 0
-  // $: orderMsg = quantity ? `${required.toLocaleString('en-in')} will be deducted from your a/c` : ''
-const formData = {
-  quantity: ''
-}
-  const price = $modalStore[0]?.meta.price.toLocaleString('en-in')
-  $: enoughAmount = $customerBalanceStore[0]?.balance >= required
+	$: required = quantity * $modalStore[0]?.meta.price || 0;
+	// $: orderMsg = quantity ? `${required.toLocaleString('en-in')} will be deducted from your a/c` : ''
+	const formData = {
+		quantity: ''
+	};
+	const price = $modalStore[0]?.meta.price.toLocaleString('en-in');
+	$: enoughAmount = $customerBalanceStore[0]?.balance >= required;
 
-
-console.log($modalStore[0]?.meta.price)
+	console.log($modalStore[0]?.meta.price);
 	// We've created a custom submit function to pass the response and close the modal.
 	let loading;
 	async function onFormSubmit() {
@@ -56,22 +61,28 @@ console.log($modalStore[0]?.meta.price)
 		<header class={cHeader}>Buy Stocks</header>
 		<div class="font-semibold mb-3 mt-2">{$modalStore[0]?.meta.company_name}</div>
 		<!-- Enable for debugging: -->
-		<form class="modal-form {cForm}">
+		<div class="modal-form {cForm}">
 			<label class="label">
 				<span>Enter Quantity</span>
-				<input class="input" type="number" bind:value={quantity} placeholder="" />
+				<input
+					bind:this={quantityInput}
+					class="input"
+					type="number"
+					bind:value={quantity}
+					placeholder=""
+				/>
 			</label>
 			<label class="label">
 				<span>Price</span>
 				<input class="input" type="number" value={price} disabled placeholder="" />
 			</label>
-		</form>
+		</div>
 		<div class="mt-24">
-      {#if !enoughAmount}
-			<div class="bg-orange-100 text-orange-950 p-1 text-sm rounded-sm mb-3 text-center">
-				Available amount is not enough
-			</div>
-      {/if}
+			{#if !enoughAmount}
+				<div class="bg-orange-100 text-orange-950 p-1 text-sm rounded-sm mb-3 text-center">
+					Available amount is not enough
+				</div>
+			{/if}
 			<!-- <div class="text-sm text-center text-gray-500 mb-3">
         {orderMsg}
 			</div> -->
@@ -87,9 +98,10 @@ console.log($modalStore[0]?.meta.price)
 				>{parent.buttonTextCancel}</button
 			>
 			<button
+				bind:this={buyButton}
 				class="btn rounded w-[50%] bg-primary-500 variant-filled-primary min-w-[124px] {parent.buttonPositive}"
 				on:click={onFormSubmit}
-        disabled= {!enoughAmount || !quantity}
+				disabled={!enoughAmount || !quantity}
 			>
 				{#if loading}
 					<ConicGradient width="w-4" stops={conicStops} spin />
