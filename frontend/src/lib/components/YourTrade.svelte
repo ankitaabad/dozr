@@ -103,7 +103,7 @@
 		<h2 class="font-medium text-lg">Summary</h2>
 	</div>
 	
-		<Chart data={data} type="bar" height="400" />
+		<!-- <Chart data={data} type="bar" height="400" /> -->
 	
 	 <div class="flex gap-6">
 		<div class="bg-white rounded-md p-6 border  border-solid border-gray-200 grow w-[25%] p-6">
@@ -178,7 +178,7 @@
 		<div class="bg-white rounded-md  border  border-solid border-gray-200 grow flex flex-col w-[25%]">
 			<h3 class="font-medium mb-4 p-6 pb-0">Balance</h3>
 			<div>
-				<div class="text-2xl font-semibold px-6">₹{$customerBalanceStore[0]?.balance}</div>
+				<div class="text-2xl font-semibold px-6">₹{$customerBalanceStore[0]?.balance.toLocaleString('en-in')}</div>
 			</div>
 			<div class="flex justify-between p-6 flex-col pt-0 mt-auto">
 				<button

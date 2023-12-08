@@ -6,7 +6,7 @@
 	$: rows = handler.getRows();
 
 	function convertDate(date) {
-		return DateTime.fromISO(date).toFormat('MM-dd-yyyy hh:mm');
+		return DateTime.fromISO(date).toLocaleString(DateTime.DATETIME_MED);
 	}
 </script>
 
