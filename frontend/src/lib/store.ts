@@ -553,8 +553,10 @@ const storeMap = {
 	customersStore,
 	customerBalanceStore,
 	customerStockInvestmentValueStore,
+  customerMFInvestmentValueStore,
 	customerTotalInvestmentValueStore,
   customersStocksStore,
+  customerMutualFundsStore
 };
 type StoreNames = keyof typeof storeMap;
 

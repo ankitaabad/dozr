@@ -3,8 +3,8 @@
 	import { DataHandler, Datatable, Th, ThFilter } from '@vincjo/datatables';
 	import { getModalStore, type ModalSettings } from '@skeletonlabs/skeleton';
 	const modalStore = getModalStore();
-	function sellStocks(row) {
-		console.log('inside add money');
+	function sellMF(row) {
+		console.log('inside sell MF');
 		const modal: ModalSettings = {
 			type: 'component',
 			component: 'sellMFModel',
@@ -15,8 +15,12 @@
 		modalStore.trigger(modal);
 	}
 
-	$: handler = new DataHandler($customerMutualFundsStore, { rowsPerPage: 5 });
-	$: rows = handler.getRows();
+	const handler = new DataHandler($customerMutualFundsStore, { rowsPerPage: 5 });
+	const rows = handler.getRows();
+
+  customerMutualFundsStore.subscribe((data) => {
+		handler?.setRows(data);
+	});
 </script>
 
 <div class="w-full ">
@@ -48,7 +52,7 @@
 							><button
 								type="button"
 								class=" btn btn-sm rounded-md px-6 bg-primary-500 variant-filled-primary"
-								on:click={() => sellStocks(row)}>Sell</button
+								on:click={() => sellMF(row)}>Sell</button
 							></td
 						>
 					</tr>

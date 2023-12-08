@@ -10,8 +10,8 @@
 <TabGroup>
 	<Tab bind:group={StocktabSet} name="tab2" value={0}>Top 10 Performer Stocks</Tab>
 	<Tab bind:group={StocktabSet} name="tab2" value={1}>All Stocks</Tab>
-	<Tab bind:group={StocktabSet} name="tab2" value={2}>Top ganiner</Tab>
-	<Tab bind:group={StocktabSet} name="tab3" value={3}>Top losers Funds</Tab>
+	<Tab bind:group={StocktabSet} name="tab2" value={2}>Daily Gainers</Tab>
+	<Tab bind:group={StocktabSet} name="tab3" value={3}>Daily Losers</Tab>
 	<svelte:fragment slot="panel">
 		{#if StocktabSet === 0}
 			<TopYearlyStock />

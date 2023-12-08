@@ -1,10 +1,10 @@
 <script lang="ts">
-	import type { SvelteComponent } from 'svelte';
-	import { ConicGradient } from '@skeletonlabs/skeleton';
 	import type { ConicStop } from '@skeletonlabs/skeleton';
-	// Stores
+	import { ConicGradient } from '@skeletonlabs/skeleton';
+	import type { SvelteComponent } from 'svelte';
+// Stores
+	import { sellMFApi } from '$lib/apis';
 	import { getModalStore } from '@skeletonlabs/skeleton';
-	import { sellStocksApi } from '$lib/apis';
 
 	// Props
 	/** Exposes parent props to this component. */
@@ -17,17 +17,17 @@
 	// $: orderMsg = quantity ? `${required.toFixed(2)} will be deducted from your a/c` : ''
 	
 	const price = $modalStore[0]?.meta?.price?.toFixed(2);
-	const availableStocks = $modalStore[0]?.meta.quantity;
+	const availableMFs = $modalStore[0]?.meta.quantity;
 	console.log('inside meta vale', $modalStore[0]?.meta);
-	$: enoughStocks = availableStocks >= quantity;
+	$: enoughMFs = availableMFs >= quantity;
 
 	// We've created a custom submit function to pass the response and close the modal.
 	let loading;
 	async function onFormSubmit() {
 		loading = true;
 		console.log({ 'inside modal store': $modalStore });
-		const { stock_id, company_name } = $modalStore[0].meta;
-		await sellStocksApi(stock_id, quantity, company_name);
+		const {  mf_id,  fund_name } = $modalStore[0].meta;
+		await sellMFApi(mf_id, quantity, fund_name);
 		if ($modalStore[0].response) $modalStore[0].response(quantity);
 		modalStore.close();
 	}
@@ -46,8 +46,8 @@
 
 {#if $modalStore[0]}
 	<div class="modal-example-form w-96 {cBase}">
-		<header class={cHeader}>Sell Stocks</header>
-		<div class="font-semibold mb-3 mt-2">{$modalStore[0]?.meta.company_name}</div>
+		<header class={cHeader}>Sell Mutual Funds</header>
+		<div class="font-semibold mb-3 mt-2">{$modalStore[0]?.meta.fund_name}</div>
 		<!-- Enable for debugging: -->
 		<form class="modal-form {cForm}">
 			<label class="label">
@@ -60,9 +60,9 @@
 			</label>
 		</form>
 		<div class="mt-24">
-			{#if !enoughStocks}
+			{#if !enoughMFs}
 				<div class="bg-orange-100 text-orange-950 p-1 text-sm rounded-sm mb-3 text-center">
-					Not enough stocks to sell.
+					Not enough units of MF to sell.
 				</div>
 			{/if}
 			<!-- <div class="text-sm text-center text-gray-500 mb-3">
@@ -72,8 +72,8 @@
 		<div
 			class="mb-2 pt-3 flex justify-between items-center text-gray-500 text-sm border-t border-gray-200 border-solid"
 		>
-			<div>Stocks to Sell: <span>{quantity || 0}</span></div>
-			<div>Available Stocks: <span>{availableStocks}</span></div>
+			<div>MF units to Sell: <span>{quantity || 0}</span></div>
+			<div>Available MF units: <span>{availableMFs}</span></div>
 		</div>
 		<footer class="modal-footer {parent.regionFooter}">
 			<button class="btn rounded w-[50%] {parent.buttonNeutral}" on:click={parent.onClose}
@@ -82,7 +82,7 @@
 			<button
 				class="btn rounded w-[50%] bg-primary-500 variant-filled-primary min-w-[124px] {parent.buttonPositive}"
 				on:click={onFormSubmit}
-				disabled={!enoughStocks || !quantity}
+				disabled={!enoughMFs || !quantity}
 			>
 				{#if loading}
 					<ConicGradient width="w-4" stops={conicStops} spin />

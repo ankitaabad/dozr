@@ -4,7 +4,7 @@
 	import type { ConicStop } from '@skeletonlabs/skeleton';
 	// Stores
 	import { getModalStore } from '@skeletonlabs/skeleton';
-	import { buyStocksApi } from '$lib/apis';
+	import { buyMFApi, buyStocksApi } from '$lib/apis';
   import {customerBalanceStore} from '$lib/store'
 
 	// Props
@@ -30,15 +30,15 @@ const formData = {
 console.log($modalStore[0]?.meta.price)
 	// We've created a custom submit function to pass the response and close the modal.
 	let loading;
+
 	async function onFormSubmit() {
 		loading = true;
 		console.log({ 'inside modal store': $modalStore });
-		const { stock_id, company_name } = $modalStore[0].meta;
-		await buyStocksApi(stock_id, quantity, company_name);
+		const { mf_id, fund_name } = $modalStore[0].meta;
+		await buyMFApi(mf_id, quantity, fund_name);
 		if ($modalStore[0].response) $modalStore[0].response(quantity);
 		modalStore.close();
 	}
-
 	// Base Classes
 	const cBase = 'card p-4 w-modal shadow-xl   ';
 	const cHeader = 'text-2xl font-bold mb-4';
@@ -53,8 +53,8 @@ console.log($modalStore[0]?.meta.price)
 
 {#if $modalStore[0]}
 	<div class="modal-example-form w-96 {cBase}">
-		<header class={cHeader}>Buy Stocks</header>
-		<div class="font-semibold mb-3 mt-2">{$modalStore[0]?.meta.company_name}</div>
+		<header class={cHeader}>Buy Mutual Funds</header>
+		<div class="font-semibold mb-3 mt-2">{$modalStore[0]?.meta.fund_name}</div>
 		<!-- Enable for debugging: -->
 		<form class="modal-form {cForm}">
 			<label class="label">

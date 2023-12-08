@@ -1,11 +1,10 @@
 <script lang="ts">
-	import type { SvelteComponent } from 'svelte';
-	import { ConicGradient } from '@skeletonlabs/skeleton';
 	import type { ConicStop } from '@skeletonlabs/skeleton';
-	// Stores
+	import { ConicGradient } from '@skeletonlabs/skeleton';
+	import type { SvelteComponent } from 'svelte';
+// Stores
+	import { customerBalanceStore } from '$lib/store';
 	import { getModalStore } from '@skeletonlabs/skeleton';
-	import { buyStocksApi } from '$lib/apis';
-  import {customerBalanceStore, isManager} from '$lib/store'
 
 	// Props
 	/** Exposes parent props to this component. */

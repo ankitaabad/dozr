@@ -21,6 +21,8 @@
 	import SellStocksModel from '$lib/models/SellStocksModel.svelte';
 	import Header from '$lib/components/Header.svelte';
 	import Footer from '$lib/components/Footer.svelte';
+	import SellMfModel from '$lib/models/SellMFModel.svelte';
+	import BuyMfModel from '$lib/models/BuyMFModel.svelte';
 
 	initializeStores();
 
@@ -28,7 +30,9 @@
 		// Set a unique modal ID, then pass the component reference
 		addMoneyModel: { ref: AddMoneyModel },
 		buyStocksModel: { ref: BuyStocksModel },
-		sellStocksModel: { ref: SellStocksModel }
+		sellStocksModel: { ref: SellStocksModel },
+    buyMFModel: {ref: BuyMfModel},
+    sellMFModel: {ref: SellMfModel}
 
 		// ...
 	};

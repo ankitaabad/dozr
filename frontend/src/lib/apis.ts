@@ -85,3 +85,64 @@ export async function sellStocksApi(stock_id, quantity, company_name) {
 			console.log(error);
 		});
 }
+
+
+export async function buyMFApi(mf_id, quantity, fund_name) {
+	console.log('inside buy  mf api');
+	const data = JSON.stringify({
+		quantity: Number(quantity),
+		fund_name,
+		customer_id: get(customerId)
+	});
+	const config = {
+		method: 'put',
+		url: `mf/${mf_id}/buy`,
+
+		data: data
+	};
+
+	await server(config)
+		.then(async (response) => {
+			console.log('bought the mfs, refreshing other data');
+			refreshDozerStores(
+				'recentTransactionsStore',
+				'customerBalanceStore',
+        'customerMutualFundsStore',
+				'customerMFInvestmentValueStore',
+				'customerTotalInvestmentValueStore'
+			);
+		})
+		.catch((error) => {
+			console.log(error);
+		});
+}
+
+export async function sellMFApi(mf_id, quantity, fund_name) {
+	console.log('inside sell stocks api');
+	const data = JSON.stringify({
+		quantity: Number(quantity),
+		 fund_name,
+		customer_id: get(customerId)
+	});
+	const config = {
+		method: 'put',
+		url: `mf/${mf_id}/sell`,
+
+		data: data
+	};
+
+	await server(config)
+		.then(async (response) => {
+			console.log('sold the mfs, refreshing other data');
+			refreshDozerStores(
+				'recentTransactionsStore',
+				'customerBalanceStore',
+        'customerMutualFundsStore',
+				'customerMFInvestmentValueStore',
+				'customerTotalInvestmentValueStore'
+			);
+		})
+		.catch((error) => {
+			console.log(error);
+		});
+}
