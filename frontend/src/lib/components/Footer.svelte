@@ -9,23 +9,11 @@
 			</div>
 			<div>
 				<div>
-					<a
+					<a target="_blank"
 						class="text-primary-500 underline hover:text-primary-400 transition-all"
 						href="https://www.techgig.com/hackathon/growthgenie">GrowthGenie Hackathon</a
 					>
 				</div>
-				<!-- <ul class="flex gap-3 justify-center">
-					<li>
-						<a href="/" class="text-primary-500 underline hover:text-primary-400 transition-all"
-							>Term and Condition</a
-						>
-					</li>
-					<li>
-						<a href="/" class="text-primary-500 underline hover:text-primary-400 transition-all"
-							>Privacy Policy</a
-						>
-					</li>
-				</ul> -->
 			</div>
 		</div>
 	</div>

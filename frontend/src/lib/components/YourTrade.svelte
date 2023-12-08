@@ -85,12 +85,12 @@
 	<div>₹{$customerTotalInvestmentValueStore[0]?.total_present_value.toFixed(2)}</div>
 </fieldset> -->
 
-<div class="w-[100%] card p-6">
+<div class="w-[100%] bg-white rounded-md p-6 border  border-solid border-gray-200">
 	<div class="heading mb-6 flex justify-between items-center">
 		<h2 class="font-medium text-lg">Summary</h2>
 	</div>
 	<div class="flex gap-6">
-		<div class="card grow w-[25%] p-6">
+		<div class="bg-white rounded-md p-6 border  border-solid border-gray-200 grow w-[25%] p-6">
 			<h3 class="font-medium mb-4">Stocks</h3>
 			<div class="flex justify-between flex-col gap-8">
 				<div class="flex justify-between">
@@ -114,7 +114,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="card grow w-[25%] p-6">
+		<div class="bg-white rounded-md p-6 border  border-solid border-gray-200 grow w-[25%] p-6">
 			<h3 class="font-medium mb-4">Mutual Funds</h3>
 			<div class="flex justify-between flex-col gap-8">
 				<div class="flex justify-between">
@@ -135,7 +135,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="card grow w-[25%] p-6">
+		<div class="bg-white rounded-md p-6 border  border-solid border-gray-200 grow w-[25%] p-6">
 			<h3 class="font-medium mb-4">Total Investment</h3>
 			<div class="flex justify-between flex-col gap-8">
 				<div class="flex justify-between">
@@ -158,8 +158,8 @@
 				</div>
 			</div>
 		</div>
-		<div class="card grow flex flex-col w-[25%]">
-			<h3 class="font-medium mb-4 p-6 pb-0">Account balance</h3>
+		<div class="bg-white rounded-md  border  border-solid border-gray-200 grow flex flex-col w-[25%]">
+			<h3 class="font-medium mb-4 p-6 pb-0">Balance</h3>
 			<div>
 				<div class="text-2xl font-semibold px-6">₹{$customerBalanceStore[0]?.balance}</div>
 			</div>

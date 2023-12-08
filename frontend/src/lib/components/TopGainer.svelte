@@ -6,7 +6,7 @@
 	$: rows = handler.getRows();
 </script>
 
-<div class="w-full card p-4">
+<div class="w-full ">
 	<Datatable {handler} search={false} rowsPerPage={false} rowCount={true}>
 		<table>
 			<thead>
@@ -30,20 +30,25 @@
 </div>
 
 <style>
-	table {
+	table{
+		border: 1px solid #e5e7eb;
+		border-collapse: collapse;
 		table-layout: fixed;
 	}
 	thead {
 		background: #fff;
 	}
 	tbody td {
-		border: 1px solid #f5f5f5;
+		border: 1px solid #e5e7eb;
 		padding: 4px 20px;
 	}
 	tbody tr {
 		transition: all, 0.2s;
 	}
 	tbody tr:hover {
-		background: #f5f5f5;
+		background: #f9f9f9;
+	}
+	footer{
+		border-top: 0;
 	}
 </style>
