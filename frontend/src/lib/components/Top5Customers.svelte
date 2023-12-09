@@ -5,11 +5,11 @@
 	$: rows = handler.getRows();
 </script>
 
-<div class="w-[100%] bg-white rounded-md p-6 border  border-solid border-gray-200 ">
+<div class="w-[100%] bg-white rounded-md p-6 border border-solid border-gray-200">
 	<div class="heading mb-6 flex justify-between items-center">
 		<h2 class="font-medium text-lg">Top Customers</h2>
 	</div>
-	<div class="w-full ">
+	<div class="w-full">
 		<Datatable {handler} search={false} rowsPerPage={false} rowCount={false} pagination={false}>
 			<table>
 				<thead>
@@ -45,10 +45,12 @@
 										>
 									</div>
 									<div>
-										<div>{row.first_name}
-											{row.last_name}</div>
-										
-										<span class="text-sm text-gray-500 ">Customer Id: {row.customer_id}</span>
+										<div>
+											{row.first_name}
+											{row.last_name}
+										</div>
+
+										<span class="text-sm text-gray-500">Customer Id: {row.customer_id}</span>
 									</div>
 								</div>
 							</td>
@@ -64,7 +66,7 @@
 </div>
 
 <style>
-	table{
+	table {
 		border: 1px solid #e5e7eb;
 		border-collapse: collapse;
 	}
@@ -81,7 +83,7 @@
 	tbody tr:hover {
 		background: #f9f9f9;
 	}
-	footer{
+	footer {
 		border-top: 0;
 	}
 </style>

@@ -63,23 +63,17 @@
 		<div class="w-[100%]">
 			<div class="flex flex-col gap-6">
 				<div class="w-full flex gap-6">
-					<div class="border border-solid border-gray-200 p-4 w-[25%] rounded-md bg-white">
-						<div class=" flex justify-between w-full">
-							<div class="flex flex-col items-start gap-2">
-								<div>Name</div>
-								<div class="font-medium">{$stockDetailStore.details.company_name}</div>
-							</div>
-						</div>
-					</div>
-					<div class="border border-solid border-gray-200 p-4 w-[25%] rounded-md bg-white">
+					<div class="border border-solid border-gray-200 p-4 w-full rounded-md bg-white">
 						<div class="flex justify-between w-full">
 							<div class="flex flex-col items-start gap-2">
 								<div>Price</div>
-								<div class="font-medium">₹{$stockDetailStore.details.price}</div>
+								<div class="font-medium">
+									₹{$stockDetailStore.details.price}
+								</div>
 							</div>
 						</div>
 					</div>
-					<div class="border border-solid border-gray-200 p-4 w-[25%] rounded-md bg-white">
+					<div class="border border-solid border-gray-200 p-4 w-full rounded-md bg-white">
 						<div class="flex justify-between w-full">
 							<div class="flex flex-col items-start gap-2">
 								<div>Industry</div>
@@ -87,17 +81,19 @@
 							</div>
 						</div>
 					</div>
-					<div class="border border-solid border-gray-200 p-4 w-[25%] rounded-md bg-white">
+					<div class="border border-solid border-gray-200 p-4 w-full rounded-md bg-white">
 						<div class="flex justify-between w-full">
 							<div class="flex flex-col items-start gap-2">
 								<div>Market Capital</div>
-								<div class="font-medium">₹{$stockDetailStore.details.market_capital}(Cr)</div>
+								<div class="font-medium">
+									₹{$stockDetailStore.details.market_capital}(Cr)
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 				<div class="w-full flex gap-6">
-					<div class="border border-solid border-gray-200 p-4 w-[25%] rounded-md bg-white">
+					<div class="border border-solid border-gray-200 p-4 w-full rounded-md bg-white">
 						<div class="flex justify-between">
 							<div class="flex flex-col items-start gap-2">
 								<div>Daily Change</div>
@@ -111,7 +107,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="border border-solid border-gray-200 p-4 w-[25%] rounded-md bg-white">
+					<div class="border border-solid border-gray-200 p-4 w-full rounded-md bg-white">
 						<div class=" flex justify-between">
 							<div class="flex flex-col items-start gap-2">
 								<div>Yearly Change</div>
@@ -125,7 +121,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="border border-solid border-gray-200 p-4 w-[25%] rounded-md bg-white">
+					<div class="border border-solid border-gray-200 p-4 w-full rounded-md bg-white">
 						<div class=" flex justify-between">
 							<div class="flex flex-col items-start gap-2">
 								<div>Symbol</div>
@@ -133,7 +129,6 @@
 							</div>
 						</div>
 					</div>
-					<div class=" p-4 w-[25%] rounded-md">&nbsp;</div>
 				</div>
 			</div>
 		</div>
