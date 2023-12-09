@@ -68,7 +68,7 @@
 		}
 	};
 
-	const data= {
+	$: data= {
 	labels: ["Stocks", "Mutual Funds", "Total Investment"],
 
 	datasets: [

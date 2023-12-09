@@ -59,18 +59,18 @@ function createStockDetailStore() {
 
 		Promise.all([
 			dozerRest.request(configPrice).then((response) => {
-        console.log({price: response.data})
+				console.log({ price: response.data });
 				update((x) => {
-					 x.dailyPrices = response.data;
-          return x
+					x.dailyPrices = response.data;
+					return x;
 				});
 			}),
 			dozerRest.request(configDetail).then((response) => {
-        console.log({details: response.data})
+				console.log({ details: response.data });
 
 				update((x) => {
-					 x.details = response.data?.[0];
-           return x
+					x.details = response.data?.[0];
+					return x;
 				});
 			})
 		]);
@@ -83,10 +83,9 @@ function createDailyStockGainers() {
 	const { subscribe, set, update } = writable([]);
 	async function fetchData() {
 		const data = JSON.stringify({
-      "$order_by": {"daily_change": "desc"},
-      "$limit": 10
-  
-  });
+			$order_by: { daily_change: 'desc' },
+			$limit: 10
+		});
 		// "$filter": {"date":DateTime.now().toSQLDate()}
 
 		const config = {
@@ -108,10 +107,9 @@ function createDailyMFGainers() {
 	const { subscribe, set, update } = writable([]);
 	async function fetchData() {
 		const data = JSON.stringify({
-      "$order_by": {"daily_change": "desc"},
-      "$limit": 10
-  
-  });
+			$order_by: { daily_change: 'desc' },
+			$limit: 10
+		});
 		// "$filter": {"date":DateTime.now().toSQLDate()}
 
 		const config = {
@@ -132,10 +130,9 @@ function createDailyMFLosers() {
 	const { subscribe, set, update } = writable([]);
 	async function fetchData() {
 		const data = JSON.stringify({
-      "$order_by": {"daily_change": "asc"},
-      "$limit": 10
-  
-  });
+			$order_by: { daily_change: 'asc' },
+			$limit: 10
+		});
 		// "$filter": {"date":DateTime.now().toSQLDate()}
 
 		const config = {
@@ -155,10 +152,9 @@ function createDailyStockLosers() {
 	const { subscribe, set, update } = writable([]);
 	async function fetchData() {
 		const data = JSON.stringify({
-      "$order_by": {"daily_change": "asc"},
-      "$limit": 10
-  
-  });
+			$order_by: { daily_change: 'asc' },
+			$limit: 10
+		});
 		// "$filter": {"date":DateTime.now().toSQLDate()}
 
 		const config = {
@@ -527,11 +523,11 @@ function createTaxLiabilityStore() {
 		const cid = get(customerId);
 		console.log({ cid });
 		let data = JSON.stringify({
-      "$filter": {
-        "customer_id": cid,
-        "year": DateTime.now().year
-      }
-    });
+			$filter: {
+				customer_id: cid,
+				year: DateTime.now().year
+			}
+		});
 
 		const config = {
 			method: 'post',
@@ -552,7 +548,6 @@ export const topStockLosersStore = createDailyStockLosers();
 export const topMFGainersStore = createDailyMFGainers();
 export const topMFLosersStore = createDailyMFLosers();
 
-
 export const customersStore = createCustomersStore();
 export const allStocksStore = createAllStocksStore();
 export const allMutualFundsStore = creatAllMutualFundsStore();
@@ -568,7 +563,7 @@ export const customerMFInvestmentValueStore = creatCustomerMFInvestmentValueStor
 export const customerTotalInvestmentValueStore = creatCustomerTotalInvestmentValueStore();
 export const topInvestorsStore = createTopInvestorsStore();
 export const stockDetailStore = createStockDetailStore();
-export const  taxLiabilityStore = createTaxLiabilityStore();
+export const taxLiabilityStore = createTaxLiabilityStore();
 function getStoreDozerId(store: Writable<any>) {
 	const data = get(store);
 
@@ -580,11 +575,11 @@ const storeMap = {
 	customersStore,
 	customerBalanceStore,
 	customerStockInvestmentValueStore,
-  customerMFInvestmentValueStore,
+	customerMFInvestmentValueStore,
 	customerTotalInvestmentValueStore,
-  customersStocksStore,
-  customerMutualFundsStore,
-  taxLiabilityStore
+	customersStocksStore,
+	customerMutualFundsStore,
+	taxLiabilityStore
 };
 type StoreNames = keyof typeof storeMap;
 
@@ -621,7 +616,14 @@ export function refreshDozerStores(...storeNames: StoreNames[]) {
 			{
 				delayFirstAttempt: true,
 				numOfAttempts: 3,
-				startingDelay: 120
+				startingDelay: [
+					'taxLiabilityStore',
+					'customerStockInvestmentValueStore',
+					'customerMFInvestmentValueStore',
+					'customerTotalInvestmentValueStore'
+				].includes(s)
+					? 250
+					: 120
 			}
 		);
 	}
