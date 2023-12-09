@@ -4,7 +4,7 @@
 	import { DataHandler, Datatable, Th, ThFilter } from '@vincjo/datatables';
 	import { getModalStore, type ModalSettings } from '@skeletonlabs/skeleton';
 	const modalStore = getModalStore();
-  function buyMF(row) {
+	function buyMF(row) {
 		console.log('inside buy MF');
 		const modal: ModalSettings = {
 			type: 'component',
@@ -17,9 +17,9 @@
 	}
 	const handler = new DataHandler($topMFLosersStore, { rowsPerPage: 10 });
 	const rows = handler.getRows();
-  topMFLosersStore.subscribe(data => {
-    handler.setRows(data)
-  })
+	topMFLosersStore.subscribe((data) => {
+		handler.setRows(data);
+	});
 </script>
 
 <div class="w-full">
@@ -41,7 +41,28 @@
 									src={row.image_src}
 									class="w-12 h-12 rounded border border-solid border-gray-300"
 								/>
-								<div>{row.fund_name}</div>
+								<div>
+									<a
+										href="/stockdetail?stock_id=001r7tOv0gSeoQ0S7nLA3szpLT2qCXfH"
+										class="flex gap-2 items-center"
+										>{row.fund_name}
+										<svg
+											xmlns="http://www.w3.org/2000/svg"
+											class="icon icon-tabler icon-tabler-external-link"
+											width="20"
+											height="20"
+											viewBox="0 0 24 24"
+											stroke-width="1.5"
+											stroke="#6366f1"
+											fill="none"
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path
+												d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6"
+											/><path d="M11 13l9 -9" /><path d="M15 4h5v5" /></svg
+										></a
+									>
+								</div>
 							</div>
 						</td>
 						<td class="text-error-500">{row.daily_change.toLocaleString('en-in')}</td>
