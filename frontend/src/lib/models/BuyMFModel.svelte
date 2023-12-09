@@ -50,7 +50,7 @@
 		modalStore.close();
     const t: ToastSettings = {
 			message: `${quantity} units  of ${fund_name} purchased.`,
-			timeout: 2200,
+			timeout: 2700,
 			background: 'variant-filled-success'
 		};
 		toastStore.trigger(t);

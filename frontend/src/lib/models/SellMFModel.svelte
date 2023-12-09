@@ -19,7 +19,7 @@
 	export let parent: SvelteComponent;
 
 	const modalStore = getModalStore();
-	let quantity = 0;
+	let quantity;
 
 	$: required = quantity * $modalStore[0]?.meta.price || 0;
 	// $: orderMsg = quantity ? `${required.toLocaleString('en-in')} will be deducted from your a/c` : ''
@@ -27,7 +27,7 @@
 	const price = $modalStore[0]?.meta?.price;
 	const availableMFs = $modalStore[0]?.meta.quantity;
 	console.log('inside meta vale', $modalStore[0]?.meta);
-	$: enoughMFs = availableMFs >= quantity;
+	$: enoughMFs = availableMFs >= (quantity||0);
 
 	// We've created a custom submit function to pass the response and close the modal.
 	let loading;
@@ -45,7 +45,7 @@
 		modalStore.close();
     const t: ToastSettings = {
 			message: `${quantity} units of ${fund_name} sold.`,
-			timeout: 2200,
+			timeout: 2700,
 			background: 'variant-filled-success'
 		};
 		toastStore.trigger(t);

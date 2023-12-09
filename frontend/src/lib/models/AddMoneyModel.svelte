@@ -41,7 +41,7 @@
 		modalStore.close();
 		const t: ToastSettings = {
 			message: `${formData.amount} credited to account`,
-			timeout: 2200,
+			timeout: 2000,
 			background: 'variant-filled-success'
 		};
 		toastStore.trigger(t);
