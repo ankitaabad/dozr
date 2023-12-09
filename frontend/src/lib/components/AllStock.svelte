@@ -35,6 +35,12 @@
 					<Th {handler} orderBy="price">Price</Th>
 					{#if !$isManager}<Th {handler} orderBy="">&nbsp;</Th>{/if}
 				</tr>
+				<tr>
+					<ThFilter {handler} filterBy="company_name" />
+					<ThFilter {handler} filterBy="industry" />
+					<ThFilter {handler} filterBy="market_capital" />
+					<ThFilter {handler} filterBy="price" />
+				</tr>
 			</thead>
 			<tbody>
 				{#each $rows as row}

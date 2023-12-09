@@ -62,6 +62,7 @@
 								</div>
 							</div>
 						</td>
+
 						<td class="text-success-500">{row.daily_change.toLocaleString('en-in')}</td>
 						<td class="font-medium s-FI5Y16UXR6H0">₹{row.price.toLocaleString('en-in')}</td>
 						<td

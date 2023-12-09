@@ -39,7 +39,7 @@
 </div>
 
 <style>
-	table{
+	table {
 		border: 1px solid #e5e7eb;
 		border-collapse: collapse;
 		border-radius: 6px;
@@ -47,7 +47,7 @@
 	thead {
 		background: #fff;
 	}
-	thead th input{
+	thead th input {
 		font-style: normal;
 	}
 	tbody td {
@@ -63,7 +63,7 @@
 	tbody tr:hover {
 		background: #f9f9f9;
 	}
-	footer{
+	footer {
 		border-top: 0;
 	}
 </style>
