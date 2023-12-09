@@ -17,6 +17,7 @@
 	import YourTrade from '$lib/components/YourTrade.svelte';
 	import Stocks from '$lib/components/Stocks.svelte';
 	import MutualFunds from '$lib/components/MutualFunds.svelte';
+	import AccountBalance from '$lib/components/AccountBalance.svelte';
 	let tabSet: number = 0;
 	const conicStops: ConicStop[] = [
 		{ color: 'transparent', start: 0, end: 25 },
@@ -29,12 +30,15 @@
 		<Tab bind:group={tabSet} name="tab1" value={0}><span>Portfolio</span></Tab>
 		<Tab bind:group={tabSet} name="tab2" value={1}>Stocks</Tab>
 		<Tab bind:group={tabSet} name="tab3" value={2}>Mutual Funds</Tab>
-		<Tab bind:group={tabSet} name="tab3" value={3}>Fixed Deposit</Tab>
+		<!-- <Tab bind:group={tabSet} name="tab3" value={3}>Fixed Deposit</Tab> -->
 		<!-- Tab Panels --->
 		<svelte:fragment slot="panel">
 			{#if tabSet === 0}
 				<div class="flex gap-6">
 					<YourTrade />
+					
+						<AccountBalance/>
+					
 					<!-- <AccountBalance /> -->
 				</div>
 
@@ -94,11 +98,11 @@
 						</div>
 						<MutualFunds/>	
 					</div>
-					<!-- <div class="w-[25%] bg-white rounded-md p-6 border  border-solid border-gray-200 ">Mutual Funds</div> -->
 				</div>
-			{:else if tabSet === 3}
-				Fixed Deposit
-			{/if}
-		</svelte:fragment>
+					{/if}
+					
+				</svelte:fragment>
+			
+	
 	</TabGroup>
 </div>

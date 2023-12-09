@@ -12,7 +12,7 @@
 			<div>
 				<svg
 					xmlns="http://www.w3.org/3000/svg"
-					class="icon icon-tabler icon-tabler-file"
+					class="icon icon-tabler icon-tabler-file w-14 h-14"
 					width="56"
 					height="56"
 					viewBox="0 0 24 24"
@@ -26,7 +26,7 @@
 					/><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /></svg
 				>
 			</div>
-			<div class="font-medium text-gray-500 text-center">You don't have any active loans.</div>
+			<div class=" text-gray-500 text-center">You don't have any active loans.</div>
 		</div>
 	</div>
 {:else}

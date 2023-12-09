@@ -8,6 +8,7 @@
 	import { customerBalanceStore } from '$lib/store';
 	import { getModalStore, type ModalSettings } from '@skeletonlabs/skeleton';
 	import Chart from 'svelte-frappe-charts';
+	import AccountBalance from './AccountBalance.svelte';
 
 	const modalStore = getModalStore();
 	function showAddMoneyModal() {
@@ -93,100 +94,93 @@
 	// 	formatTooltipX: d => (d + '').toUpperCase(),
 	// 	formatTooltipY: d => d + ' pts',
 	// }
-
+	import { TabGroup, Tab } from '@skeletonlabs/skeleton';
+	let summarytabSet: number = 0;
 </script>
-
-
-
-<div class="w-[100%] bg-white rounded-md p-6 border  border-solid border-gray-200">
-	<div class="heading mb-6 flex justify-between items-center">
+<div class="w-[75%] bg-white rounded-md p-6 border  border-solid border-gray-200">
+	<!-- <div class="heading mb-6 flex justify-between items-center">
 		<h2 class="font-medium text-lg">Summary</h2>
-	</div>
+	</div> -->
+<TabGroup>
+	<Tab bind:group={summarytabSet} name="tab2" value={0}>Visual View</Tab>
+	<Tab bind:group={summarytabSet} name="tab1" value={1}><span>Detail View</span></Tab>
+	<!-- Tab Panels --->
+	<svelte:fragment slot="panel">
+		{#if summarytabSet === 0}
+		<Chart data={data} type="bar" />
+				
+		{:else if summarytabSet === 1}
+		<div class="flex gap-6">
+			<div class="bg-white rounded-md border  border-solid border-gray-200 grow w-[25%] p-6">
+				<h3 class="font-medium mb-4">Stocks</h3>
+				<div class="flex justify-between flex-col gap-8">
+					<div class="flex justify-between">
+						<div class="flex flex-col">
+							<span class="text-xs text-gray-400">Invested</span>
+							<span>₹{$customerStockInvestmentValueStore[0]?.investment.toLocaleString('en-in')}</span>
+						</div>
 	
-		<!-- <Chart data={data} type="bar" height="400" /> -->
-	
-	 <div class="flex gap-6">
-		<div class="bg-white rounded-md p-6 border  border-solid border-gray-200 grow w-[25%] p-6">
-			
-			<h3 class="font-medium mb-4">Stocks</h3>
-			<div class="flex justify-between flex-col gap-8">
-				<div class="flex justify-between">
-					<div class="flex flex-col">
-						<span class="text-xs text-gray-400">Invested</span>
-						<span>₹{$customerStockInvestmentValueStore[0]?.investment.toLocaleString('en-in')}</span>
+						<div class="flex flex-col">
+							<span class="text-xs text-gray-400">Current</span>
+							<span>₹{$customerStockInvestmentValueStore[0]?.present_value.toLocaleString('en-in')}</span>
+						</div>
 					</div>
-
-					<div class="flex flex-col">
-						<span class="text-xs text-gray-400">Current</span>
-						<span>₹{$customerStockInvestmentValueStore[0]?.present_value.toLocaleString('en-in')}</span>
-					</div>
-				</div>
-				<div class="flex justify-between flex-col">
-					<div class="flex flex-col">
-						<span class="text-xs text-gray-400">Total return</span>
-						<span class={stockChange > 0 ? 'text-green-500' : 'text-red-500'}
-							>{stockChangeString}</span
-						>
+					<div class="flex justify-between flex-col">
+						<div class="flex flex-col">
+							<span class="text-xs text-gray-400">Total return</span>
+							<span class={stockChange > 0 ? 'text-green-500' : 'text-red-500'}
+								>{stockChangeString}</span
+							>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-		<div class="bg-white rounded-md p-6 border  border-solid border-gray-200 grow w-[25%] p-6">
-			<h3 class="font-medium mb-4">Mutual Funds</h3>
-			<div class="flex justify-between flex-col gap-8">
-				<div class="flex justify-between">
-					<div class="flex flex-col">
-						<span class="text-xs text-gray-400">Invested</span>
-						<span>₹{$customerMFInvestmentValueStore[0]?.investment.toLocaleString('en-in')}</span>
+			<div class="bg-white rounded-md  border  border-solid border-gray-200 grow w-[25%] p-6">
+				<h3 class="font-medium mb-4">Mutual Funds</h3>
+				<div class="flex justify-between flex-col gap-8">
+					<div class="flex justify-between">
+						<div class="flex flex-col">
+							<span class="text-xs text-gray-400">Invested</span>
+							<span>₹{$customerMFInvestmentValueStore[0]?.investment.toLocaleString('en-in')}</span>
+						</div>
+						<div class="flex flex-col">
+							<span class="text-xs text-gray-400">Current</span>
+							<span>₹{$customerMFInvestmentValueStore[0]?.present_value.toLocaleString('en-in')}</span>
+						</div>
 					</div>
-					<div class="flex flex-col">
-						<span class="text-xs text-gray-400">Current</span>
-						<span>₹{$customerMFInvestmentValueStore[0]?.present_value.toLocaleString('en-in')}</span>
-					</div>
-				</div>
-				<div class="flex justify-between flex-col">
-					<div class="flex flex-col">
-						<span class="text-xs text-gray-400">Total return</span>
-						<span class={mfChange > 0 ? 'text-green-500' : 'text-red-500'}>{mfChangeString}</span>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="bg-white rounded-md p-6 border  border-solid border-gray-200 grow w-[25%] p-6">
-			<h3 class="font-medium mb-4">Total Investment</h3>
-			<div class="flex justify-between flex-col gap-8">
-				<div class="flex justify-between">
-					<div class="flex flex-col">
-						<span class="text-xs text-gray-400">Invested</span>
-						<span>{$customerTotalInvestmentValueStore[0]?.total_investment.toLocaleString('en-in')}</span>
-					</div>
-					<div class="flex flex-col">
-						<span class="text-xs text-gray-400">Current</span>
-						<span>{$customerTotalInvestmentValueStore[0]?.total_present_value.toLocaleString('en-in')}</span>
-					</div>
-				</div>
-				<div class="flex justify-between flex-col">
-					<div class="flex flex-col">
-						<span class="text-xs text-gray-400">Total return</span>
-						<span class={totalChange > 0 ? 'text-green-500' : 'text-red-500'}
-							>{totalChangeString}</span
-						>
+					<div class="flex justify-between flex-col">
+						<div class="flex flex-col">
+							<span class="text-xs text-gray-400">Total return</span>
+							<span class={mfChange > 0 ? 'text-green-500' : 'text-red-500'}>{mfChangeString}</span>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-		<div class="bg-white rounded-md  border  border-solid border-gray-200 grow flex flex-col w-[25%]">
-			<h3 class="font-medium mb-4 p-6 pb-0">Balance</h3>
-			<div>
-				<div class="text-2xl font-semibold px-6">₹{$customerBalanceStore[0]?.balance.toLocaleString('en-in')}</div>
+			<div class="bg-white rounded-md  border  border-solid border-gray-200 grow w-[25%] p-6">
+				<h3 class="font-medium mb-4">Total Investment</h3>
+				<div class="flex justify-between flex-col gap-8">
+					<div class="flex justify-between">
+						<div class="flex flex-col">
+							<span class="text-xs text-gray-400">Invested</span>
+							<span>{$customerTotalInvestmentValueStore[0]?.total_investment.toLocaleString('en-in')}</span>
+						</div>
+						<div class="flex flex-col">
+							<span class="text-xs text-gray-400">Current</span>
+							<span>{$customerTotalInvestmentValueStore[0]?.total_present_value.toLocaleString('en-in')}</span>
+						</div>
+					</div>
+					<div class="flex justify-between flex-col">
+						<div class="flex flex-col">
+							<span class="text-xs text-gray-400">Total return</span>
+							<span class={totalChange > 0 ? 'text-green-500' : 'text-red-500'}
+								>{totalChangeString}</span
+							>
+						</div>
+					</div>
+				</div>
 			</div>
-			<div class="flex justify-between p-6 flex-col pt-0 mt-auto">
-				<button
-					type="button"
-					class="mt-auto btn w-full rounded bg-primary-500 variant-filled-primary"
-					on:click={showAddMoneyModal}>Add Money</button
-				>
-			</div>
-		</div>
-	</div> 
+		</div> 
+		{/if}
+	</svelte:fragment>
+</TabGroup>
 </div>
