@@ -22,7 +22,7 @@ async function backfillStocks() {
   const result = [];
   const pricemap = {};
   const getFromPriceMap = (key) => {
-    return pricemap[key] || randomIntFromInterval(20, 3000);
+    return pricemap[key] || randomIntFromInterval(20, 900);
   };
   const newStocks = [];
   for (let i = threeYearBack; today.toSQLDate() >= i.toSQLDate(); ) {
