@@ -35,8 +35,8 @@ type BuyMFModel struct {
 }
 
 type AddMoneyModel struct {
-	CustomerId string `param:"customer_id"`
-	Amount     int32  `json:"amount"`
+	CustomerId string  `param:"customer_id"`
+	Amount     float32 `json:"amount"`
 }
 
 type Msg struct {

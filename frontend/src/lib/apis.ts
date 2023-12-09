@@ -78,7 +78,8 @@ export async function sellStocksApi(stock_id, quantity, company_name) {
 				'customerBalanceStore',
         'customersStocksStore',
 				'customerStockInvestmentValueStore',
-				'customerTotalInvestmentValueStore'
+				'customerTotalInvestmentValueStore',
+        'taxLiabilityStore'
 			);
 		})
 		.catch((error) => {
@@ -139,7 +140,8 @@ export async function sellMFApi(mf_id, quantity, fund_name) {
 				'customerBalanceStore',
         'customerMutualFundsStore',
 				'customerMFInvestmentValueStore',
-				'customerTotalInvestmentValueStore'
+				'customerTotalInvestmentValueStore',
+        'taxLiabilityStore'
 			);
 		})
 		.catch((error) => {

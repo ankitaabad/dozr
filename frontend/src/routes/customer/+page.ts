@@ -17,7 +17,8 @@ import {
   customerTotalInvestmentValueStore,
   topYearlyStock,
   topYearlyMF,
-  isHome
+  isHome,
+  taxLiabilityStore
 } from '$lib/store';
 import { browser } from '$app/environment';
 import {goto} from '$app/navigation'
@@ -52,7 +53,8 @@ export async function load({url}) {
     topYearlyStock.fetchData(),
     topMFGainersStore.fetchData(),
     topMFLosersStore.fetchData(),
-    topYearlyMF.fetchData()
+    topYearlyMF.fetchData(),
+    taxLiabilityStore.fetchData(),
 
 	]);
   return {"isLoading":false}

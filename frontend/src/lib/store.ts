@@ -519,6 +519,33 @@ function creatCustomerStockInvestmentValueStore() {
 
 	return { subscribe, set, update, fetchData };
 }
+
+function createTaxLiabilityStore() {
+	const { subscribe, set, update } = writable([]);
+
+	async function fetchData() {
+		const cid = get(customerId);
+		console.log({ cid });
+		let data = JSON.stringify({
+      "$filter": {
+        "customer_id": cid,
+        "year": DateTime.now().year
+      }
+    });
+
+		const config = {
+			method: 'post',
+			url: '/tax_liability/query',
+			data: data
+		};
+
+		dozerRest.request(config).then((response) => {
+			update(() => response.data);
+		});
+	}
+
+	return { subscribe, set, update, fetchData };
+}
 export const recentTransactionsStore = createRecentTransactions();
 export const topStockGainersStore = createDailyStockGainers();
 export const topStockLosersStore = createDailyStockLosers();
@@ -541,7 +568,7 @@ export const customerMFInvestmentValueStore = creatCustomerMFInvestmentValueStor
 export const customerTotalInvestmentValueStore = creatCustomerTotalInvestmentValueStore();
 export const topInvestorsStore = createTopInvestorsStore();
 export const stockDetailStore = createStockDetailStore();
-
+export const  taxLiabilityStore = createTaxLiabilityStore();
 function getStoreDozerId(store: Writable<any>) {
 	const data = get(store);
 
@@ -556,7 +583,8 @@ const storeMap = {
   customerMFInvestmentValueStore,
 	customerTotalInvestmentValueStore,
   customersStocksStore,
-  customerMutualFundsStore
+  customerMutualFundsStore,
+  taxLiabilityStore
 };
 type StoreNames = keyof typeof storeMap;
 
