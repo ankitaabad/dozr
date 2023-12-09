@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { SvelteComponent } from 'svelte';
-	import { ConicGradient } from '@skeletonlabs/skeleton';
-	import type { ConicStop } from '@skeletonlabs/skeleton';
+	import { ConicGradient, getToastStore } from '@skeletonlabs/skeleton';
+	import type { ConicStop, ToastSettings } from '@skeletonlabs/skeleton';
 	// Stores
 	import { getModalStore } from '@skeletonlabs/skeleton';
 	import { sellStocksApi } from '$lib/apis';
@@ -9,6 +9,8 @@
 	import { enterBind } from '$lib/utils';
 
 	let quantityInput, sellButton;
+
+  const toastStore = getToastStore();
 
 	onMount(() => {
 		enterBind(sellButton, quantityInput);
@@ -33,10 +35,21 @@
 	async function onFormSubmit() {
 		loading = true;
 		console.log({ 'inside modal store': $modalStore });
+    if (!quantity) {
+			modalStore.close();
+
+			return;
+		}
 		const { stock_id, company_name } = $modalStore[0].meta;
 		await sellStocksApi(stock_id, quantity, company_name);
 		if ($modalStore[0].response) $modalStore[0].response(quantity);
 		modalStore.close();
+    const t: ToastSettings = {
+			message: `${quantity} shares of ${company_name} sold.`,
+			timeout: 2200,
+			background: 'variant-filled-success'
+		};
+		toastStore.trigger(t);
 	}
 
 	// Base Classes

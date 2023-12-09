@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount, type SvelteComponent } from 'svelte';
-	import { ConicGradient } from '@skeletonlabs/skeleton';
-	import type { ConicStop } from '@skeletonlabs/skeleton';
+	import { ConicGradient, getToastStore } from '@skeletonlabs/skeleton';
+	import type { ConicStop, ToastSettings } from '@skeletonlabs/skeleton';
 	// Stores
 	import { getModalStore } from '@skeletonlabs/skeleton';
 	import { buyMFApi, buyStocksApi } from '$lib/apis';
@@ -12,6 +12,7 @@
 	/** Exposes parent props to this component. */
 	export let parent: SvelteComponent;
 
+	const toastStore = getToastStore();
 	const modalStore = getModalStore();
 	let quantityInput, buyButton;
 
@@ -38,10 +39,22 @@
 	async function onFormSubmit() {
 		loading = true;
 		console.log({ 'inside modal store': $modalStore });
+    if (!quantity) {
+			modalStore.close();
+
+			return;
+		}
 		const { mf_id, fund_name } = $modalStore[0].meta;
 		await buyMFApi(mf_id, quantity, fund_name);
 		if ($modalStore[0].response) $modalStore[0].response(quantity);
 		modalStore.close();
+    const t: ToastSettings = {
+			message: `${quantity} units  of ${fund_name} purchased.`,
+			timeout: 2200,
+			background: 'variant-filled-success'
+		};
+		toastStore.trigger(t);
+    
 	}
 	// Base Classes
 	const cBase = 'card p-4 w-modal shadow-xl   ';

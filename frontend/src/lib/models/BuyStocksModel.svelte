@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { ConicStop } from '@skeletonlabs/skeleton';
-	import { ConicGradient } from '@skeletonlabs/skeleton';
+	import { ConicGradient, getToastStore } from '@skeletonlabs/skeleton';
 	import type { SvelteComponent } from 'svelte';
 	import { onMount } from 'svelte';
 
@@ -14,7 +14,7 @@
 	/** Exposes parent props to this component. */
 	export let parent: SvelteComponent;
 
-
+  const toastStore = getToastStore()
 	const modalStore = getModalStore();
 	let quantityInput, buyButton;
 
@@ -39,10 +39,21 @@
 	async function onFormSubmit() {
 		loading = true;
 		console.log({ 'inside modal store': $modalStore });
+    if (!quantity) {
+			modalStore.close();
+
+			return;
+		}
 		const { stock_id, company_name } = $modalStore[0].meta;
 		await buyStocksApi(stock_id, quantity, company_name);
 		if ($modalStore[0].response) $modalStore[0].response(quantity);
 		modalStore.close();
+    const t: ToastSettings = {
+			message: `${quantity} shares of ${company_name} bought.`,
+			timeout: 2200,
+			background: 'variant-filled-success'
+		};
+		toastStore.trigger(t);
 	}
 
 	// Base Classes
