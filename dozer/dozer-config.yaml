@@ -202,6 +202,13 @@ endpoints:
   - name: stocks_daily_price
     path: /stocks_daily_price
     table_name: stocks_daily_price
+    index:
+      secondary:
+        create:
+          - !SortedInverted
+              fields:
+                - stock_id
+                - date    
   
   
   - name: mf_daily_price

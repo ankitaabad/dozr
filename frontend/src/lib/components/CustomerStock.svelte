@@ -41,9 +41,7 @@
 				{#each $rows as row}
 					<tr>
 						<td
-							><a
-								href="/stockdetail?stock_id=001r7tOv0gSeoQ0S7nLA3szpLT2qCXfH"
-								class="flex gap-2 items-center"
+							><a href={`/stockdetail?stock_id=${row.stock_id}`} class="flex gap-2 items-center"
 								>{row.company_name}
 								<svg
 									xmlns="http://www.w3.org/2000/svg"

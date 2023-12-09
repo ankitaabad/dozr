@@ -2,6 +2,7 @@ import { get, writable, type Writable } from 'svelte/store';
 import { dozerRest } from './utils';
 export const isManager = writable(false);
 export const isHome = writable(false);
+export const stockPage = writable(false);
 
 export const customerId = writable(0);
 export const currentStockId = writable('');
@@ -39,7 +40,13 @@ function createRecentTransactions() {
 function createStockDetailStore() {
 	const { subscribe, set, update } = writable({ dailyPrices: [], details: {} });
 	async function fetchData() {
-		const data = JSON.stringify({ $limit: 365, $order_by: { date: 'desc' } });
+		const data = JSON.stringify({
+			$filter: {
+				stock_id: get(currentStockId)
+			},
+			$limit: 365,
+			$order_by: { date: 'desc' }
+		});
 		// "$filter": {"date":DateTime.now().toSQLDate()}
 
 		const configPrice = {
@@ -570,6 +577,11 @@ function getStoreDozerId(store: Writable<any>) {
 	return data?.[0]?.['__dozer_record_id'];
 }
 
+function getStoreFieldValue(store, fieldName) {
+	const data = get(store);
+	return data?.[0]?.[fieldName];
+}
+
 const storeMap = {
 	recentTransactionsStore,
 	customersStore,
@@ -585,8 +597,19 @@ type StoreNames = keyof typeof storeMap;
 
 export function refreshDozerStores(...storeNames: StoreNames[]) {
 	async function refreshStore(s: StoreNames) {
+		let startingDelay = [
+			'taxLiabilityStore',
+			'customerStockInvestmentValueStore',
+			'customerMFInvestmentValueStore',
+			'customerTotalInvestmentValueStore'
+		].includes(s)
+			? 800
+			: 120;
+
+		console.log({ s, startingDelay });
 		const store = storeMap[s];
 		let id = getStoreDozerId(store);
+
 		console.log({ refreshId: id });
 		if (!id) {
 			return;
@@ -597,11 +620,24 @@ export function refreshDozerStores(...storeNames: StoreNames[]) {
 				console.log('comparing ', id, getStoreDozerId(store));
 				switch (s) {
 					case 'customerBalanceStore': {
-						const oldBalance = get(store)?.[0]?.['balance'];
+						const oldBalance = getStoreFieldValue(store, 'balance');
 						await store.fetchData();
-						const newBalance = get(store)?.[0]?.['balance'];
+						const newBalance = getStoreFieldValue(store, 'balance');
 						if (oldBalance === newBalance) {
 							throw Error('throwing for retry');
+						}
+						break;
+					}
+					case 'taxLiabilityStore': {
+						console.log('refreshing tax liability');
+						const oldltcg = getStoreFieldValue(store, 'ltcg');
+						const oldstcg = getStoreFieldValue(store, 'stcg');
+
+						await store.fetchData();
+						const newltcg = getStoreFieldValue(store, 'ltcg');
+						const newstcg = getStoreFieldValue(store, 'stcg');
+						if (oldltcg + oldstcg === newltcg + newstcg) {
+							throw Error(`throwing for retry ${s}`);
 						}
 						break;
 					}
@@ -616,14 +652,7 @@ export function refreshDozerStores(...storeNames: StoreNames[]) {
 			{
 				delayFirstAttempt: true,
 				numOfAttempts: 3,
-				startingDelay: [
-					'taxLiabilityStore',
-					'customerStockInvestmentValueStore',
-					'customerMFInvestmentValueStore',
-					'customerTotalInvestmentValueStore'
-				].includes(s)
-					? 250
-					: 120
+				startingDelay
 			}
 		);
 	}

@@ -4,14 +4,21 @@
 		customerStockInvestmentValueStore,
 		customerMFInvestmentValueStore,
 		customerTotalInvestmentValueStore,
-		stockDetailStore
+		stockDetailStore,
+		stockPage
 	} from '$lib/store';
 
 	import { RowCount } from '@vincjo/datatables';
 	import { DataHandler, Datatable, Th, ThFilter } from '@vincjo/datatables';
+	import { onMount } from 'svelte';
 	$: handler = new DataHandler($stockDetailStore, { rowsPerPage: 10 });
 	$: rows = handler.getRows();
-
+	onMount(() => {
+		$stockPage = true;
+		return () => {
+			$stockPage = false;
+		};
+	});
 	import Chart from 'svelte-frappe-charts';
 	$: labels = $stockDetailStore.dailyPrices.map((d) => {
 		return d.date;
@@ -28,30 +35,10 @@
 			}
 		]
 	};
-	$: totalChange =
-		$customerTotalInvestmentValueStore[0]?.total_present_value -
-		$customerTotalInvestmentValueStore[0]?.total_investment;
+  $: console.log({data})
 
-	$: totalChangePercentage =
-		(totalChange / $customerTotalInvestmentValueStore[0]?.total_investment) * 100;
-	$: console.log({ totalChange });
-	$: totalChangeString = totalChangePercentage && getChangeString('total');
-
-	$: mfChange =
-		$customerMFInvestmentValueStore[0]?.present_value -
-		$customerMFInvestmentValueStore[0]?.investment;
-
-	$: mfChangePercentage = (mfChange / $customerMFInvestmentValueStore[0]?.investment) * 100;
-	$: mfChangeString = mfChangePercentage && getChangeString('mf');
-
-	$: stockChange =
-		$customerStockInvestmentValueStore[0]?.present_value -
-		$customerStockInvestmentValueStore[0]?.investment;
-	$: stockChangePercentage =
-		(stockChange / $customerStockInvestmentValueStore[0]?.investment) * 100;
-	$: stockChangeString = stockChangePercentage && getChangeString('stock');
+	
 </script>
-
 <div class="max-w-7xl w-full mx-auto">
 	<div class="heading flex justify-between items-center mt-6">
 		<h2 class="font-medium text-lg">{$stockDetailStore.details.company_name}</h2>
@@ -98,11 +85,11 @@
 							<div class="flex flex-col items-start gap-2">
 								<div>Daily Change</div>
 								<div
-									class={stockChange > 0
+									class={$stockDetailStore.details.daily_change > 0
 										? 'text-green-500 font-medium'
 										: 'text-red-500 font-medium'}
 								>
-									{$stockDetailStore.details.daily_change}
+									{$stockDetailStore.details.daily_change}%
 								</div>
 							</div>
 						</div>
@@ -112,11 +99,11 @@
 							<div class="flex flex-col items-start gap-2">
 								<div>Yearly Change</div>
 								<div
-									class={stockChange > 0
+									class={$stockDetailStore.details.yearly_change > 0
 										? 'text-green-500 font-medium'
 										: 'text-red-500 font-medium'}
 								>
-									{$stockDetailStore.details.yearly_change}
+									{$stockDetailStore.details.yearly_change}%
 								</div>
 							</div>
 						</div>

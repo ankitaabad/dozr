@@ -74,16 +74,24 @@
 	datasets: [
 		{
 			name: "Investment", chartType: 'bar',
-			values: [$customerStockInvestmentValueStore[0]?.investment, $customerMFInvestmentValueStore[0]?.investment, $customerTotalInvestmentValueStore[0]?.total_investment ]
+			values: [$customerStockInvestmentValueStore[0]?.investment, $customerMFInvestmentValueStore[0]?.investment, $customerTotalInvestmentValueStore[0]?.total_investment ].map(x => {
+       
+          return (x/100000).toFixed(2)
+      
+      })
 		},
 		{
 			name: "Present Values", chartType: 'bar',
-			values: [$customerStockInvestmentValueStore[0]?.present_value, $customerMFInvestmentValueStore[0]?.present_value, $customerTotalInvestmentValueStore[0]?.total_present_value]
+			values: [$customerStockInvestmentValueStore[0]?.present_value, $customerMFInvestmentValueStore[0]?.present_value, $customerTotalInvestmentValueStore[0]?.total_present_value].map(x => {
+          return (x/100000).toFixed(2)
+        
+      })
 		}
 	],
 
 	
 	}
+
 
 	// title: "My Awesome Chart",
 	// type: 'axis-mixed', // or 'bar', 'line', 'pie', 'percentage'
@@ -107,7 +115,7 @@
 	<!-- Tab Panels --->
 	<svelte:fragment slot="panel">
 		{#if summarytabSet === 0}
-		<Chart data={data} type="bar" />
+		<Chart data={data} type="bar" title="Investment (in Lacs)"/>
 				
 		{:else if summarytabSet === 1}
 		<div class="flex gap-6">

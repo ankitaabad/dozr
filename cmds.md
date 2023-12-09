@@ -24,3 +24,20 @@ atlas migrate apply --dir file://migrations --url postgresql://0.0.0.0:5432/post
 
 atlas migrate status --dir file://migrations --url "postgresql://0.0.0.0:5432/postgres?sslmode=disable"
 
+{
+
+  "TaskTemplate": {
+ 
+    "ContainerSpec": {
+
+  
+      "TTY": true
+ 
+    
+    
+    
+      }
+ 
+    }
+    
+  }

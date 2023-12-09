@@ -24,6 +24,7 @@
 		const total_tax =
 			(tax_from_ltcg > 0 ? tax_from_ltcg : 0) + (tax_from_stcg > 0 ? tax_from_stcg : 0);
 		tax_liability = total_tax.toLocaleString('en-in');
+    console.log("updating tax liability",tax_liability)
 		console.log({ total_tax });
 	});
 </script>
