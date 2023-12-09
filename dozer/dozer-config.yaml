@@ -42,6 +42,9 @@ sources:
   - name: loans 
     table_name: loans
     connection:  pgcon2
+  - name: tax_liability 
+    table_name: tax_liability 
+    connection:  pgcon2
 
   - name: customer_mf 
     table_name: customer_mf
@@ -180,6 +183,17 @@ endpoints:
   - name: loans
     path: /loans
     table_name: loans
+
+  - name: tax_liability
+    path: /tax_liability
+    table_name: tax_liability
+    index:
+      secondary:
+        create:
+          - !SortedInverted
+              fields:
+                - customer_id
+                - year
 
   - name: customer_mutual_funds
     path: /customer_mutual_funds
