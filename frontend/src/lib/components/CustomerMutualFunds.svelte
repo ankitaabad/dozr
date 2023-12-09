@@ -20,6 +20,8 @@
 
   customerMutualFundsStore.subscribe((data) => {
 		handler?.setRows(data);
+    handler.sort('fund_name')
+
 	});
 </script>
 

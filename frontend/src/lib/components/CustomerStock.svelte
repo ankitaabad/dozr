@@ -21,6 +21,7 @@
 	const rows = handler.getRows();
   customersStocksStore.subscribe((data) => {
 		handler?.setRows(data);
+    handler.sort('company_name')
 	});
 </script>
 
