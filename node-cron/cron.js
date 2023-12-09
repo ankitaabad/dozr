@@ -1,4 +1,4 @@
-const { DateTime } = require("luxon");
+const { DateTime, Settings } = require("luxon");
 const { Pool, Client } = require("pg");
 const { randomPricePercentageChange, change } = require("./utils");
 var cron = require("node-cron");
@@ -7,33 +7,34 @@ const schedule = require("node-schedule");
 const dotenv = require("dotenv");
 dotenv.config();
 let rule = new schedule.RecurrenceRule();
+Settings.defaultZoneName = "Asia/Kolkata";
 
 // your timezone
-rule.tz = 'Asia/Kolkata';
+rule.tz = "Asia/Kolkata";
 
 // runs at 15:00:00
 rule.second = 0;
 rule.minute = process.env.minute;
 rule.hour = process.env.hour;
-console.log({rule});
+console.log({ rule });
 schedule.scheduleJob(rule, async () => {
   await job();
 });
 async function job() {
-  const { user, host, port, database, password, healthChecksBaseURL } =      process.env;
-
+  const { user, host, port, database, password, healthChecksBaseURL } =
+    process.env;
 
   try {
     console.log("inside job");
-    let dateBeforeToGenerate  = DateTime.fromSQL(process.env.dateBeforeToGenerate,{'zone':'Asia/Kolkata'})
+    let dateBeforeToGenerate = DateTime.fromSQL(
+      process.env.dateBeforeToGenerate
+    );
 
-    if(!dateBeforeToGenerate.isValid){
-      dateBeforeToGenerate = DateTime.fromObject({'zone':'Asia/Kolkata'}).now()
+    if (!dateBeforeToGenerate.isValid) {
+      dateBeforeToGenerate = DateTime.now();
     }
-    console.log("day before to generate",dateBeforeToGenerate)
+    console.log({ dateBeforeToGenerate });
 
-
-      console.log({user,host,port,database,password,healthChecksBaseURL})
     const p1 = axios.default.get(`${healthChecksBaseURL}/start`);
 
     const client = new Client({
@@ -46,12 +47,9 @@ async function job() {
 
     await client.connect();
 
-
-
-    
     const tomorrow = dateBeforeToGenerate.plus({ days: 1 });
     const aYearBefore = tomorrow.plus({ year: -1 });
-    console.log({tomorrow,aYearBefore,})
+    console.log({ tomorrow, aYearBefore });
     console.log();
     const result = await client.query(
       `select stock_id,price, (select price from stocks_daily_price sdpold where "date" = '${aYearBefore.toSQLDate()}' and stock_id = s.stock_id) year_old_price from stocks s`
@@ -72,11 +70,10 @@ async function job() {
       }
     });
     sq += `) AS t (stock_id,date,price,daily_change,yearly_change)), ist as ( INSERT INTO stocks_daily_price (stock_id, "date", price)  select stock_id, "date", price from ss) update stocks s set price = sstable.price, daily_change = sstable.daily_change, yearly_change = sstable.yearly_change  from ss sstable where s.stock_id = sstable.stock_id `;
-    console.log({sq})
+    console.log({ sq });
 
     const sqResult = await client.query(sq);
     console.log({ sqResult });
-
 
     console.log("generating mf data");
     const mfdaily = await client.query(
@@ -99,8 +96,6 @@ async function job() {
     mfsq += `) AS t (mf_id,date,price,daily_change,yearly_change)), ist as ( INSERT INTO mf_daily_price (mf_id, "date", price)  select mf_id, "date", price from mfs) update mutual_funds mf set price = mfstable.price, daily_change = mfstable.daily_change, yearly_change = mfstable.yearly_change  from mfs mfstable where mf.mf_id = mfstable.mf_id `;
     // console.log({sq})
     console.log({ mfsq });
-     
-
 
     const mfsqResult = await client.query(mfsq);
     // mfsqResult.rowCount
@@ -109,10 +104,11 @@ async function job() {
     const p2 = axios.default.get(`${healthChecksBaseURL}`);
     await Promise.all([p1, p2]);
   } catch (err) {
-    console.log("error occured",err)
+    console.log("error occured", err);
     await axios.default.get(`${healthChecksBaseURL}/fail`).catch((err) => {
-      console.log("healthcheck fail endpoint error",err)
+      console.log("healthcheck fail endpoint error", err);
     });
   }
 }
 
+// job();
