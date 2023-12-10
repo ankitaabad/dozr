@@ -17,7 +17,7 @@
 		modalStore.trigger(modal);
 	}
 
-	const handler = new DataHandler($customersStocksStore, { rowsPerPage: 10 });
+	const handler = new DataHandler($customersStocksStore, { rowsPerPage: 5 });
 	const rows = handler.getRows();
 	customersStocksStore.subscribe((data) => {
 		handler?.setRows(data);
@@ -26,7 +26,7 @@
 </script>
 
 <div class="w-full">
-	<Datatable {handler} search={false} rowsPerPage={false} rowCount={true}>
+	<Datatable {handler} search={false} rowsPerPage={false} rowCount={true} pagination={true}>
 		<table>
 			<thead>
 				<tr>

@@ -20,7 +20,7 @@
 </script>
 
 <div class="w-full">
-	<Datatable {handler} search={false} rowsPerPage={false} rowCount={true}>
+	<Datatable {handler} search={false} rowsPerPage={false} rowCount={true} pagination={false}>
 		<table>
 			<thead>
 				<tr>
@@ -40,9 +40,7 @@
 									class="w-12 h-12 rounded border border-solid border-gray-300"
 								/>
 								<div>
-									<a
-									href={`/mfdetail?mf_id=${row.mf_id}`}
-										class="flex gap-2 items-center"
+									<a href={`/mfdetail?mf_id=${row.mf_id}`} class="flex gap-2 items-center"
 										>{row.fund_name}
 										<svg
 											xmlns="http://www.w3.org/2000/svg"
@@ -59,6 +57,8 @@
 												d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6"
 											/><path d="M11 13l9 -9" /><path d="M15 4h5v5" /></svg
 										></a
+									><span class="text-sm text-gray-500"
+										>Yearly Change: {row?.yearly_change.toLocaleString('en-in')}%</span
 									>
 								</div>
 							</div>

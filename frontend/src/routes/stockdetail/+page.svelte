@@ -23,12 +23,12 @@
 	import Chart from 'svelte-frappe-charts';
 	let labels, values;
 	stockDetailStore.subscribe((data) => {
-		const prices = data.dailyPrices
+		const prices = data.dailyPrices;
 		const today_date = DateTime.now().day;
 		let requiredPrices = prices.filter((p) => {
 			return DateTime.fromSQL(p.date).day === today_date;
 		});
-    requiredPrices = requiredPrices.reverse()
+		requiredPrices = requiredPrices.reverse();
 		console.log({ requiredPrices });
 		console.log('length : ', requiredPrices.length);
 
@@ -141,7 +141,7 @@
 				<div class="heading mb-6 flex justify-between items-center">
 					<h2 class="font-medium text-lg">Stock Prices</h2>
 				</div>
-				<Chart {data} type="line" height="359" />
+				<Chart {data} type="line" />
 			</div>
 		</div>
 	</div>

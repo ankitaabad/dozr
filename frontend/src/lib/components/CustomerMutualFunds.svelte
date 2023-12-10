@@ -15,7 +15,7 @@
 		modalStore.trigger(modal);
 	}
 
-	const handler = new DataHandler($customerMutualFundsStore, { rowsPerPage: 10 });
+	const handler = new DataHandler($customerMutualFundsStore, { rowsPerPage: 5 });
 	const rows = handler.getRows();
 
 	customerMutualFundsStore.subscribe((data) => {
@@ -25,7 +25,7 @@
 </script>
 
 <div class="w-full">
-	<Datatable {handler} search={false} rowsPerPage={false} rowCount={true}>
+	<Datatable {handler} search={false} rowsPerPage={false} rowCount={true} pagination={true}>
 		<table>
 			<thead>
 				<tr>
@@ -40,10 +40,7 @@
 					<tr>
 						<td>
 							<div class="flex gap-3 items-center">
-								<a
-									href={`/mfdetail?mf_id=${row.mf_id}`}
-									class="flex gap-3 items-center"
-								>
+								<a href={`/mfdetail?mf_id=${row.mf_id}`} class="flex gap-3 items-center">
 									<img
 										src={row.image_src}
 										class="w-12 h-12 rounded border border-solid border-gray-300"

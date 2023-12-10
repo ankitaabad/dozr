@@ -16,7 +16,7 @@
 					width="56"
 					height="56"
 					viewBox="0 0 24 24"
-					stroke-width="1"
+					stroke-width="0.75"
 					stroke="#495a8f"
 					fill="none"
 					stroke-linecap="round"

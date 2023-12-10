@@ -13,32 +13,33 @@
 		modalStore.trigger(modal);
 	}
 	let tax_liability = 0;
-  let ltcg=0,stcg=0
+	let ltcg = 0,
+		stcg = 0;
 	taxLiabilityStore.subscribe((value) => {
 		if (value.length === 0) {
 			return;
 		}
 		ltcg = value[0]?.ltcg || 0;
-    stcg = value[0]?.stcg || 0
+		stcg = value[0]?.stcg || 0;
 
 		const tax_from_ltcg = (ltcg - 100000) * 0.1;
 		const tax_from_stcg = stcg * 0.15;
 		const total_tax =
 			(tax_from_ltcg > 0 ? tax_from_ltcg : 0) + (tax_from_stcg > 0 ? tax_from_stcg : 0);
 		tax_liability = total_tax.toLocaleString('en-in');
-    console.log("updating tax liability",tax_liability)
+		console.log('updating tax liability', tax_liability);
 		console.log({ total_tax });
 	});
 </script>
 
 <div class="flex flex-col gap-6 w-[25%]">
-	<div class="w-[100%] bg-white rounded-md p-6 border border-solid border-gray-200 min-h-[256px]">
+	<div class="w-[100%] bg-white rounded-md p-6 border border-solid border-gray-200">
 		<div class="w-[100%] flex flex-col h-full">
 			<div>
 				<div class="heading mb-6">
 					<h2 class="font-medium text-lg">Balance</h2>
 				</div>
-				<div class="text-2xl font-semibold">
+				<div class="text-2xl font-semibold mb-12">
 					₹{$customerBalanceStore[0]?.balance.toLocaleString('en-in')}
 				</div>
 			</div>
@@ -57,9 +58,17 @@
 				<div class="heading mb-6">
 					<h2 class="font-medium text-lg">Estimated Tax Liability</h2>
 				</div>
-				<div class="text-2xl font-semibold">₹{tax_liability} </div>
-				<div class="text-2xl font-semibold">STCG: ₹{stcg} </div>
-        <div class="text-2xl font-semibold">LTCG : ₹{ltcg} </div>
+				<div class="text-2xl font-semibold mb-6">₹{tax_liability}</div>
+				<div class="flex justify-between">
+					<div class="flex flex-col">
+						<span class="text-xs text-gray-400">STCG</span>
+						<span>₹{stcg}</span>
+					</div>
+					<div class="flex flex-col">
+						<span class="text-xs text-gray-400">LTCG</span>
+						<span>₹{ltcg}</span>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

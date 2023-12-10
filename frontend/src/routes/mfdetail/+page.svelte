@@ -23,12 +23,12 @@
 	import Chart from 'svelte-frappe-charts';
 	let labels, values;
 	mfDetailStore.subscribe((data) => {
-		const prices = data.dailyPrices
+		const prices = data.dailyPrices;
 		const today_date = DateTime.now().day;
 		let requiredPrices = prices.filter((p) => {
 			return DateTime.fromSQL(p.date).day === today_date;
 		});
-    requiredPrices = requiredPrices.reverse()
+		requiredPrices = requiredPrices.reverse();
 		console.log({ requiredPrices });
 		console.log('length : ', requiredPrices.length);
 
@@ -55,7 +55,14 @@
 
 <div class="max-w-7xl w-full mx-auto">
 	<div class="heading flex justify-between items-center mt-6">
-		<h2 class="font-medium text-lg">{$mfDetailStore.details.fund_name}</h2>
+		<h2 class="font-medium text-lg flex gap-3 items-center">
+			<div class="w-16 h-16 rounded border border-solid border-gray-300">
+				<img src={$mfDetailStore.details.image_src} alt="" />
+			</div>
+			<div class="flex flex-col max-w-[256px] leading-snug">
+				<div>{$mfDetailStore.details.fund_name}</div>
+			</div>
+		</h2>
 	</div>
 </div>
 <div class="max-w-7xl w-full mx-auto my-6 flex flex-col gap-6">
@@ -63,35 +70,6 @@
 	<div class="w-[100%] flex gap-6">
 		<div class="w-[100%]">
 			<div class="flex flex-col gap-6">
-				<div class="w-full flex gap-6">
-					<div class="border border-solid border-gray-200 p-4 w-full rounded-md bg-white">
-						<div class=" flex justify-between">
-							<div class="flex flex-col items-start gap-2">
-								<div>Symbol</div>
-								<div class="font-medium">{$mfDetailStore.details.symbol}</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="border border-solid border-gray-200 p-4 w-full rounded-md bg-white">
-						<div class="flex justify-between w-full">
-							<div class="flex flex-col items-start gap-2">
-								<div>Industry</div>
-								<div class="font-medium">{$mfDetailStore.details.industry}</div>
-							</div>
-						</div>
-					</div>
-					<div class="border border-solid border-gray-200 p-4 w-full rounded-md bg-white">
-						<div class="flex justify-between w-full">
-							<div class="flex flex-col items-start gap-2">
-								<div>Market Capital</div>
-								<div class="font-medium">
-									₹{$mfDetailStore.details.market_capital?.toLocaleString('en-in')}(Cr)
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
 				<div class="w-full flex gap-6">
 					<div class="border border-solid border-gray-200 p-4 w-full rounded-md bg-white">
 						<div class="flex justify-between w-full">
@@ -139,9 +117,9 @@
 		<div class="w-[100%] flex gap-6">
 			<div class="w-[100%] bg-white rounded-md p-6 border border-solid border-gray-200">
 				<div class="heading mb-6 flex justify-between items-center">
-					<h2 class="font-medium text-lg">Stock Prices</h2>
+					<h2 class="font-medium text-lg">Mutual Fund Prices</h2>
 				</div>
-				<Chart {data} type="line" height="359" />
+				<Chart {data} type="line" />
 			</div>
 		</div>
 	</div>
