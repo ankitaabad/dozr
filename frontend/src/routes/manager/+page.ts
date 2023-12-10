@@ -3,7 +3,12 @@ import {
 	topStockLosersStore,
 	topInvestorsStore,
 	topYearlyStock,
-	allStocksStore
+	allStocksStore,
+  topMFGainersStore,
+  topMFLosersStore,
+  topYearlyMF,
+  allMutualFundsStore
+  
 } from '$lib/store';
 import { browser } from '$app/environment';
 import { isHome } from '$lib/store';
@@ -26,8 +31,10 @@ export async function load({ url }) {
 		topStockLosersStore.fetchData(),
 		topInvestorsStore.fetchData(),
 		topYearlyStock.fetchData(),
-		allStocksStore.fetchData()
-
-		// allMutualFundsStore.fetchData(),
+		allStocksStore.fetchData(),
+    topMFGainersStore.fetchData(),
+    topMFLosersStore.fetchData(),
+    topYearlyMF.fetchData(),
+		allMutualFundsStore.fetchData(),
 	]);
 }
