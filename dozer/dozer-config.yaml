@@ -214,7 +214,14 @@ endpoints:
   - name: mf_daily_price
     path: /mf_daily_price
     table_name: mf_daily_price
-
+    index:
+      secondary:
+        create:
+          - !SortedInverted
+              fields:
+                - mf_id
+                - date    
+  
       
 
   
