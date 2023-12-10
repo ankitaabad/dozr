@@ -5,7 +5,7 @@
 	$: rows = handler.getRows();
 </script>
 
-<div class="w-[100%] bg-white rounded-md p-6 border border-solid border-gray-200">
+<div class="w-[100%] bg-white rounded-md p-6 border border-solid border-gray-200 tg-top-customer">
 	<div class="heading mb-6 flex justify-between items-center">
 		<h2 class="font-medium text-lg">Top Customers</h2>
 	</div>

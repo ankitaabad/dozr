@@ -27,7 +27,7 @@
 			<thead>
 				<tr>
 					<Th {handler} orderBy="fund_name">Name</Th>
-					<Th {handler} orderBy="fund_size">Quantity</Th>
+					<Th {handler} orderBy="fund_size">Fund Size</Th>
 					<Th {handler} orderBy="price">Price</Th>
 					<Th {handler} orderBy="">&nbsp;</Th>
 				</tr>
@@ -47,9 +47,7 @@
 									class="w-12 h-12 rounded border border-solid border-gray-300"
 								/>
 								<div>
-									<a
-									href={`/mfdetail?mf_id=${row.mf_id}`}
-										class="flex gap-2 items-center"
+									<a href={`/mfdetail?mf_id=${row.mf_id}`} class="flex gap-2 items-center"
 										>{row.fund_name}
 										<svg
 											xmlns="http://www.w3.org/2000/svg"
@@ -70,7 +68,7 @@
 								</div>
 							</div>
 						</td>
-						<td>{row.fund_size}</td>
+						<td>{row.fund_size}(Cr)</td>
 						<td class="font-medium s-FI5Y16UXR6H0">₹{row.price.toLocaleString('en-in')}</td>
 						<td
 							><button

@@ -59,8 +59,13 @@
 			<div class="w-16 h-16 rounded border border-solid border-gray-300">
 				<img src={$mfDetailStore.details.image_src} alt="" />
 			</div>
-			<div class="flex flex-col max-w-[256px] leading-snug">
+			<div class="flex flex-col">
 				<div>{$mfDetailStore.details.fund_name}</div>
+				<div>
+					<span class="font-normal text-sm text-gray-500"
+						>Fund Size: {$mfDetailStore.details.fund_size}(Cr)</span
+					>
+				</div>
 			</div>
 		</h2>
 	</div>

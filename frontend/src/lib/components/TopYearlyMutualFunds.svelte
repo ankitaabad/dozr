@@ -25,7 +25,7 @@
 			<thead>
 				<tr>
 					<Th {handler} orderBy="fund_name">Name</Th>
-					<Th {handler} orderBy="fund_size">Quantity</Th>
+					<Th {handler} orderBy="fund_size">Fund Size</Th>
 					<Th {handler} orderBy="price">Price</Th>
 					<Th {handler} orderBy="">&nbsp;</Th>
 				</tr>
@@ -63,7 +63,7 @@
 								</div>
 							</div>
 						</td>
-						<td>{row.fund_size}</td>
+						<td>{row.fund_size}(Cr)</td>
 						<td class="font-medium s-FI5Y16UXR6H0">₹{row.price.toLocaleString('en-in')}</td>
 						<td
 							><button
