@@ -17,7 +17,7 @@ function createRecentTransactions() {
 		const cid = get(customerId);
 		console.log({ cid });
 		const data = JSON.stringify({
-			$limit: 30,
+			$limit: 10,
 			$filter: {
 				customer_id: cid
 			},
