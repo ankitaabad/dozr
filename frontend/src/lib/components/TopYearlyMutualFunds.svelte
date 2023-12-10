@@ -41,7 +41,7 @@
 								/>
 								<div>
 									<a
-										href="/stockdetail?stock_id=001r7tOv0gSeoQ0S7nLA3szpLT2qCXfH"
+									href={`/mfdetail?mf_id=${row.mf_id}`}
 										class="flex gap-2 items-center"
 										>{row.fund_name}
 										<svg

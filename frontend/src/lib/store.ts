@@ -6,6 +6,8 @@ export const stockPage = writable(false);
 
 export const customerId = writable(0);
 export const currentStockId = writable('');
+export const currentMFId = writable('');
+
 import { backOff } from 'exponential-backoff';
 import { DateTime } from 'luxon';
 
@@ -60,6 +62,55 @@ function createStockDetailStore() {
 			data: JSON.stringify({
 				$filter: {
 					stock_id: get(currentStockId)
+				}
+			})
+		};
+
+		Promise.all([
+			dozerRest.request(configPrice).then((response) => {
+				console.log({ price: response.data });
+				update((x) => {
+					x.dailyPrices = response.data;
+					return x;
+				});
+			}),
+			dozerRest.request(configDetail).then((response) => {
+				console.log({ details: response.data });
+
+				update((x) => {
+					x.details = response.data?.[0];
+					return x;
+				});
+			})
+		]);
+	}
+
+	return { subscribe, set, update, fetchData };
+}
+
+function createMFDetailStore() {
+	const { subscribe, set, update } = writable({ dailyPrices: [], details: {} });
+	async function fetchData() {
+		const data = JSON.stringify({
+			$filter: {
+				mf_id: get(currentMFId)
+			},
+			$limit: 367,
+			$order_by: { date: 'desc' }
+		});
+		// "$filter": {"date":DateTime.now().toSQLDate()}
+
+		const configPrice = {
+			method: 'post',
+			url: '/mf_daily_price/query',
+			data: data
+		};
+		const configDetail = {
+			method: 'post',
+			url: '/mutual_funds/query',
+			data: JSON.stringify({
+				$filter: {
+					mf_id: get(currentMFId)
 				}
 			})
 		};
@@ -570,6 +621,9 @@ export const customerMFInvestmentValueStore = creatCustomerMFInvestmentValueStor
 export const customerTotalInvestmentValueStore = creatCustomerTotalInvestmentValueStore();
 export const topInvestorsStore = createTopInvestorsStore();
 export const stockDetailStore = createStockDetailStore();
+export const mfDetailStore = createMFDetailStore();
+
+
 export const taxLiabilityStore = createTaxLiabilityStore();
 function getStoreDozerId(store: Writable<any>) {
 	const data = get(store);

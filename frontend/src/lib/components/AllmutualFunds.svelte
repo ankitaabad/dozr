@@ -48,7 +48,7 @@
 								/>
 								<div>
 									<a
-										href="/mutualfunddetail?mf_id=001r6PfI0kTaJT1T62NI3ma7Wm2Toqqw"
+									href={`/mfdetail?mf_id=${row.mf_id}`}
 										class="flex gap-2 items-center"
 										>{row.fund_name}
 										<svg

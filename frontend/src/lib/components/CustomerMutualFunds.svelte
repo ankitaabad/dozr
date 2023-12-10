@@ -41,7 +41,7 @@
 						<td>
 							<div class="flex gap-3 items-center">
 								<a
-									href="/stockdetail?stock_id=001r7tOv0gSeoQ0S7nLA3szpLT2qCXfH"
+									href={`/mfdetail?mf_id=${row.mf_id}`}
 									class="flex gap-3 items-center"
 								>
 									<img
