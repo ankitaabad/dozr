@@ -38,8 +38,6 @@
 	}
 </script>
 
-
-
 <div class="h-screen flex">
 	<div
 		class="container h-80 justify-center my-auto gap-y-4 items-center flex flex-col max-w-sm mx-auto"

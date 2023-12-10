@@ -141,7 +141,7 @@
 				<div class="heading mb-6 flex justify-between items-center">
 					<h2 class="font-medium text-lg">Stock Prices</h2>
 				</div>
-				<Chart {data} type="line" />
+				<Chart {data} type="line" height="359" />
 			</div>
 		</div>
 	</div>

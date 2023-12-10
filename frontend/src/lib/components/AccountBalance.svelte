@@ -59,14 +59,14 @@
 					<h2 class="font-medium text-lg">Estimated Tax Liability</h2>
 				</div>
 				<div class="text-2xl font-semibold mb-6">₹{tax_liability}</div>
-				<div class="flex justify-between">
+				<div class="flex justify-between flex-wrap gap-6">
 					<div class="flex flex-col">
 						<span class="text-xs text-gray-400">STCG</span>
-						<span>₹{stcg}</span>
+						<span>₹{stcg?.toLocaleString('en-in')}</span>
 					</div>
 					<div class="flex flex-col">
 						<span class="text-xs text-gray-400">LTCG</span>
-						<span>₹{ltcg}</span>
+						<span>₹{ltcg?.toLocaleString('en-in')}</span>
 					</div>
 				</div>
 			</div>

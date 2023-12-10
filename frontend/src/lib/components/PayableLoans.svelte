@@ -44,7 +44,7 @@
 						<div class="font-semibold text-sm">EMI: {row.EMI}</div>
 					</div>
 				</div>
-				<div class="mt-3 mb-0 text-gray-400"><em>{row.repayment_schedule}</em></div>
+				<div class="mt-3 text-gray-400 text-sm">{row.repayment_schedule}</div>
 			</div>
 		{/each}
 	</div>

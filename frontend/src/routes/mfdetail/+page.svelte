@@ -65,7 +65,7 @@
 		</h2>
 	</div>
 </div>
-<div class="max-w-7xl w-full mx-auto my-6 flex flex-col gap-6">
+<div class="max-w-7xl w-full mx-auto my-6 flex flex-col gap-6 tg-mf-chart">
 	<!-- <div class=""><a href="#" class="font-medium flex gap-2 items-center text-primary-500"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l14 0" /><path d="M5 12l6 6" /><path d="M5 12l6 -6" /></svg>Back </a></div> -->
 	<div class="w-[100%] flex gap-6">
 		<div class="w-[100%]">
@@ -119,7 +119,7 @@
 				<div class="heading mb-6 flex justify-between items-center">
 					<h2 class="font-medium text-lg">Mutual Fund Prices</h2>
 				</div>
-				<Chart {data} type="line" />
+				<Chart {data} type="line" height="359" />
 			</div>
 		</div>
 	</div>
