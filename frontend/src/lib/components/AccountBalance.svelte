@@ -13,11 +13,13 @@
 		modalStore.trigger(modal);
 	}
 	let tax_liability = 0;
+  let ltcg=0,stcg=0
 	taxLiabilityStore.subscribe((value) => {
 		if (value.length === 0) {
 			return;
 		}
-		let { ltcg, stcg } = value[0];
+		ltcg = value[0]?.ltcg || 0;
+    stcg = value[0]?.stcg || 0
 
 		const tax_from_ltcg = (ltcg - 100000) * 0.1;
 		const tax_from_stcg = stcg * 0.15;
@@ -55,7 +57,9 @@
 				<div class="heading mb-6">
 					<h2 class="font-medium text-lg">Estimated Tax Liability</h2>
 				</div>
-				<div class="text-2xl font-semibold">₹{tax_liability}</div>
+				<div class="text-2xl font-semibold">₹{tax_liability} </div>
+				<div class="text-2xl font-semibold">STCG: ₹{stcg} </div>
+        <div class="text-2xl font-semibold">LTCG : ₹{ltcg} </div>
 			</div>
 		</div>
 	</div>

@@ -15,7 +15,7 @@ function createRecentTransactions() {
 		const cid = get(customerId);
 		console.log({ cid });
 		const data = JSON.stringify({
-			$limit: 10,
+			$limit: 30,
 			$filter: {
 				customer_id: cid
 			},
@@ -44,7 +44,7 @@ function createStockDetailStore() {
 			$filter: {
 				stock_id: get(currentStockId)
 			},
-			$limit: 365,
+			$limit: 367,
 			$order_by: { date: 'desc' }
 		});
 		// "$filter": {"date":DateTime.now().toSQLDate()}
@@ -611,9 +611,9 @@ export function refreshDozerStores(...storeNames: StoreNames[]) {
 		let id = getStoreDozerId(store);
 
 		console.log({ refreshId: id });
-		if (!id) {
-			return;
-		}
+		// if (!id) {
+		// 	return;
+		// }
 
 		backOff(
 			async () => {

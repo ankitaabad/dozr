@@ -38,12 +38,7 @@
 	}
 </script>
 
-<button
-	class="btn btn-primary btn-sm"
-	on:click={() => goto('/stockdetail?stock_id=001r7tOv0gSeoQ0S7nLA3szpLT2qCXfH')}
->
-	stocks
-</button>
+
 
 <div class="h-screen flex">
 	<div

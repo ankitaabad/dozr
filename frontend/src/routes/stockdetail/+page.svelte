@@ -10,6 +10,7 @@
 
 	import { RowCount } from '@vincjo/datatables';
 	import { DataHandler, Datatable, Th, ThFilter } from '@vincjo/datatables';
+	import { DateTime } from 'luxon';
 	import { onMount } from 'svelte';
 	$: handler = new DataHandler($stockDetailStore, { rowsPerPage: 10 });
 	$: rows = handler.getRows();
@@ -20,25 +21,38 @@
 		};
 	});
 	import Chart from 'svelte-frappe-charts';
-	$: labels = $stockDetailStore.dailyPrices.map((d) => {
-		return d.date;
+	let labels, values;
+	stockDetailStore.subscribe((data) => {
+		const prices = data.dailyPrices
+		const today_date = DateTime.now().day;
+		let requiredPrices = prices.filter((p) => {
+			return DateTime.fromSQL(p.date).day === today_date;
+		});
+    requiredPrices = requiredPrices.reverse()
+		console.log({ requiredPrices });
+		console.log('length : ', requiredPrices.length);
+
+		labels = requiredPrices.map((d) => DateTime.fromSQL(d.date).toFormat('LLL-yyyy'));
+		values = requiredPrices.map((d) => d.price?.toFixed(2));
 	});
-	$: values = $stockDetailStore.dailyPrices.map((d) => {
-		return d.price;
-	});
+	// let labels = $stockDetailStore.dailyPrices.map((d) => {
+	// 	return d.date;
+	// });
+	// let values = $stockDetailStore.dailyPrices.map((d) => {
+	// 	return d.price;
+	// });
 
 	$: data = {
-		labels: labels.slice(0, 12),
+		labels,
 		datasets: [
 			{
-				values: values.slice(0, 12)
+				values
 			}
 		]
 	};
-  $: console.log({data})
-
-	
+	$: console.log({ data });
 </script>
+
 <div class="max-w-7xl w-full mx-auto">
 	<div class="heading flex justify-between items-center mt-6">
 		<h2 class="font-medium text-lg">{$stockDetailStore.details.company_name}</h2>
@@ -51,15 +65,14 @@
 			<div class="flex flex-col gap-6">
 				<div class="w-full flex gap-6">
 					<div class="border border-solid border-gray-200 p-4 w-full rounded-md bg-white">
-						<div class="flex justify-between w-full">
+						<div class=" flex justify-between">
 							<div class="flex flex-col items-start gap-2">
-								<div>Price</div>
-								<div class="font-medium">
-									₹{$stockDetailStore.details.price}
-								</div>
+								<div>Symbol</div>
+								<div class="font-medium">{$stockDetailStore.details.symbol}</div>
 							</div>
 						</div>
 					</div>
+
 					<div class="border border-solid border-gray-200 p-4 w-full rounded-md bg-white">
 						<div class="flex justify-between w-full">
 							<div class="flex flex-col items-start gap-2">
@@ -73,13 +86,23 @@
 							<div class="flex flex-col items-start gap-2">
 								<div>Market Capital</div>
 								<div class="font-medium">
-									₹{$stockDetailStore.details.market_capital}(Cr)
+									₹{$stockDetailStore.details.market_capital?.toLocaleString('en-in')}(Cr)
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 				<div class="w-full flex gap-6">
+					<div class="border border-solid border-gray-200 p-4 w-full rounded-md bg-white">
+						<div class="flex justify-between w-full">
+							<div class="flex flex-col items-start gap-2">
+								<div>Price</div>
+								<div class="font-medium">
+									₹{$stockDetailStore.details.price?.toLocaleString('en-in')}
+								</div>
+							</div>
+						</div>
+					</div>
 					<div class="border border-solid border-gray-200 p-4 w-full rounded-md bg-white">
 						<div class="flex justify-between">
 							<div class="flex flex-col items-start gap-2">
@@ -89,7 +112,7 @@
 										? 'text-green-500 font-medium'
 										: 'text-red-500 font-medium'}
 								>
-									{$stockDetailStore.details.daily_change}%
+									{$stockDetailStore.details.daily_change?.toLocaleString('en-in')}%
 								</div>
 							</div>
 						</div>
@@ -103,16 +126,8 @@
 										? 'text-green-500 font-medium'
 										: 'text-red-500 font-medium'}
 								>
-									{$stockDetailStore.details.yearly_change}%
+									{$stockDetailStore.details.yearly_change?.toLocaleString('en-in')}%
 								</div>
-							</div>
-						</div>
-					</div>
-					<div class="border border-solid border-gray-200 p-4 w-full rounded-md bg-white">
-						<div class=" flex justify-between">
-							<div class="flex flex-col items-start gap-2">
-								<div>Symbol</div>
-								<div class="font-medium">{$stockDetailStore.details.symbol}</div>
 							</div>
 						</div>
 					</div>
@@ -124,7 +139,7 @@
 		<div class="w-[100%] flex gap-6">
 			<div class="w-[100%] bg-white rounded-md p-6 border border-solid border-gray-200">
 				<div class="heading mb-6 flex justify-between items-center">
-					<h2 class="font-medium text-lg">Visual View</h2>
+					<h2 class="font-medium text-lg">Stock Prices</h2>
 				</div>
 				<Chart {data} type="line" height="359" />
 			</div>
