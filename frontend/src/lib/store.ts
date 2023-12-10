@@ -651,16 +651,16 @@ type StoreNames = keyof typeof storeMap;
 
 export function refreshDozerStores(...storeNames: StoreNames[]) {
 	async function refreshStore(s: StoreNames) {
-		let startingDelay = [
-			'taxLiabilityStore',
-			'customerStockInvestmentValueStore',
-			'customerMFInvestmentValueStore',
-			'customerTotalInvestmentValueStore'
-		].includes(s)
-			? 800
-			: 120;
+		// let startingDelay = [
+		// 	'taxLiabilityStore',
+		// 	'customerStockInvestmentValueStore',
+		// 	'customerMFInvestmentValueStore',
+		// 	'customerTotalInvestmentValueStore'
+		// ].includes(s)
+		// 	? 800
+		// 	: 120;
 
-		console.log({ s, startingDelay });
+		console.log({ s });
 		const store = storeMap[s];
 		let id = getStoreDozerId(store);
 
@@ -699,14 +699,14 @@ export function refreshDozerStores(...storeNames: StoreNames[]) {
 						await store.fetchData();
 
 						if (id === getStoreDozerId(store)) {
-							throw Error('throwing for retry');
+							throw Error(`throwing for retry ${s}`);
 						}
 				}
 			},
 			{
 				delayFirstAttempt: true,
 				numOfAttempts: 3,
-				startingDelay
+				startingDelay: 120
 			}
 		);
 	}
