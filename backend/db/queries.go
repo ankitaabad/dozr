@@ -24,6 +24,8 @@ func (c *DbConn) AddMoney(input models.AddMoneyModel) error {
 	fmt.Println(transactionId)
 
 	_, err := c.pool.Exec(context.Background(), "with cb as (update customers  set balance = balance + $1 where customer_id = $2)\nINSERT INTO transactions (id, amount,date, customer_id, \"desc\") VALUES($3, $1, $4,$2, 'Money credited to Account');", input.Amount, input.CustomerId, transactionId, todayIso)
+	fmt.Println("printing err ", err)
+
 	return err
 }
 
@@ -48,6 +50,8 @@ func (c *DbConn) BuyStocks(input models.BuyStocksModel) error {
 	*/
 	/* customer buys 100 stocks of tata worth 50rs then we need  50*100 = 5000 in balance to complete this transaction, chech if customer have enough balance, if enough balance then deduct the balance, make an entry in transactions table to show recent transactions, add an entry in customer_stocks if he already had stocks of tata then we average out stocks price and add to quantity, also make an entry in stocks_buy table that we use for tax calculation purpose. */
 	result, err := c.pool.Exec(context.Background(), "with sp as ( select price from stocks s where s.stock_id = $1),\nbalance as ( select (select balance from customers where customer_id = $3) > sp.price* $4 as enough_balance, sp.price*$4 as amount,price from sp),\ncu as (update customers set balance = balance - sp.price*$4 from sp where customer_id = $3 and (select enough_balance from balance) = true),\nit as (INSERT INTO transactions (id, amount, \"date\", customer_id, \"desc\") select $5, amount, $8, $3, $6 from balance where enough_balance = true),\nisbuy as (INSERT INTO stocks_buy (id, stock_id, quantity, buy_date, price, remaining_quantity,customer_id) select $7, $1, $4, $2, price, $4,$3 from balance where enough_balance = true)\nINSERT INTO customer_stocks as cs (customer_id, stock_id, quantity, avg_price) select $3, $1, $4, price from balance where enough_balance = true ON CONFLICT (customer_id,stock_id) DO update set quantity = cs.quantity + $4, avg_price = (cs.quantity*cs.avg_price + $4* (select price from balance))/(cs.quantity+ $4) where cs.stock_id = $1 and cs.customer_id= $3 and (select enough_balance from balance) = true;", input.StockId, today, input.CustomerId, input.Quantity, transactionId, desc, stockBuyId, todayIso)
+	fmt.Println("printing err ", err)
+
 	fmt.Println("printing result ", result)
 
 	return err
@@ -75,6 +79,8 @@ func (c *DbConn) SellStocks(input models.SellStocksModel) error {
 		7 stockbuyid
 	*/
 	result, err := c.pool.Exec(context.Background(), "with sp as ( select price from stocks s where s.stock_id = $1),\nstock_balance as (select  *,cs.quantity - $4 >= 0 as enough_stock,(select price from sp) as selling_price from customer_stocks cs where cs.stock_id = $1 and customer_id =$3 ),\nup as (update customers c set balance = c.balance + $4* selling_price from stock_balance where c.customer_id = $3 and  enough_stock  = true),\nit as (INSERT INTO transactions (id, amount, \"date\", customer_id, \"desc\") select $5, $4*selling_price,$8, $3, $6   from stock_balance where enough_stock = true),\niss as (INSERT INTO stocks_sell (id, stock_id, \"date\", quantity, price, customer_id) select $7, stock_id, $2, $4, selling_price, $3 from stock_balance where enough_stock = true)\nupdate customer_stocks cs set quantity = cs.quantity - $4 from stock_balance where enough_stock = true and cs.customer_id = $3 and cs.stock_id = $1;", input.StockId, today, input.CustomerId, input.Quantity, transactionId, desc, stockSellId, todayIso)
+	fmt.Println("printing err ", err)
+
 	fmt.Println("printing result ", result)
 
 	return err
@@ -102,6 +108,8 @@ func (c *DbConn) BuyMF(input models.BuyMFModel) error {
 	*/
 
 	result, err := c.pool.Exec(context.Background(), "with mfp as ( select price from mutual_funds mf where mf.mf_id = $1),\nbalance as ( select (select balance from customers where customer_id = $3) > mfp.price* $4 as enough_balance, mfp.price*$4 as amount,price from mfp),\ncu as (update customers set balance = balance - mfp.price*$4 from mfp where customer_id = $3 and (select enough_balance from balance) = true),\nit as (INSERT INTO transactions (id, amount, \"date\", customer_id, \"desc\") select $5, amount, $8, $3, $6 from balance where enough_balance = true),\nisbuy as (INSERT INTO mf_buy (id, mf_id, quantity, buy_date, price, remaining_quantity,customer_id) select $7, $1, $4, $2, price, $4,$3 from balance where enough_balance = true)\nINSERT INTO customer_mf as cs (customer_id, mf_id, quantity, avg_price) select $3, $1, $4, price from balance where enough_balance = true ON CONFLICT (customer_id,mf_id) DO update set quantity = cs.quantity + $4, avg_price = (cs.quantity*cs.avg_price + $4* (select price from balance))/(cs.quantity+ $4) where cs.mf_id = $1 and cs.customer_id= $3 and (select enough_balance from balance) = true;", input.MFId, today, input.CustomerId, input.Quantity, transactionId, desc, mfBuyId, todayIso)
+	fmt.Println("printing err ", err)
+
 	fmt.Println("printing result ", result)
 
 	return err
@@ -129,6 +137,8 @@ func (c *DbConn) SellMF(input models.SellMFModel) error {
 		7 mfbuyid
 	*/
 	result, err := c.pool.Exec(context.Background(), "with mfp as ( select price from mutual_funds mf where mf.mf_id = $1),\n mf_balance as (select  *,cmf.quantity - $4 >= 0 as enough_mf,(select price from mfp) as selling_price from customer_mf cmf where cmf.mf_id = $1 and customer_id =$3 ),\nup as (update customers c set balance = c.balance + $4* selling_price from mf_balance where c.customer_id = $3 and  enough_mf  = true),\nit as (INSERT INTO transactions (id, amount, \"date\", customer_id, \"desc\") select $5, $4*selling_price,$8, $3, $6   from mf_balance where enough_mf = true),\niss as (INSERT INTO mf_sell (id, mf_id, \"date\", quantity, price, customer_id) select $7, mf_id, $2, $4, selling_price, $3 from mf_balance where enough_mf = true)\nupdate customer_mf cmf set quantity = cmf.quantity - $4 from mf_balance where enough_mf = true and cmf.customer_id = $3 and cmf.mf_id = $1;", input.MFId, today, input.CustomerId, input.Quantity, transactionId, desc, mfSellId, todayIso)
+	fmt.Println("printing err ", err)
+
 	fmt.Println("printing result ", result)
 
 	return err
